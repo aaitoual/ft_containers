@@ -6,7 +6,7 @@
 /*   By: aaitoual <aaitoual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 20:55:51 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/10/22 06:24:29 by aaitoual         ###   ########.fr       */
+/*   Updated: 2022/10/24 15:36:59 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,11 @@
 # include <algorithm>
 # include <iostream>
 # include <memory>
+# include <limits>
+# include <algorithm>
+# include <stdexcept>
 # include "exceptions/__exceptions.hpp"
+# include "../implementations/enable_if.hpp"
 
 void	_throw_my_exception(int index) {
 	switch (index)
@@ -26,6 +30,8 @@ void	_throw_my_exception(int index) {
 		throw __exceptions::vector_bad_allocation();
 	case 2 :
 		throw __exceptions::vector_bad_range();
+	case 3 :
+		throw std::out_of_range("vector");
 	default:
 		break;
 	}
@@ -43,36 +49,75 @@ namespace ft
 	typedef	typename allocator_type::pointer			pointer;
 	typedef	typename allocator_type::const_pointer		const_pointer;
 	typedef typename alloc::size_type					size_type;
+	typedef std::allocator_traits<allocator_type>       __alloc_traits;
 	
 //****************************************iterator*******************************************************************//
-		class iterator : public std::iterator < std::random_access_iterator_tag, T, const T*, T> {
+		template<typename S>
+		class iterator_vec{
 			private :
-				T*	current;
+				S*	current;
 			public :
-				iterator () {current = NULL;}
-				iterator (T * it) {current = it;}
-				T&	operator * () {return *current;}
-				iterator	operator ++ (int) {iterator	tmp(current);current++;return tmp;}
-				iterator&	operator ++ () {current++;return current;}
-				iterator	operator -- (int) {iterator	tmp(current);current--;return tmp;}
-				iterator&	operator -- () {current--;return current;}
-				iterator&	operator = (iterator copy) {current = copy.current; return *this;};
-				bool		operator != (iterator& iter) {return (*current != *iter) ?  1 : 0;}
-				bool		operator == (iterator& iter) {return (*current != *iter) ?  0 : 1;}
-				bool		operator > (iterator& iter) {return (*current > *iter) ?  0 : 1;}
-				bool		operator >= (iterator& iter) {return (*current >= *iter) ?  0 : 1;}
-				bool		operator < (iterator& iter) {return (*current < *iter) ?  0 : 1;}
-				bool		operator <= (iterator& iter) {return (*current <= *iter) ?  0 : 1;}
+				iterator_vec () {current = NULL;}
+				iterator_vec (T * it) {current = it;}
+				T&	operator * () const {return *current;}
+				iterator_vec			operator ++ (int) {iterator_vec	tmp(current);current++;return tmp;}
+				iterator_vec&			operator ++ () {current++;return *this;}
+				iterator_vec			operator -- (int) {iterator_vec	tmp(current);current--;return tmp;}
+				iterator_vec&			operator -- () {current--;return *this;}
+				iterator_vec&			operator = (iterator_vec copy) {current = copy.current; return *this;};
+				bool				operator != (iterator_vec& iter) {return (this->current != iter.current) ?  1 : 0;}
+				bool				operator == (iterator_vec& iter) {return (this->current != iter) ?  0 : 1;}
+				bool				operator > (iterator_vec& iter) {return (this->current > iter.current) ?  1 : 0;}
+				bool				operator >= (iterator_vec& iter) {return (this->current >= iter.current) ?  1 : 0;}
+				bool				operator < (iterator_vec& iter) {return (this->current < iter.current) ?  1 : 0;}
+				bool				operator <= (iterator_vec& iter) {return (this->current <= iter.current) ?  1 : 0;}
+				friend bool			operator != (const iterator_vec& that, const iterator_vec& iter) {return (that.current != iter.current) ?  1 : 0;}
+				friend bool			operator == (const iterator_vec& that, const iterator_vec& iter) {return (that.current != iter) ?  0 : 1;}
+				friend bool			operator > (const iterator_vec& that, const iterator_vec& iter) {return (that.current > iter.current) ?  1 : 0;}
+				friend bool			operator >= (const iterator_vec& that, const iterator_vec& iter) {return (that.current >= iter.current) ?  1 : 0;}
+				friend bool			operator < (const iterator_vec& that, const iterator_vec& iter) {return (that.current < iter.current) ?  1 : 0;}
+				friend bool			operator <= (const iterator_vec& that, const iterator_vec& iter) {return (that.current <= iter.current) ?  1 : 0;}
 		};
+		template<typename S>
+		class reverse_iterator_vec{
+			private :
+				S*	current;
+			public :
+				reverse_iterator_vec () {current = NULL;}
+				reverse_iterator_vec (T * it) {current = it;}
+				T&	operator * () const {return *current;}
+				reverse_iterator_vec			operator ++ (int) {reverse_iterator_vec	tmp(current);current--;return tmp;}
+				reverse_iterator_vec&			operator ++ () {current--;return *this;}
+				reverse_iterator_vec			operator -- (int) {reverse_iterator_vec	tmp(current);current++;return tmp;}
+				reverse_iterator_vec&			operator -- () {current++;return *this;}
+				reverse_iterator_vec&			operator = (reverse_iterator_vec copy) {current = copy.current; return *this;};
+				bool				operator != (reverse_iterator_vec& iter) {return (this->current != iter.current) ?  1 : 0;}
+				bool				operator == (reverse_iterator_vec& iter) {return (this->current != iter) ?  0 : 1;}
+				bool				operator < (reverse_iterator_vec& iter) {return (this->current > iter.current) ?  1 : 0;}
+				bool				operator <= (reverse_iterator_vec& iter) {return (this->current >= iter.current) ?  1 : 0;}
+				bool				operator > (reverse_iterator_vec& iter) {return (this->current < iter.current) ?  1 : 0;}
+				bool				operator >= (reverse_iterator_vec& iter) {return (this->current <= iter.current) ?  1 : 0;}
+				friend bool			operator != (const reverse_iterator_vec& that, const reverse_iterator_vec& iter) {return (that.current != iter.current) ?  1 : 0;}
+				friend bool			operator == (const reverse_iterator_vec& that, const reverse_iterator_vec& iter) {return (that.current != iter) ?  0 : 1;}
+				friend bool			operator < (const reverse_iterator_vec& that, const reverse_iterator_vec& iter) {return (that.current > iter.current) ?  1 : 0;}
+				friend bool			operator <= (const reverse_iterator_vec& that, const reverse_iterator_vec& iter) {return (that.current >= iter.current) ?  1 : 0;}
+				friend bool			operator > (const reverse_iterator_vec& that, const reverse_iterator_vec& iter) {return (that.current < iter.current) ?  1 : 0;}
+				friend bool			operator >= (const reverse_iterator_vec& that, const reverse_iterator_vec& iter) {return (that.current <= iter.current) ?  1 : 0;}
+		};
+		public :
+			typedef iterator_vec<const T>				const_iterator;
+			typedef reverse_iterator_vec<T>				reverse_iterator;
+			typedef reverse_iterator_vec<const T>	const_reverse_iterator;
+			typedef iterator_vec<T>						iterator;
 //****************************************private_attribute***************************************************************//
 		private :
 			T			*arr;
 			alloc		alloc_obj;
-			size_type	capacity;
-			size_type	size;
+			size_type	capacity__;
+			size_type	size__;
 //****************************************private_methods***************************************************************//
 		private :
-			size_type	max_size() {
+			size_type	max_size_() {
 				return size_type(~0) / sizeof(T);
 			}
 //****************************************public_methods***************************************************************//
@@ -80,12 +125,12 @@ namespace ft
 			vector (const allocator_type &tmp = alloc()) {																//default
 				(void) tmp;
 				arr = NULL;
-				size = 0;
-				capacity = 0;
+				size__ = 0;
+				capacity__ = 0;
 			}
-			explicit vector (size_type capacity_, const T &value = T(), const allocator_type& tmp = alloc()) {			//fill
+			explicit vector (size_type capacity_, const T& value = T(), const allocator_type& tmp = alloc()) {			//fill
 				(void)tmp;
-				if (capacity_ > max_size())
+				if (capacity_ > max_size_())
 					_throw_my_exception(1);
 				if (capacity_) {
 					arr = alloc_obj.allocate(capacity_);
@@ -95,13 +140,15 @@ namespace ft
 				}
 				else
 					arr = NULL;
-				capacity = capacity_;
-				size = capacity_;
+				capacity__ = capacity_;
+				size__ = capacity_;
 			}
-			template <typename IT>
-        	vector (IT first, IT last, const allocator_type& tmp = allocator_type()) {									//range
+			template <class IT >
+        	vector (IT first, IT last, const allocator_type& tmp = allocator_type(), typename ft::enable_if<!std::is_integral<IT>::value>::type = NULL) {									//range
 				(void) tmp;
 				arr = NULL;
+				capacity__ = 0;
+				size__ = 0;
 				if (first > last)
 					_throw_my_exception(2);
 				if (first == last)
@@ -112,52 +159,165 @@ namespace ft
 				}	
 			}
 			vector (const vector& copy) {																				//copy
-				capacity = 0;
+				capacity__ = 0;
 				*this = copy;
 			}
 			~vector () {
-				alloc_obj.deallocate(arr, capacity);
+				if (capacity__)
+					alloc_obj.deallocate(arr, capacity__);
 			};
 			iterator	begin() {
 				return iterator (arr);
 			}
+			const iterator	begin() const {
+				return const_iterator (arr);
+			}
+			reverse_iterator	rbegin() {
+				if (size__)
+					return reverse_iterator (arr + size__ - 1);
+				return reverse_iterator (NULL);
+			}
+			const reverse_iterator	rbegin() const {
+				if (size__)
+					return const_reverse_iterator (arr + size__ - 1);
+				return const_reverse_iterator (arr);
+			}
 			iterator	end() {
-				return	iterator (arr + size);
+				return	iterator (arr + size__);
 			}
-			void	push_back(T element) {
-				if (size == capacity && capacity) { // while pushing on an already full array
+			const iterator	end() const {
+				return const_iterator (arr + size__);
+			}
+			reverse_iterator	rend() {
+				if (size__)
+					return	reverse_iterator (arr - 1);
+				return	reverse_iterator (NULL);
+			}
+			const reverse_iterator	rend() const {
+				if (size__)
+					return	const_reverse_iterator (arr - 1);
+				return	const_reverse_iterator (NULL);
+			}
+			void	push_back(const T& element) {
+				if (size__ == capacity__ && capacity__) { // while pushing on an already full array
 					T *arr_tmp;
-					arr_tmp = alloc_obj.allocate(capacity * 2);
-					std::copy(arr, arr + capacity, arr_tmp);
-					alloc_obj.deallocate(arr, capacity);
+					arr_tmp = alloc_obj.allocate(capacity__ * 2);
+					std::copy(arr, arr + capacity__, arr_tmp);
+					alloc_obj.deallocate(arr, capacity__);
 					arr = arr_tmp;
-					capacity *= 2;
+					capacity__ *= 2;
 				}
-				else if (!capacity) { // while pushing on a 0 capacity array
+				else if (!capacity__) { // while pushing on a 0 capacity__ array
 					arr = alloc_obj.allocate(1);
-					capacity = 1;
+					capacity__ = 1;
 				}
-				arr[size++] = element;
+				arr[size__++] = element;
 			}
+			size_type	max_size() const {
+				return (((unsigned long)std::numeric_limits<T>::max() < __alloc_traits::max_size(alloc_obj)) / sizeof(T) ? std::numeric_limits<typename alloc::difference_type>::max() : __alloc_traits::max_size(alloc_obj));
+			}
+			size_type	size() const {
+				return size__;
+			}
+			void resize (size_type n, T val = T()) {
+				if (n > size__) {
+					for (size_t i = size__; i != n; i++) push_back(val);
+				}
+				else if (n && n < size__) {
+					size__ = n;
+				}
+			}
+			bool empty() const {
+				return !size__;
+			}
+			size_type capacity() const {return capacity__;}
+			void reserve (size_type n) {
+				T* tmp_arr;
+				T val = T();
+				if (!capacity__) {
+					capacity__ = n;
+					arr = alloc_obj.allocate(capacity__);
+					for (size_t i = 0; i != capacity__; i++) arr[i] = val;
+				}
+				else if (n > capacity__) {
+					tmp_arr = arr;
+					arr = alloc_obj.allocate(n);
+					for (size_t i = 0; i != size__; i++) arr[i] = tmp_arr[i];
+					alloc_obj.deallocate(tmp_arr, capacity__);
+					capacity__ = n;
+				}
+			}
+			T& at (size_type index) {
+				if (index >= size__)
+					_throw_my_exception(3);
+				return arr[index];
+			}
+			const T& at (size_type index) const {
+				if (index >= size__)
+					_throw_my_exception(3);
+				return arr[index];
+			}
+			T& front() {
+				return arr[0];
+			}
+			const T& front() const {
+				return arr[0];
+			}
+			T& back() {
+				if (size__)
+					return arr[size__ - 1];
+				return NULL;
+			}
+			const T& back() const {
+				if (size__)
+					return arr[size__ - 1];
+				return NULL;
+			}
+			alloc get_allocator() const {
+				return alloc_obj;
+			}
+			template <class IT>
+  			// void assign (IT first, IT last, typename ft::enable_if<!std::is_integral<IT>::value>::type = NULL) {
+  			void assign (IT first, IT last) {
+				size_t dis = std::distance(first, last);
+				if (dis < 0)
+					_throw_my_exception(1); //******************************************************************
+				if (dis) {
+					size_t i = 0;
+					if (dis > capacity__ && capacity__)
+						alloc_obj.deallocate(arr, capacity__);
+					else if (!capacity__)
+						arr = alloc_obj.allocate(dis);
+					for (IT iter = first; iter != last; iter++) {
+						arr[i++] = *iter;
+					}
+				}
+			}
+			// void assign (size_type n, const T& val);
+
 //****************************************public_operator***************************************************************//
 		public :
-			int&	operator [] (int index) {
+			T&	operator [] (int index) {
+				return arr[index];
+			}
+			const T& operator[] (size_type index) const {
 				return arr[index];
 			}
 			vector& operator = (const vector& copy) {
-				if (copy.capacity && !capacity)
-					arr = alloc_obj.allocate(capacity.capacity);
-				else if (copy.capacity && capacity) {
-					alloc_obj.deallocate(arr, capacity);
-					arr = alloc_obj.allocate(copy.capacity);
+				if (copy.capacity__ && !capacity__)
+					arr = alloc_obj.allocate(copy.capacity__);
+				else if (copy.capacity__ && capacity__) {
+					alloc_obj.deallocate(arr, capacity__);
+					arr = alloc_obj.allocate(copy.capacity__);
 				}
-				else if (!copy.capacity) {
-					if (capacity)
-						alloc_obj.deallocate(arr, capacity);
+				else if (!copy.capacity__) {
+					if (capacity__)
+						alloc_obj.deallocate(arr, capacity__);
 					arr = NULL;
 				}
-				capacity = copy.capacity;
-				size = copy.size;
+				capacity__ = copy.capacity__;
+				size__ = copy.size__;
+				return *this;
 			}
 			
 	};
