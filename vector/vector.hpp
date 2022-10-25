@@ -6,7 +6,7 @@
 /*   By: aaitoual <aaitoual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 20:55:51 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/10/24 15:36:59 by aaitoual         ###   ########.fr       */
+/*   Updated: 2022/10/25 11:30:37 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,14 @@ namespace ft
 	typedef	typename allocator_type::const_pointer		const_pointer;
 	typedef typename alloc::size_type					size_type;
 	typedef std::allocator_traits<allocator_type>       __alloc_traits;
+	// typedef	typename long int									difference_type;
 	
 //****************************************iterator*******************************************************************//
 		template<typename S>
-		class iterator_vec{
+		class iterator_vec : public std::iterator < std::random_access_iterator_tag, T, const T*, T>{
 			private :
 				S*	current;
+				S*	base() const {return current;};
 			public :
 				iterator_vec () {current = NULL;}
 				iterator_vec (T * it) {current = it;}
@@ -64,7 +66,7 @@ namespace ft
 				iterator_vec&			operator ++ () {current++;return *this;}
 				iterator_vec			operator -- (int) {iterator_vec	tmp(current);current--;return tmp;}
 				iterator_vec&			operator -- () {current--;return *this;}
-				iterator_vec&			operator = (iterator_vec copy) {current = copy.current; return *this;};
+				iterator_vec&			operator = (iterator_vec& copy) {current = copy.current; return *this;};
 				bool				operator != (iterator_vec& iter) {return (this->current != iter.current) ?  1 : 0;}
 				bool				operator == (iterator_vec& iter) {return (this->current != iter) ?  0 : 1;}
 				bool				operator > (iterator_vec& iter) {return (this->current > iter.current) ?  1 : 0;}
@@ -77,9 +79,10 @@ namespace ft
 				friend bool			operator >= (const iterator_vec& that, const iterator_vec& iter) {return (that.current >= iter.current) ?  1 : 0;}
 				friend bool			operator < (const iterator_vec& that, const iterator_vec& iter) {return (that.current < iter.current) ?  1 : 0;}
 				friend bool			operator <= (const iterator_vec& that, const iterator_vec& iter) {return (that.current <= iter.current) ?  1 : 0;}
+				friend long			operator - (const iterator_vec &that, const iterator_vec& sec) {return that.current - sec.current;}
 		};
 		template<typename S>
-		class reverse_iterator_vec{
+		class reverse_iterator_vec : public std::iterator < std::random_access_iterator_tag, T, const T*, T>{
 			private :
 				S*	current;
 			public :
@@ -119,6 +122,13 @@ namespace ft
 		private :
 			size_type	max_size_() {
 				return size_type(~0) / sizeof(T);
+			}
+			template <typename S>
+			size_t	get_range(S first, S last) {
+				size_t ret = 0;
+				for (S iter = first; iter != last; iter++)
+					ret++;
+				return ret;
 			}
 //****************************************public_methods***************************************************************//
 		public :
@@ -277,23 +287,49 @@ namespace ft
 				return alloc_obj;
 			}
 			template <class IT>
-  			// void assign (IT first, IT last, typename ft::enable_if<!std::is_integral<IT>::value>::type = NULL) {
-  			void assign (IT first, IT last) {
-				size_t dis = std::distance(first, last);
-				if (dis < 0)
+  			void assign (IT first, IT last, typename ft::enable_if<!std::is_integral<IT>::value>::type = NULL) {
+				if (first > last)
 					_throw_my_exception(1); //******************************************************************
+				size__ = 0;
+				size_t dis = get_range (first, last);
 				if (dis) {
-					size_t i = 0;
 					if (dis > capacity__ && capacity__)
+					{
 						alloc_obj.deallocate(arr, capacity__);
-					else if (!capacity__)
 						arr = alloc_obj.allocate(dis);
+						capacity__ = dis;
+					}
+					else if (!capacity__)
+					{
+						arr = alloc_obj.allocate(dis);
+						capacity__ = dis;
+					}
 					for (IT iter = first; iter != last; iter++) {
-						arr[i++] = *iter;
+						arr[size__++] = *iter;
 					}
 				}
 			}
-			// void assign (size_type n, const T& val);
+			void assign (size_type n, const T& val) {
+				if (n > max_size_())
+					_throw_my_exception(1); //*********************************************************************
+				size__ = 0;
+				if (n) {
+					if (n > capacity__ && capacity__)
+					{
+						alloc_obj.deallocate(arr, capacity__);
+						arr = alloc_obj.allocate(n);
+						capacity__ = n;
+					}
+					else if (!capacity__)
+					{
+						arr = alloc_obj.allocate(n);
+						capacity__ = n;
+					}
+					for (size_t iter = 0; iter != n; iter++) {
+						arr[size__++] = val;
+					}
+				}
+			}
 
 //****************************************public_operator***************************************************************//
 		public :
