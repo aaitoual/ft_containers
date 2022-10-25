@@ -6,7 +6,7 @@
 /*   By: aaitoual <aaitoual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 20:55:51 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/10/25 12:06:42 by aaitoual         ###   ########.fr       */
+/*   Updated: 2022/10/25 18:06:44 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ namespace ft
 				iterator_vec&			operator ++ () {current++;return *this;}
 				iterator_vec			operator -- (int) {iterator_vec	tmp(current);current--;return tmp;}
 				iterator_vec&			operator -- () {current--;return *this;}
-				iterator_vec&			operator = (iterator_vec& copy) {current = copy.current; return *this;};
+				iterator_vec&			operator = (iterator_vec& copy) {current = copy.current; return *this;}
+				iterator_vec&			operator = (const iterator_vec& copy) {current = copy.current; return *this;}
 				bool				operator != (iterator_vec& iter) {return (this->current != iter.current) ?  1 : 0;}
 				bool				operator == (iterator_vec& iter) {return (this->current != iter) ?  0 : 1;}
 				bool				operator > (iterator_vec& iter) {return (this->current > iter.current) ?  1 : 0;}
@@ -332,6 +333,55 @@ namespace ft
 			}
 			void	pop_back() {
 				size__--;
+			}
+			iterator insert (iterator position, const T& val) {
+				size_t j = 0;
+				iterator ret;
+				if (size__ + 1 > capacity__ && capacity__) {
+					T* arr_tmp = arr;
+					arr = alloc_obj.allocate(capacity__ * 2);
+					for (size_t i = 0; i != capacity__ * 2; i++) arr[i] = 0;
+					for (size_t i = 0; iterator(&arr_tmp[i]) != position; i++) {
+						arr[i] = arr_tmp[i];
+						j++;
+					}
+					arr[j++] = val;
+					ret = iterator (arr + j - 1);
+					if (j < capacity__) {
+						for (size_t i = j - 1; i != capacity__; i++) {
+							arr[j] = arr_tmp[i];
+							j++;
+						}
+					}
+					alloc_obj.deallocate(arr_tmp, capacity__);
+					capacity__ *= 2;
+					size__++;
+				}
+				else if (size__ + 1 > capacity__) {
+					T* arr_tmp = arr;
+					arr = alloc_obj.allocate(1);
+					capacity__ = 1;
+					for (size_t i = 0; iterator(arr_tmp + i) != position; i++) {
+						arr[i] = arr_tmp[i];
+						j++;
+					}
+					arr[j] = val;
+					ret = iterator (arr);
+					size__++;
+				}
+				else {
+					T *arr_tmp = arr;
+					for (size_t i = 0; i != capacity__; i++) {
+						if (iterator (arr_tmp + i) == position) {
+							arr[j++] = val;
+							ret = iterator(arr + j - 1);
+						}
+						arr[j] = arr_tmp[i];
+						j++;
+					}
+					size__++;
+				}
+				return ret;
 			}
 
 //****************************************public_operator***************************************************************//
