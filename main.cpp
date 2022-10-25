@@ -6,7 +6,7 @@
 /*   By: aaitoual <aaitoual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 21:02:50 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/10/25 18:01:57 by aaitoual         ###   ########.fr       */
+/*   Updated: 2022/10/25 18:29:32 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ void	test() {
 	try {
 		// std::vector<int, my_alloc<int> > test2(10, 1);
 		std::vector<int, my_alloc<int> > test;
-		test.reserve(10);
+		// test.reserve(10);
 		// for (int i = 0; i != 10; i++) test.push_back(i);
 		std::cout << "size : " << test.size() << " capacity : " << test.capacity() << std::endl;
-		std::cout << "return value : " << *test.insert(test.end(), 88) << std::endl;
+		test.insert(test.end(), 23, 5);
 		std::cout << "size : " << test.size() << " capacity : " << test.capacity() << std::endl;
-		std::cout << test[0] << std::endl;
-		// for (int i = 0; i != 12; i++) std::cout << test[i] << " ";
+		// std::cout << test[0] << std::endl;
+		for (int i = 0; i != 12; i++) std::cout << test[i] << " ";
 		std::cout << std::endl;
 	}
 	catch (std::exception &i) {
@@ -45,13 +45,13 @@ void	test() {
 	try {
 		// std::vector<int, my_alloc<int> > test2(10, 1);
 		ft::vector<int, my_alloc<int> > test;
-		test.reserve(10);
+		// test.reserve(10);
 		// for (int i = 0; i != 10; i++) test.push_back(i);
 		std::cout << "size : " << test.size() << " capacity : " << test.capacity() << std::endl;
-		std::cout << "return value : " << *test.insert(test.end(), 88) << std::endl;
+		test.insert(test.end(), 23, 5);
 		std::cout << "size : " << test.size() << " capacity : " << test.capacity() << std::endl;
-		std::cout << test[0] << std::endl;
-		// for (int i = 0; i != 12; i++) std::cout << test[i] << " ";
+		// std::cout << test[0] << std::endl;
+		for (int i = 0; i != 12; i++) std::cout << test[i] << " ";
 		std::cout << std::endl;
 	}
 	catch (std::exception &i) {

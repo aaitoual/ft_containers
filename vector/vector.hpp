@@ -6,7 +6,7 @@
 /*   By: aaitoual <aaitoual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 20:55:51 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/10/25 18:06:44 by aaitoual         ###   ########.fr       */
+/*   Updated: 2022/10/25 18:51:45 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -382,6 +382,66 @@ namespace ft
 					size__++;
 				}
 				return ret;
+			}
+			void insert (iterator position, size_type n, const T& val){
+				size_t j = 0;
+				size_t old_capacity = capacity__;
+				if (size__ + n > capacity__ && capacity__) {
+					T* arr_tmp = arr;
+					if (size__ + n > capacity__ * 2)
+					{
+						arr = alloc_obj.allocate(size__ + n);
+						capacity__ = size__ + n;
+					}
+					else
+					{
+						arr = alloc_obj.allocate(capacity__ * 2);
+						capacity__ = capacity__ * 2;
+					}
+					for (size_t i = 0; i != capacity__; i++) arr[i] = 0;
+					for (size_t i = 0; iterator(&arr_tmp[i]) != position; i++) {
+						arr[i] = arr_tmp[i];
+						j++;
+					}
+					for (size_t i = 0; i != n; i++){
+						arr[j++] = val;
+						size__++;
+					}
+					if (j < old_capacity) {
+						for (size_t i = j - 1; i != old_capacity; i++) {
+							arr[j] = arr_tmp[i];
+							j++;
+							size__++;
+						}
+					}
+					alloc_obj.deallocate(arr_tmp, old_capacity);
+				}
+				else if (size__ + n > capacity__) {
+					T* arr_tmp = arr;
+					arr = alloc_obj.allocate(size__ + n);
+					capacity__ = n;
+					for (size_t i = 0; iterator(arr_tmp + i) != position; i++) {
+						arr[i] = arr_tmp[i];
+						j++;
+					}
+					for (size_t i = 0; i != n; i++){
+						arr[j++] = val;
+						size__++;
+					}
+				}
+				else { 
+					T *arr_tmp = arr;
+					for (size_t i = 0; i != capacity__; i++) {
+						if (iterator (arr_tmp + i) == position) {
+							for (size_t i = 0; i != n; i++){
+								arr[j++] = val;
+								size__++;
+							}
+						}
+						arr[j] = arr_tmp[i];
+						j++;
+					}
+				}
 			}
 
 //****************************************public_operator***************************************************************//
