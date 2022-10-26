@@ -6,7 +6,7 @@
 #    By: aaitoual <aaitoual@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/18 20:56:55 by aaitoual          #+#    #+#              #
-#    Updated: 2022/10/24 12:52:59 by aaitoual         ###   ########.fr        #
+#    Updated: 2022/10/26 12:18:41 by aaitoual         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = containers
 
 CC = c++
 
-CFLAGS = -Wall -Wextra -Werror -std=c++98
+CFLAGS = -std=c++98
 
 OBJ_PATH = ./__Obj_Tmp_Fils/
 
