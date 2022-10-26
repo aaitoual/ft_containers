@@ -6,7 +6,7 @@
 /*   By: aaitoual <aaitoual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 20:55:51 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/10/25 18:51:45 by aaitoual         ###   ########.fr       */
+/*   Updated: 2022/10/26 10:32:48 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ namespace ft
 		class iterator_vec : public std::iterator < std::random_access_iterator_tag, T, const T*, T>{
 			private :
 				S*	current;
-				S*	base() const {return current;};
 			public :
+				S*	base() const {return current;};
 				iterator_vec () {current = NULL;}
 				iterator_vec (T * it) {current = it;}
 				T&	operator * () const {return *current;}
@@ -244,11 +244,10 @@ namespace ft
 			size_type capacity() const {return capacity__;}
 			void reserve (size_type n) {
 				T* tmp_arr;
-				T val = T();
 				if (!capacity__) {
 					capacity__ = n;
 					arr = alloc_obj.allocate(capacity__);
-					for (size_t i = 0; i != capacity__; i++) arr[i] = val;
+					// for (size_t i = 0; i != capacity__; i++) arr[i] = val;
 				}
 				else if (n > capacity__) {
 					tmp_arr = arr;
@@ -336,7 +335,7 @@ namespace ft
 			}
 			iterator insert (iterator position, const T& val) {
 				size_t j = 0;
-				iterator ret;
+				iterator ret = position.base();
 				if (size__ + 1 > capacity__ && capacity__) {
 					T* arr_tmp = arr;
 					arr = alloc_obj.allocate(capacity__ * 2);
@@ -369,16 +368,12 @@ namespace ft
 					ret = iterator (arr);
 					size__++;
 				}
-				else {
-					T *arr_tmp = arr;
-					for (size_t i = 0; i != capacity__; i++) {
-						if (iterator (arr_tmp + i) == position) {
-							arr[j++] = val;
-							ret = iterator(arr + j - 1);
-						}
-						arr[j] = arr_tmp[i];
-						j++;
+				else if (position.base() >= arr) {
+					for (size_t i = 0; arr + i < position.base(); i++) j++;
+					for (size_t i = size__; i != j; i--) {
+						arr[i] = arr[i - 1];
 					}
+					arr[j] = val;
 					size__++;
 				}
 				return ret;
@@ -386,6 +381,7 @@ namespace ft
 			void insert (iterator position, size_type n, const T& val){
 				size_t j = 0;
 				size_t old_capacity = capacity__;
+				size_t old_size = size__;
 				if (size__ + n > capacity__ && capacity__) {
 					T* arr_tmp = arr;
 					if (size__ + n > capacity__ * 2)
@@ -407,11 +403,10 @@ namespace ft
 						arr[j++] = val;
 						size__++;
 					}
-					if (j < old_capacity) {
-						for (size_t i = j - 1; i != old_capacity; i++) {
+					if (j - n < old_size) {
+						for (size_t i = j - n; i != old_size; i++) {
 							arr[j] = arr_tmp[i];
 							j++;
-							size__++;
 						}
 					}
 					alloc_obj.deallocate(arr_tmp, old_capacity);
@@ -419,6 +414,7 @@ namespace ft
 				else if (size__ + n > capacity__) {
 					T* arr_tmp = arr;
 					arr = alloc_obj.allocate(size__ + n);
+					for(size_t i = 0; i != size__ + n; i++) arr[i] = 0;
 					capacity__ = n;
 					for (size_t i = 0; iterator(arr_tmp + i) != position; i++) {
 						arr[i] = arr_tmp[i];
@@ -442,6 +438,72 @@ namespace ft
 						j++;
 					}
 				}
+			}
+			template <class InputIterator>
+    		void	insert (iterator position, InputIterator first, InputIterator last) {
+				long dis = last - first;
+				size_t old_capacity = capacity__;
+				size_t old_size = size__;
+				size_t j = 0;
+				if (dis > 0) {
+					size_t n = dis;
+					if (size__ + n > capacity__ && capacity__) {
+						T* arr_tmp = arr;
+						if (size__ + n > capacity__ * 2)
+						{
+							arr = alloc_obj.allocate(size__ + n);
+							capacity__ = size__ + n;
+						}
+						else
+						{
+							arr = alloc_obj.allocate(capacity__ * 2);
+							capacity__ = capacity__ * 2;
+						}
+						for (size_t i = 0; i != capacity__; i++) arr[i] = 0;
+						for (size_t i = 0; iterator(&arr_tmp[i]) != position; i++) {
+							arr[i] = arr_tmp[i];
+							j++;
+						}
+						for (iterator iter = first; iter != last; iter++){
+							arr[j++] = *iter;
+							size__++;
+						}
+						if (j - n < old_size) {
+							for (size_t i = j - n; i != old_size; i++) {
+								arr[j] = arr_tmp[i];
+								j++;
+							}
+						}
+						alloc_obj.deallocate(arr_tmp, old_capacity);
+					}
+					else if (size__ + n > capacity__) {
+						T* arr_tmp = arr;
+						arr = alloc_obj.allocate(size__ + n);
+						for (size_t i = 0; i != n; i++) arr[i] = 0;
+						capacity__ = n;
+						for (size_t i = 0; iterator(arr_tmp + i) != position; i++) {
+							arr[i] = arr_tmp[i];
+							j++;
+						}
+						for (iterator iter = first; iter != last; iter++) {
+							arr[j++] = *iter;
+							size__++;
+						}
+					}
+					else { 
+						T *arr_tmp = arr;
+						for (size_t i = 0; i != capacity__; i++) {
+							if (iterator (arr_tmp + i) == position) {
+								for (iterator iter = first; iter != last; iter++){
+									arr[j++] = *iter;
+									size__++;
+								}
+							}
+							arr[j] = arr_tmp[i];
+							j++;
+						}
+					}
+					}
 			}
 
 //****************************************public_operator***************************************************************//

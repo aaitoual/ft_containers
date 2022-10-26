@@ -6,7 +6,7 @@
 /*   By: aaitoual <aaitoual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 21:02:50 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/10/25 18:29:32 by aaitoual         ###   ########.fr       */
+/*   Updated: 2022/10/26 10:34:17 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,74 +27,37 @@ struct my_alloc : public std::allocator<T> {
 
 void	test() {
 	try {
-		// std::vector<int, my_alloc<int> > test2(10, 1);
 		std::vector<int, my_alloc<int> > test;
-		// test.reserve(10);
-		// for (int i = 0; i != 10; i++) test.push_back(i);
+		test.reserve(10);
+		for (int i = 0; i != 10; i++) test.push_back(i);
 		std::cout << "size : " << test.size() << " capacity : " << test.capacity() << std::endl;
-		test.insert(test.end(), 23, 5);
+		std::cout << *test.insert(test.end(), 7) << std::endl;
 		std::cout << "size : " << test.size() << " capacity : " << test.capacity() << std::endl;
-		// std::cout << test[0] << std::endl;
-		for (int i = 0; i != 12; i++) std::cout << test[i] << " ";
-		std::cout << std::endl;
+		for (int i = 0; i != 12; i++)
+		std::cout << "value" << i << " : " << test[i] << std::endl;
 	}
-	catch (std::exception &i) {
-		std::cout << i.what() << std::endl;
+	catch (std::exception &e) {
+		std::cout << "-----------" << e.what() << std::endl;
 	}
-	puts ("-----------------------------------------------------------\n");
+	puts ("****************************************************\n\n****************************************************");
 	try {
-		// std::vector<int, my_alloc<int> > test2(10, 1);
 		ft::vector<int, my_alloc<int> > test;
-		// test.reserve(10);
-		// for (int i = 0; i != 10; i++) test.push_back(i);
+		test.reserve(10);
+		for (int i = 0; i != 10; i++) test.push_back(i);
 		std::cout << "size : " << test.size() << " capacity : " << test.capacity() << std::endl;
-		test.insert(test.end(), 23, 5);
+		std::cout << *test.insert(test.end(), 7) << std::endl;
 		std::cout << "size : " << test.size() << " capacity : " << test.capacity() << std::endl;
-		// std::cout << test[0] << std::endl;
-		for (int i = 0; i != 12; i++) std::cout << test[i] << " ";
-		std::cout << std::endl;
+		for (int i = 0; i != 12; i++)
+		std::cout << "value" << i << " : " << test[i] << std::endl;
 	}
-	catch (std::exception &i) {
-		std::cout << i.what() << std::endl;
+	catch (std::exception &e) {
+		std::cout << "-----------" << e.what() << std::endl;
 	}
-	// try {
-	// 	// std::vector<int, my_alloc<int> > test2(10, 1);
-	// 	ft::vector<int, my_alloc<int> > test;
-	// 	test.reserve(10);
-	// 	for (int i = 0; i != 10; i++) test.push_back(i);
-	// 	std::cout << "size : " << test.size() << " capacity : " << test.capacity() << std::endl;
-	// 	test.insert(test.end(), 88);
-	// 	std::cout << "size : " << test.size() << " capacity : " << test.capacity() << std::endl;
-	// 	for (int i = 0; i != 12; i++) std::cout << test[i] << " ";
-	// 	std::cout << std::endl;
-	// }
-	// catch (std::exception &i) {
-	// 	std::cout << i.what() << std::endl;
-	// }
-	// {
-	// 	ft::vector<int, my_alloc<int> > test(10, 5);
-	// }
-	// {
-		
-	// }
-	// {
-	// 	try {
-	// 		ft::vector<int, my_alloc<int> > test (10, 1);
-	// 		// std::cout << std::distance(test2.end(), test2.begin()) << std::endl;
-	// 		test.assign(10, 5);
-	// 		std::cout << test[0] << std::endl;
-	// 		std::cout << test.capacity() << std::endl;
-	// 		std::cout << test.size() << std::endl;
-	// 	}
-	// 	catch (std::exception &e) {
-	// 		std::cout << e.what() << std::endl;
-	// 	}
-	// }
 }
 
 int main() {
 	test();
-	std::cout << std::endl << std::endl << std::endl << std::endl << std::endl << std::endl << std::endl << std::endl;
+	std::cout << std::endl << std::endl << std::endl << std::endl << std::endl << std::endl;
 	system("leaks containers");
 	return 0;
 }
