@@ -6,7 +6,7 @@
 /*   By: aaitoual <aaitoual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 21:02:50 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/10/26 15:38:33 by aaitoual         ###   ########.fr       */
+/*   Updated: 2022/10/26 16:47:11 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,42 +26,32 @@ struct my_alloc : public std::allocator<T> {
 };
 
 void	test() {
-	// try {
-		// std::vector<int, my_alloc<int> > test;
-	// 	test.reserve(10);
-	// 	for (int i = 0; i != 10; i++) test.push_back(i);
-	// 	std::cout << "size : " << test.size() << " capacity : " << test.capacity() << std::endl;
-		// test.insert(--test.begin(), 1);
-	// 	std::cout << "size : " << test.size() << " capacity : " << test.capacity() << std::endl;
-	// 	for (int i = 0; i != 12; i++)
-	// 	std::cout << "value" << i << " : " << test[i] << std::endl;
-	// }
-	// catch (std::exception &e) {
-	// 	std::cout << "-----------" << e.what() << std::endl;
-	// }
-	// try {
-	// 	std::vector<int, my_alloc<int> > test;
-	// 	test.reserve(10);
-	// 	// for (int i = 0; i != 12; i++)
-	// 	// std::cout << "value" << i << " : " << test[i] << std::endl;
-	// 	// std::cout << *(++test.end()) << std::endl;
-	// 	// for (int i = 0; i != 10; i++) test.push_back(i + 1);
-	// 	std::cout << "size : " << test.size() << " capacity : " << test.capacity() << std::endl;
-	// 	test.insert(test.begin() + 3, 3, 99);
-	// 	std::cout << "size : " << test.size() << " capacity : " << test.capacity() << std::endl;
-	// 	for (int i = 0; i != 12; i++)
-	// 	std::cout << "value" << i << " : " << test[i] << std::endl;
-	// }
-	// catch (std::exception &e) {
-	// 	std::cout << "-----------" << e.what() << std::endl;
-	// }
-	puts ("****************************************************\n\n****************************************************");
 	try {
+		std::vector<int, my_alloc<int> > test2;
+		test2.reserve(10);
+		for (int i = 0; i != 10; i++) test2.push_back(i + 10);
 		ft::vector<int, my_alloc<int> > test;
 		test.reserve(10);
 		for (int i = 0; i != 10; i++) test.push_back(i + 1);
 		std::cout << "size : " << test.size() << " capacity : " << test.capacity() << std::endl;
-		test.insert(test.begin(), 3, 88);
+		test.insert(test.begin(), test2.end(), test2.begin());
+		std::cout << "size : " << test.size() << " capacity : " << test.capacity() << std::endl;
+		for (int i = 0; i != 12; i++)
+		std::cout << "value" << i << " : " << test[i] << std::endl;
+	}
+	catch (std::exception &e) {
+		std::cout << "-----------" << e.what() << std::endl;
+	}
+	puts ("****************************************************\n\n****************************************************");
+	try {
+		ft::vector<int, my_alloc<int> > test2;
+		test2.reserve(10);
+		for (int i = 0; i != 10; i++) test2.push_back(i + 10);
+		ft::vector<int, my_alloc<int> > test;
+		test.reserve(10);
+		for (int i = 0; i != 10; i++) test.push_back(i + 1);
+		std::cout << "size : " << test.size() << " capacity : " << test.capacity() << std::endl;
+		test.insert(test.begin(), test2.end(), test2.begin());
 		std::cout << "size : " << test.size() << " capacity : " << test.capacity() << std::endl;
 		for (int i = 0; i != 12; i++)
 		std::cout << "value" << i << " : " << test[i] << std::endl;

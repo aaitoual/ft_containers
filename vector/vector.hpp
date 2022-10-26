@@ -6,7 +6,7 @@
 /*   By: aaitoual <aaitoual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 20:55:51 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/10/26 15:38:02 by aaitoual         ###   ########.fr       */
+/*   Updated: 2022/10/26 16:44:28 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,19 @@ namespace ft
 					arr[(*j)++] = val;
 					size__++;
 				}
+				for (size_t i = (*j) - n; i != capacity__; i++) arr[(*j)++] = arr_tmp[i];
+				if (arr_tmp != NULL)
+					alloc_obj.deallocate(arr_tmp, capacity__);
+			}
+			template <typename input_iter>
+			void	fill_the_new_array(input_iter first, input_iter last, T* arr_tmp, size_t *j, T* __P, size_t n)
+			{
+				for (size_t i = 0; arr_tmp + i != __P; i++) {
+					arr[i] = arr_tmp[i];
+					(*j)++;
+				}
+				for (input_iter iter = first; iter != last; iter++)
+					arr[(*j)++] = *iter;
 				for (size_t i = (*j) - n; i != capacity__; i++) arr[(*j)++] = arr_tmp[i];
 				if (arr_tmp != NULL)
 					alloc_obj.deallocate(arr_tmp, capacity__);
@@ -422,69 +435,40 @@ namespace ft
 				}
 			}
 			template <class InputIterator>
-    		void	insert (iterator position, InputIterator first, InputIterator last, typename ft::enable_if<!std::is_integral<InputIterator>::value>::type = NULL) {
-				long dis = last - first;
-				size_t old_capacity = capacity__;
-				size_t old_size = size__;
-				size_t j = 0;
+    		void	insert (iterator position, InputIterator first, InputIterator last) {
+				long 		dis = last - first;
+				T*			__P = begin().base() + (position.base() - begin().base());
+				size_t 		j = 0;
+				size_t		new_capacity;
+				T*			arr_tmp = arr;
 				if (dis > 0) {
 					size_t n = dis;
 					if (size__ + n > capacity__ && capacity__) {
-						T* arr_tmp = arr;
-						if (size__ + n > capacity__ * 2)
-						{
-							arr = alloc_obj.allocate(size__ + n);
-							capacity__ = size__ + n;
-						}
-						else
-						{
+						if (size__ + n <= capacity__ * 2) {
 							arr = alloc_obj.allocate(capacity__ * 2);
-							capacity__ = capacity__ * 2;
+							new_capacity = capacity__ * 2;
 						}
-						for (size_t i = 0; iterator(&arr_tmp[i]) != position; i++) {
-							arr[i] = arr_tmp[i];
-							j++;
+						else {
+							arr = alloc_obj.allocate(size__ + n);
+							new_capacity = size__ + n;
 						}
-						for (iterator iter = first; iter != last; iter++){
-							arr[j++] = *iter;
-							size__++;
-						}
-						if (j - n < old_size) {
-							for (size_t i = j - n; i != old_size; i++) {
-								arr[j] = arr_tmp[i];
-								j++;
-							}
-						}
-						alloc_obj.deallocate(arr_tmp, old_capacity);
+						fill_the_new_array(first, last, arr_tmp, &j, __P, n);
+						capacity__ = new_capacity;
 					}
 					else if (size__ + n > capacity__) {
-						T* arr_tmp = arr;
 						arr = alloc_obj.allocate(size__ + n);
-						for (size_t i = 0; i != n; i++) arr[i] = 0;
-						capacity__ = n;
-						for (size_t i = 0; iterator(arr_tmp + i) != position; i++) {
-							arr[i] = arr_tmp[i];
-							j++;
-						}
-						for (iterator iter = first; iter != last; iter++) {
-							arr[j++] = *iter;
+						fill_the_new_array(first, last, arr_tmp, &j, __P, n);
+						capacity__ = size__ + n;
+					}
+					else if (position.base() >= arr) {
+						size_t i = size__;
+						for (i = i; arr + i != __P; i--) arr[i] = arr[i - n];
+						for (InputIterator iter = first; iter != last; iter++) {
+							arr[i++] = *iter;
 							size__++;
 						}
 					}
-					else { 
-						T *arr_tmp = arr;
-						for (size_t i = 0; i != capacity__; i++) {
-							if (iterator (arr_tmp + i) == position) {
-								for (iterator iter = first; iter != last; iter++){
-									arr[j++] = *iter;
-									size__++;
-								}
-							}
-							arr[j] = arr_tmp[i];
-							j++;
-						}
-					}
-					}
+				}
 			}
 
 //****************************************public_operator***************************************************************//
