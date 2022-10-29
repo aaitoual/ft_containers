@@ -6,7 +6,7 @@
 /*   By: aaitoual <aaitoual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 20:55:51 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/10/26 16:44:28 by aaitoual         ###   ########.fr       */
+/*   Updated: 2022/10/29 16:09:27 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,19 +54,19 @@ namespace ft
 	
 //****************************************iterator*******************************************************************//
 		template<typename S>
-		class iterator_vec : public std::iterator < std::random_access_iterator_tag, T, const T*, T>{
+		class iterator_vec : public std::iterator < std::random_access_iterator_tag, S, const S*, S>{
 			private :
 				S*	current;
 			public :
 				S*	base() const {return current;};
 				iterator_vec () {current = NULL;}
-				iterator_vec (T * it) {current = it;}
-				T&	operator * () const {return *current;}
+				iterator_vec (S * it) {current = it;}
+				S&	operator * () const {return *current;}
 				iterator_vec			operator ++ (int) {iterator_vec	tmp(current);current++;return tmp;}
 				iterator_vec&			operator ++ () {current++;return *this;}
 				iterator_vec			operator -- (int) {iterator_vec	tmp(current);current--;return tmp;}
 				iterator_vec&			operator -- () {current--;return *this;}
-				iterator_vec&			operator = (iterator_vec& copy) {current = copy.current; return *this;}
+				// iterator_vec&			operator = (const iterator_vec& copy) {current = copy.current; return *this;}
 				iterator_vec&			operator = (const iterator_vec& copy) {current = copy.current; return *this;}
 				bool				operator != (iterator_vec& iter) {return (this->current != iter.current) ?  1 : 0;}
 				bool				operator == (iterator_vec& iter) {return (this->current != iter) ?  0 : 1;}
@@ -111,7 +111,7 @@ namespace ft
 		public :
 			typedef iterator_vec<const T>				const_iterator;
 			typedef reverse_iterator_vec<T>				reverse_iterator;
-			typedef reverse_iterator_vec<const T>	const_reverse_iterator;
+			typedef reverse_iterator_vec<const T>		const_reverse_iterator;
 			typedef iterator_vec<T>						iterator;
 //****************************************private_attribute***************************************************************//
 		private :
@@ -135,13 +135,13 @@ namespace ft
 			{
 				iterator ret;
 				for (size_t i = 0; arr_tmp + i != __P; i++) {
-					arr[i] = arr_tmp[i];
+					alloc_obj.construct(arr + i, arr_tmp[i]);
 					(*j)++;
 				}
 				ret = iterator (&arr[*j]);
-				arr[(*j)++] = val;
+				alloc_obj.construct(arr + (*j)++, val);;
 				size__++;
-				for (size_t i = (*j) - 1; i != capacity__; i++) arr[(*j)++] = arr_tmp[i];
+				for (size_t i = (*j) - 1; i != capacity__; i++) alloc_obj.construct(arr + (*j)++, arr_tmp[i]);
 				if (arr_tmp != NULL)
 					alloc_obj.deallocate(arr_tmp, capacity__);
 				return ret;
@@ -149,14 +149,14 @@ namespace ft
 			void	fill_the_new_array(T* arr_tmp, size_t *j, T val, T* __P, size_t n)
 			{
 				for (size_t i = 0; arr_tmp + i != __P; i++) {
-					arr[i] = arr_tmp[i];
+					alloc_obj.construct(arr + i, arr_tmp[i]);
 					(*j)++;
 				}
 				for (size_t i = 0; i != n; i++) {
-					arr[(*j)++] = val;
+					alloc_obj.construct(arr + (*j)++, val);
 					size__++;
 				}
-				for (size_t i = (*j) - n; i != capacity__; i++) arr[(*j)++] = arr_tmp[i];
+				for (size_t i = (*j) - n; i != capacity__; i++) alloc_obj.construct(arr + (*j)++, arr_tmp[i]);;
 				if (arr_tmp != NULL)
 					alloc_obj.deallocate(arr_tmp, capacity__);
 			}
@@ -164,20 +164,25 @@ namespace ft
 			void	fill_the_new_array(input_iter first, input_iter last, T* arr_tmp, size_t *j, T* __P, size_t n)
 			{
 				for (size_t i = 0; arr_tmp + i != __P; i++) {
-					arr[i] = arr_tmp[i];
+					alloc_obj.construct(arr + i, arr_tmp[i]);;
 					(*j)++;
 				}
 				for (input_iter iter = first; iter != last; iter++)
-					arr[(*j)++] = *iter;
-				for (size_t i = (*j) - n; i != capacity__; i++) arr[(*j)++] = arr_tmp[i];
+					alloc_obj.constract(arr + (*j)++, *iter);
+				for (size_t i = (*j) - n; i != capacity__; i++) alloc_obj.constract(arr + (*j)++, arr_tmp[i]);;
 				if (arr_tmp != NULL)
 					alloc_obj.deallocate(arr_tmp, capacity__);
+			}
+			void	destroy_constructors(T*arr, size_t lenght) {
+				for (size_t i = 0; i != lenght; i++) {
+					alloc_obj.destroy(arr + i);
+				}
 			}
 //****************************************public_methods***************************************************************//
 		public :
 			vector (const allocator_type &tmp = alloc()) {																//default
 				(void) tmp;
-				arr = NULL;
+				arr = NULL; ///////////////////////////////////////////////////////////
 				size__ = 0;
 				capacity__ = 0;
 			}
@@ -188,18 +193,18 @@ namespace ft
 				if (capacity_) {
 					arr = alloc_obj.allocate(capacity_);
 					for (size_type i = 0; i != capacity_; i++) {
-						arr[i] = value;
+						alloc_obj.construct(arr + i, value);
 					}
 				}
 				else
-					arr = NULL;
+					alloc_obj.construct(arr);
 				capacity__ = capacity_;
 				size__ = capacity_;
 			}
 			template <class IT >
         	vector (IT first, IT last, const allocator_type& tmp = allocator_type(), typename ft::enable_if<!std::is_integral<IT>::value>::type = NULL) {									//range
 				(void) tmp;
-				arr = NULL;
+				alloc_obj.construct(arr);
 				capacity__ = 0;
 				size__ = 0;
 				if (first > last)
@@ -253,18 +258,28 @@ namespace ft
 			}
 			void	push_back(const T& element) {
 				if (size__ == capacity__ && capacity__) { // while pushing on an already full array
-					T *arr_tmp;
-					arr_tmp = alloc_obj.allocate(capacity__ * 2);
-					std::copy(arr, arr + capacity__, arr_tmp);
-					alloc_obj.deallocate(arr, capacity__);
-					arr = arr_tmp;
+					T *arr_tmp = arr;
+					arr = alloc_obj.allocate(capacity__ * 2);
+					for (size_t i = 0; i != capacity__ *2; i++) {
+						if (i == size__)
+							alloc_obj.construct(arr + i, element);
+						else if (i < capacity__)
+							alloc_obj.construct(arr + i, arr_tmp[i]);
+						else
+							alloc_obj.construct(arr + i);
+					}
+					alloc_obj.deallocate(arr_tmp, capacity__);
+					destroy_constructors(arr_tmp, capacity__);
+					size__++;
 					capacity__ *= 2;
 				}
 				else if (!capacity__) { // while pushing on a 0 capacity__ array
 					arr = alloc_obj.allocate(1);
 					capacity__ = 1;
+					alloc_obj.construct(arr + size__++, element);
 				}
-				arr[size__++] = element;
+				else
+					alloc_obj.construct(arr + size__++, element);
 			}
 			size_type	max_size() const {
 				return (((unsigned long)std::numeric_limits<T>::max() < __alloc_traits::max_size(alloc_obj)) / sizeof(T) ? std::numeric_limits<typename alloc::difference_type>::max() : __alloc_traits::max_size(alloc_obj));
@@ -289,12 +304,11 @@ namespace ft
 				if (!capacity__) {
 					capacity__ = n;
 					arr = alloc_obj.allocate(capacity__);
-					// for (size_t i = 0; i != capacity__; i++) arr[i] = val;
 				}
 				else if (n > capacity__) {
 					tmp_arr = arr;
 					arr = alloc_obj.allocate(n);
-					for (size_t i = 0; i != size__; i++) arr[i] = tmp_arr[i];
+					for (size_t i = 0; i != size__; i++) alloc_obj.construct(arr + i, tmp_arr[i]);
 					alloc_obj.deallocate(tmp_arr, capacity__);
 					capacity__ = n;
 				}
@@ -347,7 +361,7 @@ namespace ft
 						capacity__ = dis;
 					}
 					for (IT iter = first; iter != last; iter++) {
-						arr[size__++] = *iter;
+						alloc_obj.construct(arr + size__++, *iter);
 					}
 				}
 			}
@@ -368,7 +382,7 @@ namespace ft
 						capacity__ = n;
 					}
 					for (size_t iter = 0; iter != n; iter++) {
-						arr[size__++] = val;
+						alloc_obj.construct(arr + size__++, val);
 					}
 				}
 			}
@@ -394,8 +408,9 @@ namespace ft
 					size_t i = size__;
 					for (i = capacity__ - 1; arr + i != position.base(); i--) {
 						arr [i] = arr [i - 1];
+						// alloc_obj.destroy(arr + i - 1);
 					}
-					arr[i] = val;
+					alloc_obj.construct(arr + i, val);
 					ret = iterator (&arr[i]);
 					size__++;
 				}
@@ -427,15 +442,16 @@ namespace ft
 					size_t i = size__;
 					for (i = i; arr + i != __P; i--) {
 						arr[i] = arr[i - n];
+						// alloc_obj.destroy(arr + i - n);
 					}
 					for (size_t u = 0; u != n; u++) {
-						arr[i++] = val;
+						alloc_obj.construct(arr + i++, val);
 						size__++;
 					}
 				}
 			}
 			template <class InputIterator>
-    		void	insert (iterator position, InputIterator first, InputIterator last) {
+    		void	insert (iterator position, InputIterator first, InputIterator last, typename ft::enable_if<!std::is_integral<InputIterator>::value>::type = NULL) {
 				long 		dis = last - first;
 				T*			__P = begin().base() + (position.base() - begin().base());
 				size_t 		j = 0;
@@ -464,16 +480,31 @@ namespace ft
 						size_t i = size__;
 						for (i = i; arr + i != __P; i--) arr[i] = arr[i - n];
 						for (InputIterator iter = first; iter != last; iter++) {
-							arr[i++] = *iter;
+							alloc_obj.construct(arr + i++, *iter);
 							size__++;
 						}
 					}
 				}
 			}
+			void swap (vector& x) {
+				T*			arr_tmp = arr;
+				size_type	capacity_tmp = capacity__;
+				size_type	size_tmp = size__;
+				alloc		alloc_obj_tmp = alloc_obj;
+				
+				arr = x.arr;
+				capacity__ = x.capacity__;
+				size__ = x.size__;
+				alloc_obj = x.alloc_obj;
+				x.arr = arr_tmp;
+				x.capacity__ = capacity_tmp;
+				x.size__ = size_tmp;
+				x.alloc_obj = alloc_obj_tmp;
+			}
 
 //****************************************public_operator***************************************************************//
 		public :
-			T&	operator [] (int index) {
+			T&	operator [] (size_t index) {
 				return arr[index];
 			}
 			const T& operator[] (size_type index) const {
