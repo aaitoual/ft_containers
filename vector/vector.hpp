@@ -6,7 +6,7 @@
 /*   By: aaitoual <aaitoual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 20:55:51 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/10/29 16:09:27 by aaitoual         ###   ########.fr       */
+/*   Updated: 2022/10/31 00:11:09 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,8 +268,8 @@ namespace ft
 						else
 							alloc_obj.construct(arr + i);
 					}
-					alloc_obj.deallocate(arr_tmp, capacity__);
 					destroy_constructors(arr_tmp, capacity__);
+					alloc_obj.deallocate(arr_tmp, capacity__);
 					size__++;
 					capacity__ *= 2;
 				}
@@ -292,7 +292,10 @@ namespace ft
 					for (size_t i = size__; i != n; i++) push_back(val);
 				}
 				else if (n && n < size__) {
-					size__ = n;
+					for (size_t i = size__ - 1; i != n; i--) {
+						alloc_obj.destroy(arr + i);
+						size__--;
+					}
 				}
 			}
 			bool empty() const {
@@ -346,11 +349,13 @@ namespace ft
   			void assign (IT first, IT last, typename ft::enable_if<!std::is_integral<IT>::value>::type = NULL) {
 				if (first > last)
 					_throw_my_exception(1); //******************************************************************
+				size_type old_size = size__;
 				size__ = 0;
 				size_t dis = get_range (first, last);
 				if (dis) {
 					if (dis > capacity__ && capacity__)
 					{
+						destroy_constructors(arr, old_size);
 						alloc_obj.deallocate(arr, capacity__);
 						arr = alloc_obj.allocate(dis);
 						capacity__ = dis;
@@ -368,10 +373,12 @@ namespace ft
 			void assign (size_type n, const T& val) {
 				if (n > max_size_())
 					_throw_my_exception(1); //*********************************************************************
+				size_type old_size = size__;
 				size__ = 0;
 				if (n) {
 					if (n > capacity__ && capacity__)
 					{
+						destroy_constructors(arr, old_size);
 						alloc_obj.deallocate(arr, capacity__);
 						arr = alloc_obj.allocate(n);
 						capacity__ = n;
@@ -387,6 +394,7 @@ namespace ft
 				}
 			}
 			void	pop_back() {
+				alloc_obj.destroy(arr + size__ - 1);
 				size__--;
 			}
 			iterator insert (iterator position, const T& val) {
@@ -408,7 +416,6 @@ namespace ft
 					size_t i = size__;
 					for (i = capacity__ - 1; arr + i != position.base(); i--) {
 						arr [i] = arr [i - 1];
-						// alloc_obj.destroy(arr + i - 1);
 					}
 					alloc_obj.construct(arr + i, val);
 					ret = iterator (&arr[i]);
@@ -442,7 +449,6 @@ namespace ft
 					size_t i = size__;
 					for (i = i; arr + i != __P; i--) {
 						arr[i] = arr[i - n];
-						// alloc_obj.destroy(arr + i - n);
 					}
 					for (size_t u = 0; u != n; u++) {
 						alloc_obj.construct(arr + i++, val);
@@ -500,6 +506,36 @@ namespace ft
 				x.capacity__ = capacity_tmp;
 				x.size__ = size_tmp;
 				x.alloc_obj = alloc_obj_tmp;
+			}
+			iterator	erase (iterator position) {
+				T* __P = begin().base() + (position.base() - begin().base());
+				size_t	index = 0;
+				bool	after = 0;
+				for (index = 0; arr + index < __P; index++) {}
+				if (index + 1 <= size__) {
+					alloc_obj.destroy(arr + index);
+					while (index + 1 < size__) {
+						arr[index] = arr[index + 1];
+						index++;
+					}
+					size__--;
+				}
+				return iterator (__P);
+			}
+			iterator	erase (iterator first, iterator last) {
+				T* 		__P = begin().base() + (first.base() - begin().base());
+				size_t	dis = last - first;
+				size_t	index = 0;
+				bool	after = 0;
+				for (index = 0; arr + index != first.base(); index++);
+				for (index = index; arr + index != last; index++) {
+					alloc_obj.destroy(arr + index);
+					size__--;
+				}
+				for (index = index; index < capacity__; index++) {
+					arr[index - dis] = arr[index];
+				}
+				return iterator (__P);
 			}
 
 //****************************************public_operator***************************************************************//

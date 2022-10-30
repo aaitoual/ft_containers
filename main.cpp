@@ -6,7 +6,7 @@
 /*   By: aaitoual <aaitoual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 21:02:50 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/10/29 15:14:46 by aaitoual         ###   ########.fr       */
+/*   Updated: 2022/10/31 00:11:57 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,55 +26,51 @@ struct my_alloc : public std::allocator<T> {
 	// void	destroy (T* ptr) {
 	// 	std::cout << "destroy called\n";
 	// }
-	// static T*	allocate (size_t size) {
-	// 	std::cout << "calling allocate for :" << size << std::endl;
-	// 	return new T[size];
-	// }
-	// static void	deallocate(T *arr, size_t size) {
-	// 	std::cout << "calling deallocate for :" << size << std::endl;
-	// 	delete [] arr;
-	// }
+	static T*	allocate (size_t size) {
+		std::cout << "calling allocate for :" << size << std::endl;
+		return new T[size];
+	}
+	static void	deallocate(T *arr, size_t size) {
+		std::cout << "calling deallocate for :" << size << std::endl;
+		delete [] arr;
+	}
 };
 
 void	test() {
 	{
-		std::vector<int> test;
-		std::vector<int, my_alloc<int> > test2;
-		for (int i = 0; i != 10; i++) test.push_back(20);
-		for (int i = 0; i != 20; i++) test2.push_back(10);
-		std::cout << "test size : " << test.size() << " test capacity : " << test.capacity() << std::endl;
-		std::cout << "test2 size : " << test2.size() << " test2 capacity : " << test2.capacity() << std::endl;
-		std::vector<int>::iterator test2_iterator = test2.begin();
-		std::vector<int>::iterator test_iterator = test.begin();
-		// test.swap(test2);
-		for (int i = 0; i != 10; i++) std::cout << test2[i] << ", ";
-		std::cout << std::endl;
-		for (int i = 0; i != 10; i++) std::cout << test[i] << ", ";
-		std::cout << std::endl;
-		std::cout << "test size : " << test.size() << " test capacity : " << test.capacity() << std::endl;
-		std::cout << "test2 size : " << test2.size() << " test2 capacity : " << test2.capacity() << std::endl;
-		std::cout << "test begin : " << *test_iterator << std::endl;
-		std::cout << "test2 begin : " << *test2_iterator << std::endl;
+		try {
+			std::vector<int, my_alloc<int> > test;
+	
+			test.reserve(10);
+			std::cout << &test[0] << std::endl;
+			for (int i = 0; i != 10; i++) test.push_back(i);
+			std::vector<int, my_alloc<int> >::iterator begin = --test.begin();
+			std::cout << *test.erase(test.begin(), --test.end()) << std::endl;
+			for (size_t i = 0; i != test.size(); i++) std::cout << test[i] << " ,";
+			std::cout << std::endl;
+			std::cout << &test[0] << std::endl;
+		}
+		catch (std::exception &e) {
+			std::cout << e.what() << std::endl;
+		}
 	}
 	puts ("*-**************************************************************************");
 	{
-		ft::vector<int> test;
-		ft::vector<int, my_alloc<int> > test2;
-		for (int i = 0; i != 10; i++) test.push_back(20);
-		for (int i = 0; i != 20; i++) test2.push_back(10);
-		std::cout << "test size : " << test.size() << " test capacity : " << test.capacity() << std::endl;
-		std::cout << "test2 size : " << test2.size() << " test2 capacity : " << test2.capacity() << std::endl;
-		ft::vector<int>::iterator test2_iterator = test2.begin();
-		ft::vector<int>::iterator test_iterator = test.begin();
-		// test.swap(test2);
-		for (int i = 0; i != 10; i++) std::cout << test2[i] << ", ";
-		std::cout << std::endl;
-		for (int i = 0; i != 10; i++) std::cout << test[i] << ", ";
-		std::cout << std::endl;
-		std::cout << "test size : " << test.size() << " test capacity : " << test.capacity() << std::endl;
-		std::cout << "test2 size : " << test2.size() << " test2 capacity : " << test2.capacity() << std::endl;
-		std::cout << "test begin : " << *test_iterator << std::endl;
-		std::cout << "test2 begin : " << *test2_iterator << std::endl;
+		try {
+			ft::vector<int, my_alloc<int> > test;
+	
+			test.reserve(10);
+			std::cout << &test[0] << std::endl;
+			for (int i = 0; i != 10; i++) test.push_back(i);
+			ft::vector<int, my_alloc<int> >::iterator begin = --test.begin();
+			std::cout << *test.erase(test.begin(), --test.end()) << std::endl;
+			for (size_t i = 0; i != test.size(); i++) std::cout << test[i] << " ,";
+			std::cout << std::endl;
+			std::cout << &test[0] << std::endl;
+		}
+		catch (std::exception &e) {
+			std::cout << e.what() << std::endl;
+		}
 	}
 }
 
