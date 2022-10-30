@@ -6,7 +6,7 @@
 /*   By: aaitoual <aaitoual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 20:55:51 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/10/31 00:11:09 by aaitoual         ###   ########.fr       */
+/*   Updated: 2022/10/31 00:35:33 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -536,6 +536,11 @@ namespace ft
 					arr[index - dis] = arr[index];
 				}
 				return iterator (__P);
+			}
+			void	clear (void) {
+				for (size_t i = 0; i != size__; i++)
+					alloc_obj.destroy(arr + i);
+				size__ = 0;
 			}
 
 //****************************************public_operator***************************************************************//
