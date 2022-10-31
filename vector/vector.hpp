@@ -6,7 +6,7 @@
 /*   By: aaitoual <aaitoual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 20:55:51 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/10/31 02:35:41 by aaitoual         ###   ########.fr       */
+/*   Updated: 2022/10/31 23:40:59 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <stdexcept>
 # include "exceptions/__exceptions.hpp"
 # include "../implementations/enable_if.hpp"
+# include "iterators/___vec_iterator.hpp"
+# include "iterators/___vec_reverse_iterator.hpp"
 
 void	_throw_my_exception(int index) {
 	switch (index)
@@ -53,61 +55,6 @@ namespace ft
 	// typedef	typename long int									difference_type;
 	
 //****************************************iterator*******************************************************************//
-		template<typename S>
-		class iterator_vec : public std::iterator < std::random_access_iterator_tag, S, const S*, S>{
-			private :
-				S*	current;
-			public :
-				S*	base() const {return current;};
-				iterator_vec () {current = NULL;}
-				iterator_vec (S * it) {current = it;}
-				S&	operator * () const {return *current;}
-				iterator_vec			operator ++ (int) {iterator_vec	tmp(current);current++;return tmp;}
-				iterator_vec&			operator ++ () {current++;return *this;}
-				iterator_vec			operator -- (int) {iterator_vec	tmp(current);current--;return tmp;}
-				iterator_vec&			operator -- () {current--;return *this;}
-				// iterator_vec&			operator = (const iterator_vec& copy) {current = copy.current; return *this;}
-				iterator_vec&			operator = (const iterator_vec& copy) {current = copy.current; return *this;}
-				bool				operator != (iterator_vec& iter) {return (this->current != iter.current) ?  1 : 0;}
-				bool				operator == (iterator_vec& iter) {return (this->current != iter) ?  0 : 1;}
-				bool				operator > (iterator_vec& iter) {return (this->current > iter.current) ?  1 : 0;}
-				bool				operator >= (iterator_vec& iter) {return (this->current >= iter.current) ?  1 : 0;}
-				bool				operator < (iterator_vec& iter) {return (this->current < iter.current) ?  1 : 0;}
-				bool				operator <= (iterator_vec& iter) {return (this->current <= iter.current) ?  1 : 0;}
-				friend bool			operator != (const iterator_vec& that, const iterator_vec& iter) {return (that.current != iter.current) ?  1 : 0;}
-				friend bool			operator == (const iterator_vec& that, const iterator_vec& iter) {return (that.current != iter) ?  0 : 1;}
-				friend bool			operator > (const iterator_vec& that, const iterator_vec& iter) {return (that.current > iter.current) ?  1 : 0;}
-				friend bool			operator >= (const iterator_vec& that, const iterator_vec& iter) {return (that.current >= iter.current) ?  1 : 0;}
-				friend bool			operator < (const iterator_vec& that, const iterator_vec& iter) {return (that.current < iter.current) ?  1 : 0;}
-				friend bool			operator <= (const iterator_vec& that, const iterator_vec& iter) {return (that.current <= iter.current) ?  1 : 0;}
-				friend long			operator - (const iterator_vec &that, const iterator_vec& sec) {return that.current - sec.current;}
-		};
-		template<typename S>
-		class reverse_iterator_vec : public std::iterator < std::random_access_iterator_tag, T, const T*, T>{
-			private :
-				S*	current;
-			public :
-				reverse_iterator_vec () {current = NULL;}
-				reverse_iterator_vec (T * it) {current = it;}
-				T&	operator * () const {return *current;}
-				reverse_iterator_vec			operator ++ (int) {reverse_iterator_vec	tmp(current);current--;return tmp;}
-				reverse_iterator_vec&			operator ++ () {current--;return *this;}
-				reverse_iterator_vec			operator -- (int) {reverse_iterator_vec	tmp(current);current++;return tmp;}
-				reverse_iterator_vec&			operator -- () {current++;return *this;}
-				reverse_iterator_vec&			operator = (reverse_iterator_vec copy) {current = copy.current; return *this;};
-				bool				operator != (reverse_iterator_vec& iter) {return (this->current != iter.current) ?  1 : 0;}
-				bool				operator == (reverse_iterator_vec& iter) {return (this->current != iter) ?  0 : 1;}
-				bool				operator < (reverse_iterator_vec& iter) {return (this->current > iter.current) ?  1 : 0;}
-				bool				operator <= (reverse_iterator_vec& iter) {return (this->current >= iter.current) ?  1 : 0;}
-				bool				operator > (reverse_iterator_vec& iter) {return (this->current < iter.current) ?  1 : 0;}
-				bool				operator >= (reverse_iterator_vec& iter) {return (this->current <= iter.current) ?  1 : 0;}
-				friend bool			operator != (const reverse_iterator_vec& that, const reverse_iterator_vec& iter) {return (that.current != iter.current) ?  1 : 0;}
-				friend bool			operator == (const reverse_iterator_vec& that, const reverse_iterator_vec& iter) {return (that.current != iter) ?  0 : 1;}
-				friend bool			operator < (const reverse_iterator_vec& that, const reverse_iterator_vec& iter) {return (that.current > iter.current) ?  1 : 0;}
-				friend bool			operator <= (const reverse_iterator_vec& that, const reverse_iterator_vec& iter) {return (that.current >= iter.current) ?  1 : 0;}
-				friend bool			operator > (const reverse_iterator_vec& that, const reverse_iterator_vec& iter) {return (that.current < iter.current) ?  1 : 0;}
-				friend bool			operator >= (const reverse_iterator_vec& that, const reverse_iterator_vec& iter) {return (that.current <= iter.current) ?  1 : 0;}
-		};
 		public :
 			typedef iterator_vec<const T>				const_iterator;
 			typedef reverse_iterator_vec<T>				reverse_iterator;

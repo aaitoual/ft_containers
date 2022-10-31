@@ -6,7 +6,7 @@
 /*   By: aaitoual <aaitoual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 21:02:50 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/10/31 02:34:28 by aaitoual         ###   ########.fr       */
+/*   Updated: 2022/10/31 21:01:59 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	test() {
 			test.reserve(10);
 			std::cout << &test[0] << std::endl;
 			for (int i = 0; i != 10; i++) test.push_back(i);
-			ft::vector<int, my_alloc<int> >::iterator begin = --test.begin();
+			ft::vector<int>::iterator begin = --test.begin();
 			std::cout << *test.erase(test.begin(), --test.end()) << std::endl;
 			for (size_t i = 0; i != test.size(); i++) std::cout << test[i] << " ,";
 			std::cout << std::endl;
@@ -75,35 +75,35 @@ void	test() {
 }
 
 
-int test2 ()
-{
-	{
-		std::vector<int> foo (3,100);   // three ints with a value of 100
-		std::vector<int> bar (2,200);   // two ints with a value of 200
-		if (foo==bar) std::cout << "foo and bar are equal\n";
-		if (foo!=bar) std::cout << "foo and bar are not equal\n";
-		if (foo< bar) std::cout << "foo is less than bar\n";
-		if (foo> bar) std::cout << "foo is greater than bar\n";
-		if (foo<=bar) std::cout << "foo is less than or equal to bar\n";
-		if (foo>=bar) std::cout << "foo is greater than or equal to bar\n";
-	}
-	{
-		ft::vector<int> foo (3,100);   // three ints with a value of 100
-		ft::vector<int> bar (2,200);   // two ints with a value of 200
-		if (foo==bar) std::cout << "foo and bar are equal\n";
-		if (foo!=bar) std::cout << "foo and bar are not equal\n";
-		if (foo< bar) std::cout << "foo is less than bar\n";
-		if (foo> bar) std::cout << "foo is greater than bar\n";
-		if (foo<=bar) std::cout << "foo is less than or equal to bar\n";
-		if (foo>=bar) std::cout << "foo is greater than or equal to bar\n";
-	}
+// int test2 ()
+// {
+// 	{
+// 		std::vector<int> foo (3,100);   // three ints with a value of 100
+// 		std::vector<int> bar (2,200);   // two ints with a value of 200
+// 		if (foo==bar) std::cout << "foo and bar are equal\n";
+// 		if (foo!=bar) std::cout << "foo and bar are not equal\n";
+// 		if (foo< bar) std::cout << "foo is less than bar\n";
+// 		if (foo> bar) std::cout << "foo is greater than bar\n";
+// 		if (foo<=bar) std::cout << "foo is less than or equal to bar\n";
+// 		if (foo>=bar) std::cout << "foo is greater than or equal to bar\n";
+// 	}
+// 	{
+// 		ft::vector<int> foo (3,100);   // three ints with a value of 100
+// 		ft::vector<int> bar (2,200);   // two ints with a value of 200
+// 		if (foo==bar) std::cout << "foo and bar are equal\n";
+// 		if (foo!=bar) std::cout << "foo and bar are not equal\n";
+// 		if (foo< bar) std::cout << "foo is less than bar\n";
+// 		if (foo> bar) std::cout << "foo is greater than bar\n";
+// 		if (foo<=bar) std::cout << "foo is less than or equal to bar\n";
+// 		if (foo>=bar) std::cout << "foo is greater than or equal to bar\n";
+// 	}
 
-  return 0;
-}
+//   return 0;
+// }
 
 int main() {
-	// test();
-	test2();
+	test();
+	// test2();
 	std::cout << std::endl << std::endl << std::endl << std::endl << std::endl << std::endl;
 	system("leaks containers");
 	return 0;
