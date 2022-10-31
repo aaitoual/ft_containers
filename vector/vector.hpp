@@ -6,7 +6,7 @@
 /*   By: aaitoual <aaitoual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 20:55:51 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/10/31 00:35:33 by aaitoual         ###   ########.fr       */
+/*   Updated: 2022/10/31 02:35:41 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,7 +227,7 @@ namespace ft
 			iterator	begin() {
 				return iterator (arr);
 			}
-			const iterator	begin() const {
+			const_iterator	begin() const {
 				return const_iterator (arr);
 			}
 			reverse_iterator	rbegin() {
@@ -235,7 +235,7 @@ namespace ft
 					return reverse_iterator (arr + size__ - 1);
 				return reverse_iterator (NULL);
 			}
-			const reverse_iterator	rbegin() const {
+			const_reverse_iterator	rbegin() const {
 				if (size__)
 					return const_reverse_iterator (arr + size__ - 1);
 				return const_reverse_iterator (arr);
@@ -243,7 +243,7 @@ namespace ft
 			iterator	end() {
 				return	iterator (arr + size__);
 			}
-			const iterator	end() const {
+			const_iterator	end() const {
 				return const_iterator (arr + size__);
 			}
 			reverse_iterator	rend() {
@@ -251,7 +251,7 @@ namespace ft
 					return	reverse_iterator (arr - 1);
 				return	reverse_iterator (NULL);
 			}
-			const reverse_iterator	rend() const {
+			const_reverse_iterator	rend() const {
 				if (size__)
 					return	const_reverse_iterator (arr - 1);
 				return	const_reverse_iterator (NULL);
@@ -567,6 +567,35 @@ namespace ft
 				size__ = copy.size__;
 				return *this;
 			}
-			
 	};
+}
+
+template <typename R, typename alloc>
+bool	operator== (const ft::vector<R, alloc>& lhs, const ft::vector<R,alloc>& rhs) {
+	if (lhs.size() == rhs.size())
+		return std::equal(lhs.begin(), lhs.end(), rhs.begin());
+	return false;
+}
+
+template <typename R, typename alloc>
+bool	operator!= (const ft::vector<R, alloc>& lhs, const ft::vector<R,alloc>& rhs) {return !(lhs == rhs);}
+
+template <typename R, typename alloc>
+bool	operator< (const ft::vector<R, alloc>& lhs, const ft::vector<R,alloc>& rhs) {
+	return lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+}
+
+template <typename R, typename alloc>
+bool	operator> (const ft::vector<R, alloc>& lhs, const ft::vector<R,alloc>& rhs) {
+	return (rhs < lhs);
+}
+
+template <typename R, typename alloc>
+bool	operator<= (const ft::vector<R, alloc>& lhs, const ft::vector<R,alloc>& rhs) {
+	return !(rhs < lhs);
+}
+
+template <typename R, typename alloc>
+bool	operator>= (const ft::vector<R, alloc>& lhs, const ft::vector<R,alloc>& rhs) {
+	return !(lhs < rhs);
 }
