@@ -6,7 +6,7 @@
 /*   By: aaitoual <aaitoual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 23:42:39 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/11/01 04:43:55 by aaitoual         ###   ########.fr       */
+/*   Updated: 2022/11/01 05:18:52 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,22 @@ class iterator_vec : public std::iterator < std::random_access_iterator_tag, S, 
 	private :
 		S*	current;
 	public :
-		S*	base() const {return current;};
-		iterator_vec () {current = NULL;}
-		iterator_vec (S * it) {current = it;}
+		S*	base() const {return current;}
+		iterator_vec () : current() {}
+		iterator_vec (S * it) : current(it) {}
 		template <typename T>
 		iterator_vec (const iterator_vec<T>& it) : current(it.base()) {};
-		// iterator_vec (iterator_vec& it, iterator_vec::type * = NULL) : current(it.base()) {};
-		S&	operator * () const {return *current;}
+		S&						operator * () const {return *current;}
+		S						operator -> () const {return current;}
 		iterator_vec			operator ++ (int) {iterator_vec	tmp(current);current++;return tmp;}
 		iterator_vec			operator + (int i) {return current + i;}
 		iterator_vec			operator - (int i) {return current - i;}
 		iterator_vec&			operator ++ () {current++;return *this;}
 		iterator_vec			operator -- (int) {iterator_vec	tmp(current);current--;return tmp;}
 		iterator_vec&			operator -- () {current--;return *this;}
-		iterator_vec&			operator = (iterator_vec& copy) {current = copy.current; return *this;}
-		iterator_vec&			operator = (const iterator_vec& copy) {current = copy.current; return *this;}
+		template <typename T>
+		iterator_vec&			operator = (iterator_vec<T>& copy) {current = copy.current; return *this;}
+		// iterator_vec&			operator = (const iterator_vec& copy) {current = copy.current; return *this;}
 		S&						operator [] (int i) {return current[i];}
 		iterator_vec&			operator += (int i) {current += i; return *this;}
 		iterator_vec&			operator -= (int i) {current -= i; return *this;}
@@ -53,4 +54,5 @@ class iterator_vec : public std::iterator < std::random_access_iterator_tag, S, 
 		friend	long			operator - (const iterator_vec &that, const iterator_vec& sec) {return that.current - sec.current;}
 		friend	iterator_vec	operator + (int i, iterator_vec it) {return it + i;}
 		friend	iterator_vec	operator - (int i, iterator_vec it) {return it - i;}
+		friend	long			operator + (const iterator_vec &that, const iterator_vec& sec) {return that.current + sec.current;}
 };

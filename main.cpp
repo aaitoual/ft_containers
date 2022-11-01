@@ -6,7 +6,7 @@
 /*   By: aaitoual <aaitoual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 21:02:50 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/11/01 04:48:26 by aaitoual         ###   ########.fr       */
+/*   Updated: 2022/11/01 05:14:35 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,17 @@ void	test() {
 //   return 0;
 // }
 
+void	rev_it() {
+  std::vector<int> myvector;
+  for (int i=0; i<10; i++) myvector.push_back(i);  // myvector: 0 1 2 3 4 5 6 7 8 9
+
+  typedef std::vector<int>::iterator iter_type;
+
+  std::reverse_iterator<iter_type> rev_iterator = myvector.rbegin();
+
+  std::cout << "The fourth element from the end is: " << rev_iterator[3] << '\n';
+}
+
 void	it() {
 	{
 		std::vector<int> test;
@@ -122,7 +133,8 @@ void	it() {
 
 
 int main() {
-	it();
+	rev_it();
+	// it();
 	// test();
 	// test2();
 	std::cout << std::endl << std::endl << std::endl << std::endl << std::endl << std::endl;
