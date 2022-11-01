@@ -6,7 +6,7 @@
 /*   By: aaitoual <aaitoual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 21:02:50 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/10/31 21:01:59 by aaitoual         ###   ########.fr       */
+/*   Updated: 2022/11/01 04:48:26 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,29 @@ void	test() {
 //   return 0;
 // }
 
+void	it() {
+	{
+		std::vector<int> test;
+		for (int i = 0; i != 10; i++) test.push_back(i);
+		std::vector<int>::iterator it = test.begin();
+		it += 5;
+		std::cout << *++it << std::endl;
+	}
+	puts ("********************************");
+	{
+		ft::vector<int> test;
+		for (int i = 0; i != 10; i++) test.push_back(i);
+		ft::vector<int>::iterator it = test.begin();
+		it += 5;
+		std::cout << *++it << std::endl;
+	}
+}
+
+
+
 int main() {
-	test();
+	it();
+	// test();
 	// test2();
 	std::cout << std::endl << std::endl << std::endl << std::endl << std::endl << std::endl;
 	system("leaks containers");
