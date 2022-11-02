@@ -6,7 +6,7 @@
 /*   By: aaitoual <aaitoual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 20:55:51 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/10/31 23:40:59 by aaitoual         ###   ########.fr       */
+/*   Updated: 2022/11/02 01:04:16 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,10 @@ namespace ft
 	
 //****************************************iterator*******************************************************************//
 		public :
-			typedef iterator_vec<const T>				const_iterator;
-			typedef reverse_iterator_vec<T>				reverse_iterator;
-			typedef reverse_iterator_vec<const T>		const_reverse_iterator;
-			typedef iterator_vec<T>						iterator;
+			typedef iterator_vec<T*>						iterator;
+			typedef iterator_vec<const T*>					const_iterator;
+			typedef reverse_iterator_vec<iterator>			reverse_iterator;
+			typedef reverse_iterator_vec<const_iterator>	const_reverse_iterator;
 //****************************************private_attribute***************************************************************//
 		private :
 			T			*arr;

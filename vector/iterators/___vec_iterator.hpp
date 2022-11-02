@@ -6,7 +6,7 @@
 /*   By: aaitoual <aaitoual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 23:42:39 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/11/01 05:18:52 by aaitoual         ###   ########.fr       */
+/*   Updated: 2022/11/02 01:01:59 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 # include <iterator>
 
 template<typename S>
-class iterator_vec : public std::iterator < std::random_access_iterator_tag, S, const S*, S>{
+class iterator_vec : public std::iterator < std::random_access_iterator_tag, S, const S, S>{
 	private :
-		S*	current;
+		S	current;
 	public :
-		S*	base() const {return current;}
+		S	base() const {return current;}
 		iterator_vec () : current() {}
 		iterator_vec (S * it) : current(it) {}
 		template <typename T>
