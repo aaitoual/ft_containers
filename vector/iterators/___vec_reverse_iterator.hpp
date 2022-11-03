@@ -6,16 +6,19 @@
 /*   By: aaitoual <aaitoual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 21:02:30 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/11/01 05:21:05 by aaitoual         ###   ########.fr       */
+/*   Updated: 2022/11/03 05:24:44 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # pragma once
 
 # include <iterator>
+# include "../../implementations/iterator_traits.hpp"
 
 template<typename S>
-class reverse_iterator_vec : public std::iterator < std::random_access_iterator_tag, S, const S*, S>{
+class reverse_iterator_vec{
+	public :
+		typedef typename ft::iterator_traits<S>::reference reference;
 	private :
 		S	current;
 	public :
@@ -23,8 +26,7 @@ class reverse_iterator_vec : public std::iterator < std::random_access_iterator_
 		explicit reverse_iterator_vec (S it) : current (it) {}
 		template <typename T>
 		reverse_iterator_vec (const reverse_iterator_vec<T>& it) : current(it.base()) {};
-		template <typename T>
-		S&								operator * () const {return current;}
+		reference	operator * () const {S tmp = current; return *--tmp;}
 		S*								operator -> () const {return &current;}
 		reverse_iterator_vec			operator ++ (int) {reverse_iterator_vec	tmp(current);current--;return tmp;}
 		reverse_iterator_vec&			operator ++ () {current--;return *this;}

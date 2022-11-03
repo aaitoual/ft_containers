@@ -6,7 +6,7 @@
 /*   By: aaitoual <aaitoual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 20:55:51 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/11/02 01:04:16 by aaitoual         ###   ########.fr       */
+/*   Updated: 2022/11/03 06:04:11 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include "../implementations/enable_if.hpp"
 # include "iterators/___vec_iterator.hpp"
 # include "iterators/___vec_reverse_iterator.hpp"
+# include "../../implementations/reverse_iterator.hpp"
 
 void	_throw_my_exception(int index) {
 	switch (index)
@@ -58,8 +59,8 @@ namespace ft
 		public :
 			typedef iterator_vec<T*>						iterator;
 			typedef iterator_vec<const T*>					const_iterator;
-			typedef reverse_iterator_vec<iterator>			reverse_iterator;
-			typedef reverse_iterator_vec<const_iterator>	const_reverse_iterator;
+			typedef ft::reverse_iterator<iterator>			reverse_iterator;
+			typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 //****************************************private_attribute***************************************************************//
 		private :
 			T			*arr;

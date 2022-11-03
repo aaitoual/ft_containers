@@ -6,25 +6,28 @@
 /*   By: aaitoual <aaitoual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 23:42:39 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/11/02 01:01:59 by aaitoual         ###   ########.fr       */
+/*   Updated: 2022/11/03 05:12:28 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # pragma once
 
 # include <iterator>
+# include "../../implementations/iterator_traits.hpp"
 
 template<typename S>
 class iterator_vec : public std::iterator < std::random_access_iterator_tag, S, const S, S>{
+	public :
+		typedef typename ft::iterator_traits<S>::reference reference;
 	private :
 		S	current;
 	public :
 		S	base() const {return current;}
 		iterator_vec () : current() {}
-		iterator_vec (S * it) : current(it) {}
+		iterator_vec (S it) : current(it) {}
 		template <typename T>
 		iterator_vec (const iterator_vec<T>& it) : current(it.base()) {};
-		S&						operator * () const {return *current;}
+		reference				operator * () const {return *current;}
 		S						operator -> () const {return current;}
 		iterator_vec			operator ++ (int) {iterator_vec	tmp(current);current++;return tmp;}
 		iterator_vec			operator + (int i) {return current + i;}
