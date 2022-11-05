@@ -6,13 +6,13 @@
 /*   By: aaitoual <aaitoual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 02:30:10 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/11/03 05:41:47 by aaitoual         ###   ########.fr       */
+/*   Updated: 2022/11/03 19:27:29 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-# include "../../implementations/iterator_traits.hpp"
+# include "iterator_traits.hpp"
 
 namespace ft {
 	template<typename S>
@@ -33,15 +33,15 @@ namespace ft {
 			explicit reverse_iterator (S it) : current (it) {}
 			template <typename T>
 			reverse_iterator (const reverse_iterator<T>& it) : current(it.base()) {};
-			reference					operator * () const {S tmp = current; return *tmp;}
+			reference					operator * () const {S tmp = current; return *--tmp;}
 			S*							operator -> () const {return &current;}
 			reverse_iterator			operator ++ (int) {reverse_iterator	tmp(current);current--;return tmp;}
 			reverse_iterator&			operator ++ () {current--;return *this;}
 			reverse_iterator			operator -- (int) {reverse_iterator	tmp(current);current++;return tmp;}
 			reverse_iterator&			operator -- () {current++;return *this;}
-			reverse_iterator			operator + (int i) {return current - i;}
-			reverse_iterator			operator - (int i) {return current + i;}
-			S&							operator [] (int i) {return reverse_iterator(current - i);}
+			reverse_iterator			operator + (int i) {return reverse_iterator (current - i);}
+			reverse_iterator			operator - (int i) {return reverse_iterator (current + i);}
+			reference					operator [] (int i) {return *(*this + i);}
 			reverse_iterator&			operator -= (int i) {current += i; return *this;}
 			reverse_iterator&			operator += (int i) {current -= i; return *this;}
 			template <typename T>
@@ -58,10 +58,14 @@ namespace ft {
 			friend	bool				operator <= (const reverse_iterator& that, const reverse_iterator& iter) {return (that.current >= iter.current) ?  1 : 0;}
 			friend	bool				operator > (const reverse_iterator& that, const reverse_iterator& iter) {return (that.current < iter.current) ?  1 : 0;}
 			friend	bool				operator >= (const reverse_iterator& that, const reverse_iterator& iter) {return (that.current <= iter.current) ?  1 : 0;}
-			friend	long				operator + (const reverse_iterator &that, const reverse_iterator& sec) {return that.current - sec.current;}
-			friend	reverse_iterator	operator - (int i, reverse_iterator it) {return it + i;}
-			friend	reverse_iterator	operator + (int i, reverse_iterator it) {return it - i;}
-			friend	long				operator - (const reverse_iterator &that, const reverse_iterator& sec) {return that.current + sec.current;}
+			friend	reverse_iterator	operator - (int i, reverse_iterator it) {return reverse_iterator<S> (it.base() + i);}
+			friend	reverse_iterator	operator + (int i, reverse_iterator it) {return reverse_iterator<S> (it.base() - i);}
 			S							base() const {return current;}
 	};
+	template <class _Iter1, class _Iter2>
+	typename reverse_iterator<_Iter1>::difference_type
+	operator-(const reverse_iterator<_Iter1>& __x, const reverse_iterator<_Iter2>& __y)
+	{
+	    return __y.base() - __x.base();
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: aaitoual <aaitoual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 20:55:51 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/11/03 06:04:11 by aaitoual         ###   ########.fr       */
+/*   Updated: 2022/11/03 14:23:40 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@
 # include "exceptions/__exceptions.hpp"
 # include "../implementations/enable_if.hpp"
 # include "iterators/___vec_iterator.hpp"
-# include "iterators/___vec_reverse_iterator.hpp"
-# include "../../implementations/reverse_iterator.hpp"
+// # include "iterators/___vec_reverse_iterator.hpp"
+# include "../implementations/iterator_traits.hpp"
+# include "../implementations/reverse_iterator.hpp"
 
 void	_throw_my_exception(int index) {
 	switch (index)
@@ -179,14 +180,10 @@ namespace ft
 				return const_iterator (arr);
 			}
 			reverse_iterator	rbegin() {
-				if (size__)
-					return reverse_iterator (arr + size__ - 1);
-				return reverse_iterator (NULL);
+				return reverse_iterator (arr + size__);
 			}
 			const_reverse_iterator	rbegin() const {
-				if (size__)
-					return const_reverse_iterator (arr + size__ - 1);
-				return const_reverse_iterator (arr);
+				return const_reverse_iterator (arr + size__);
 			}
 			iterator	end() {
 				return	iterator (arr + size__);
@@ -195,14 +192,10 @@ namespace ft
 				return const_iterator (arr + size__);
 			}
 			reverse_iterator	rend() {
-				if (size__)
-					return	reverse_iterator (arr - 1);
-				return	reverse_iterator (NULL);
+				return	reverse_iterator (arr);
 			}
 			const_reverse_iterator	rend() const {
-				if (size__)
-					return	const_reverse_iterator (arr - 1);
-				return	const_reverse_iterator (NULL);
+				return	const_reverse_iterator (arr);
 			}
 			void	push_back(const T& element) {
 				if (size__ == capacity__ && capacity__) { // while pushing on an already full array

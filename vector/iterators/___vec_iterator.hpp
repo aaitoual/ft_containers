@@ -6,7 +6,7 @@
 /*   By: aaitoual <aaitoual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 23:42:39 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/11/03 05:12:28 by aaitoual         ###   ########.fr       */
+/*   Updated: 2022/11/03 19:38:20 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 template<typename S>
 class iterator_vec : public std::iterator < std::random_access_iterator_tag, S, const S, S>{
 	public :
-		typedef typename ft::iterator_traits<S>::reference reference;
+		typedef typename ft::iterator_traits<S>::reference 			reference;
+		typedef typename ft::iterator_traits<S>::difference_type	difference_type;
 	private :
 		S	current;
 	public :
@@ -36,26 +37,26 @@ class iterator_vec : public std::iterator < std::random_access_iterator_tag, S, 
 		iterator_vec			operator -- (int) {iterator_vec	tmp(current);current--;return tmp;}
 		iterator_vec&			operator -- () {current--;return *this;}
 		template <typename T>
-		iterator_vec&			operator = (iterator_vec<T>& copy) {current = copy.current; return *this;}
-		// iterator_vec&			operator = (const iterator_vec& copy) {current = copy.current; return *this;}
-		S&						operator [] (int i) {return current[i];}
+		iterator_vec&			operator = (const iterator_vec<T>& copy) {current = copy.base(); return *this;}
+		reference				operator [] (int i) {return current[i];}
 		iterator_vec&			operator += (int i) {current += i; return *this;}
 		iterator_vec&			operator -= (int i) {current -= i; return *this;}
 		bool					operator != (iterator_vec& iter) {return (this->current != iter.current) ?  1 : 0;}
-		bool					operator == (iterator_vec& iter) {return (this->current != iter) ?  0 : 1;}
+		bool					operator == (iterator_vec& iter) {return (this->current != iter.current) ?  0 : 1;}
 		bool					operator > (iterator_vec& iter) {return (this->current > iter.current) ?  1 : 0;}
 		bool					operator >= (iterator_vec& iter) {return (this->current >= iter.current) ?  1 : 0;}
 		bool					operator < (iterator_vec& iter) {return (this->current < iter.current) ?  1 : 0;}
 		bool					operator <= (iterator_vec& iter) {return (this->current <= iter.current) ?  1 : 0;}
 		
-		friend	bool			operator != (const iterator_vec& that, const iterator_vec& iter) {return (that.current != iter.current) ?  1 : 0;}
-		friend	bool			operator == (const iterator_vec& that, const iterator_vec& iter) {return (that.current != iter) ?  0 : 1;}
-		friend	bool			operator > (const iterator_vec& that, const iterator_vec& iter) {return (that.current > iter.current) ?  1 : 0;}
-		friend	bool			operator >= (const iterator_vec& that, const iterator_vec& iter) {return (that.current >= iter.current) ?  1 : 0;}
-		friend	bool			operator < (const iterator_vec& that, const iterator_vec& iter) {return (that.current < iter.current) ?  1 : 0;}
-		friend	bool			operator <= (const iterator_vec& that, const iterator_vec& iter) {return (that.current <= iter.current) ?  1 : 0;}
-		friend	long			operator - (const iterator_vec &that, const iterator_vec& sec) {return that.current - sec.current;}
+		friend	bool			operator != (const iterator_vec& that, const iterator_vec& iter) {return (that.base() != iter.base()) ?  1 : 0;}
+		friend	bool			operator == (const iterator_vec& that, const iterator_vec& iter) {return (that.base() != iter) ?  0 : 1;}
+		friend	bool			operator > (const iterator_vec& that, const iterator_vec& iter) {return (that.base() > iter.base()) ?  1 : 0;}
+		friend	bool			operator >= (const iterator_vec& that, const iterator_vec& iter) {return (that.base() >= iter.base()) ?  1 : 0;}
+		friend	bool			operator < (const iterator_vec& that, const iterator_vec& iter) {return (that.base() < iter.base()) ?  1 : 0;}
+		friend	bool			operator <= (const iterator_vec& that, const iterator_vec& iter) {return (that.base() <= iter.base()) ?  1 : 0;}
+		friend	long			operator - (const iterator_vec &that, const iterator_vec& sec) {return that.base() - sec.base();}
 		friend	iterator_vec	operator + (int i, iterator_vec it) {return it + i;}
 		friend	iterator_vec	operator - (int i, iterator_vec it) {return it - i;}
-		friend	long			operator + (const iterator_vec &that, const iterator_vec& sec) {return that.current + sec.current;}
 };
+template <typename val, typename val2>
+long			operator + (const iterator_vec<val> &that, const iterator_vec<val2> &sec) {return that.base() + sec.base();}
