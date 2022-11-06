@@ -6,7 +6,7 @@
 /*   By: aaitoual <aaitoual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 21:02:50 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/11/06 01:51:21 by aaitoual         ###   ########.fr       */
+/*   Updated: 2022/11/06 04:46:07 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,11 +91,11 @@ void	test()
   		std::cout << "Comparing foo and bar lexicographically (foo<bar):\n";
 		
   		std::cout << "Using default comparison (operator<): ";
-  		std::cout << std::lexicographical_compare(foo,foo+5,bar,bar+9);
+  		std::cout << ft::lexicographical_compare(foo,foo+5,bar,bar+9);
   		std::cout << '\n';
 		
   		std::cout << "Using mycomp as comparison object: ";
-  		std::cout << std::lexicographical_compare(foo,foo+5,bar,bar+9,mycomp);
+  		std::cout << ft::lexicographical_compare(foo,foo+5,bar,bar+9,mycomp);
   		std::cout << '\n';
 	}
 }
