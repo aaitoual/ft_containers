@@ -6,7 +6,7 @@
 /*   By: aaitoual <aaitoual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 21:02:50 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/11/03 19:33:59 by aaitoual         ###   ########.fr       */
+/*   Updated: 2022/11/06 01:51:21 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 # include "./implementations/reverse_iterator.hpp"
 # include "map"
 
+
+#include <iostream>
+#include <iomanip>
+#include <type_traits>
 
 // void	test() {
 // 	{
@@ -38,24 +42,62 @@
 // 	}
 // }
 
-struct A { };
-struct B { B(){} };
-struct C { C(int){} };
+class A {};
+ 
+enum E : int {};
+
+template <class T>
+T f(T i)
+{
+    static_assert(std::is_integral<T>::value, "Integral required.");
+    return i;
+}
+
+template <class T>
+T g(T i)
+{
+    static_assert(ft::is_integral<T>::value, "Integral required.");
+    return i;
+}
+
+bool mycomp (char c1, char c2)
+{ return std::tolower(c1)<std::tolower(c2); }
 
 void	test()
 {
-  {
-    std::vector<int>::iterator a;
-    a++;
-    ++a;
-    *a++;
-  }
-  {
-    ft::vector<int>::iterator a;
-    a++;
-    ++a;
-    *a++;
-  }
+	{
+    	char foo[]="Apple";
+  		char bar[]="apartment";
+		
+  		std::cout << std::boolalpha;
+		
+  		std::cout << "Comparing foo and bar lexicographically (foo<bar):\n";
+		
+  		std::cout << "Using default comparison (operator<): ";
+  		std::cout << std::lexicographical_compare(foo,foo+5,bar,bar+9);
+  		std::cout << '\n';
+		
+  		std::cout << "Using mycomp as comparison object: ";
+  		std::cout << std::lexicographical_compare(foo,foo+5,bar,bar+9,mycomp);
+  		std::cout << '\n';
+	}
+	puts ("\n***************************\n");
+	{
+    	char foo[]="Apple";
+  		char bar[]="apartment";
+		
+  		std::cout << std::boolalpha;
+		
+  		std::cout << "Comparing foo and bar lexicographically (foo<bar):\n";
+		
+  		std::cout << "Using default comparison (operator<): ";
+  		std::cout << std::lexicographical_compare(foo,foo+5,bar,bar+9);
+  		std::cout << '\n';
+		
+  		std::cout << "Using mycomp as comparison object: ";
+  		std::cout << std::lexicographical_compare(foo,foo+5,bar,bar+9,mycomp);
+  		std::cout << '\n';
+	}
 }
 
 int main() {
