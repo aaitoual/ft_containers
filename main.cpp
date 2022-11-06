@@ -6,7 +6,7 @@
 /*   By: aaitoual <aaitoual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 21:02:50 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/11/06 04:46:07 by aaitoual         ###   ########.fr       */
+/*   Updated: 2022/11/06 04:57:39 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,37 +66,33 @@ bool mycomp (char c1, char c2)
 void	test()
 {
 	{
-    	char foo[]="Apple";
-  		char bar[]="apartment";
+		std::pair <std::string,double> product1;                     // default constructor
+		std::pair <std::string,double> product2 ("tomatoes",2.30);   // value init
+		std::pair <std::string,double> product3 (product2);          // copy constructor
 		
-  		std::cout << std::boolalpha;
+		product1 = std::make_pair(std::string("lightbulbs"),0.99);   // using make_pair (move)
 		
-  		std::cout << "Comparing foo and bar lexicographically (foo<bar):\n";
+		product2.first = "shoes";                  // the type of first is string
+		product2.second = 39.90;                   // the type of second is double
 		
-  		std::cout << "Using default comparison (operator<): ";
-  		std::cout << std::lexicographical_compare(foo,foo+5,bar,bar+9);
-  		std::cout << '\n';
-		
-  		std::cout << "Using mycomp as comparison object: ";
-  		std::cout << std::lexicographical_compare(foo,foo+5,bar,bar+9,mycomp);
-  		std::cout << '\n';
+		std::cout << "The price of " << product1.first << " is $" << product1.second << '\n';
+		std::cout << "The price of " << product2.first << " is $" << product2.second << '\n';
+		std::cout << "The price of " << product3.first << " is $" << product3.second << '\n';
 	}
 	puts ("\n***************************\n");
 	{
-    	char foo[]="Apple";
-  		char bar[]="apartment";
+		std::pair <std::string,double> product1;                     // default constructor
+		std::pair <std::string,double> product2 ("tomatoes",2.30);   // value init
+		std::pair <std::string,double> product3 (product2);          // copy constructor
 		
-  		std::cout << std::boolalpha;
+		product1 = std::make_pair(std::string("lightbulbs"),0.99);   // using make_pair (move)
 		
-  		std::cout << "Comparing foo and bar lexicographically (foo<bar):\n";
+		product2.first = "shoes";                  // the type of first is string
+		product2.second = 39.90;                   // the type of second is double
 		
-  		std::cout << "Using default comparison (operator<): ";
-  		std::cout << ft::lexicographical_compare(foo,foo+5,bar,bar+9);
-  		std::cout << '\n';
-		
-  		std::cout << "Using mycomp as comparison object: ";
-  		std::cout << ft::lexicographical_compare(foo,foo+5,bar,bar+9,mycomp);
-  		std::cout << '\n';
+		std::cout << "The price of " << product1.first << " is $" << product1.second << '\n';
+		std::cout << "The price of " << product2.first << " is $" << product2.second << '\n';
+		std::cout << "The price of " << product3.first << " is $" << product3.second << '\n';
 	}
 }
 
