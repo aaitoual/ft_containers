@@ -6,7 +6,7 @@
 /*   By: aaitoual <aaitoual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 05:27:54 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/11/06 21:03:45 by aaitoual         ###   ########.fr       */
+/*   Updated: 2022/11/06 23:53:21 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ namespace ft {
 		//member_functions
 		pair() : first(), second() {}
 		template<class U, class V> pair (const pair<U,V>& pr) : first(pr.first), second(pr.second) {};
-		pair (const first_type& a, const second_type& b) : first(a), second(b);
+		pair (const first_type& a, const second_type& b) : first(a), second(b) {};
 
 		//operators
 		pair& operator=(pair const& __p) {first = __p.first;second = __p.second; return *this;}

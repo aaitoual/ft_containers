@@ -6,7 +6,7 @@
 /*   By: aaitoual <aaitoual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 21:02:50 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/11/06 20:29:16 by aaitoual         ###   ########.fr       */
+/*   Updated: 2022/11/06 23:53:01 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	test()
 		ft::pair <std::string,double> product2 ("tomatoes",2.30);   // value init
 		ft::pair <std::string,double> product3 (product2);          // copy constructor
 		
-		product1 = std::make_pair(std::string("lightbulbs"),0.99);   // using make_pair (move)
+		product1 = ft::make_pair(std::string("lightbulbs"),0.99);   // using make_pair (move)
 		
 		product2.first = "shoes";                  // the type of first is string
 		product2.second = 39.90;                   // the type of second is double
