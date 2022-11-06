@@ -6,7 +6,7 @@
 /*   By: aaitoual <aaitoual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 21:02:50 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/11/06 04:57:39 by aaitoual         ###   ########.fr       */
+/*   Updated: 2022/11/06 20:29:16 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,56 +16,15 @@
 # include "map"
 
 
-#include <iostream>
-#include <iomanip>
-#include <type_traits>
+// #include <iostream>
+// #include <iomanip>
+// #include <type_traits>
 
-// void	test() {
-// 	{
-// 		ft::vector<int> test;
-// 		test.reserve(2);
-// 		// test[0] = 10;
-// 		std::cout << *test.rbegin().base() << std::endl;
-// 		test.push_back(10);
-// 		test.push_back(10);
-// 		std::cout << *test.rbegin().base() << std::endl;
-// 	}
-// 	char * r = (char *)malloc (100000);
-// 	{
-// 		std::vector<int> test;
-// 		test.reserve(2);
-// 		// test[0] = 10;
-// 		std::cout << *test.rbegin().base() << std::endl;
-// 		test.push_back(10);
-// 		test.push_back(10);
-// 		std::cout << *test.rbegin().base() << std::endl;
-// 	}
-// }
-
-class A {};
- 
-enum E : int {};
-
-template <class T>
-T f(T i)
-{
-    static_assert(std::is_integral<T>::value, "Integral required.");
-    return i;
-}
-
-template <class T>
-T g(T i)
-{
-    static_assert(ft::is_integral<T>::value, "Integral required.");
-    return i;
-}
-
-bool mycomp (char c1, char c2)
-{ return std::tolower(c1)<std::tolower(c2); }
 
 void	test()
 {
 	{
+		std::vector<int> TEST;
 		std::pair <std::string,double> product1;                     // default constructor
 		std::pair <std::string,double> product2 ("tomatoes",2.30);   // value init
 		std::pair <std::string,double> product3 (product2);          // copy constructor
@@ -81,9 +40,9 @@ void	test()
 	}
 	puts ("\n***************************\n");
 	{
-		std::pair <std::string,double> product1;                     // default constructor
-		std::pair <std::string,double> product2 ("tomatoes",2.30);   // value init
-		std::pair <std::string,double> product3 (product2);          // copy constructor
+		ft::pair <std::string,double> product1;                     // default constructor
+		ft::pair <std::string,double> product2 ("tomatoes",2.30);   // value init
+		ft::pair <std::string,double> product3 (product2);          // copy constructor
 		
 		product1 = std::make_pair(std::string("lightbulbs"),0.99);   // using make_pair (move)
 		
