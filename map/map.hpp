@@ -1,23 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   containers.hpp                                     :+:      :+:    :+:   */
+/*   map.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaitoual <aaitoual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/18 20:51:46 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/11/08 09:29:03 by aaitoual         ###   ########.fr       */
+/*   Created: 2022/11/08 08:05:53 by aaitoual          #+#    #+#             */
+/*   Updated: 2022/11/08 09:28:51 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# pragma once
+#pragma once
 
-
-# include "vector/vector.hpp"
-# include "implementations/iterator_traits.hpp"
-# include "implementations/reverse_iterator.hpp"
-# include "implementations/is_integral.hpp"
-# include "implementations/lexicographical_compare.hpp"
-# include "implementations/pair.hpp"
-# include "implementations/make_pair.hpp"
-# include "map/map.hpp"
+# include "red_black_three.hpp"
