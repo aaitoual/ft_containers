@@ -17,7 +17,8 @@ class test {
 };
 
 int main () {
-	const test a (10);
-	const test b (20);
-	std::cout << test::min(a, b).i;
+	int i = 0;
+	int j = 1;
+
+	std::cout << i;
 }
