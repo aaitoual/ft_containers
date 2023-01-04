@@ -11,13 +11,11 @@
 /* ************************************************************************** */
 
 # include "containers.hpp"
-# include "map"
-// # include <vector>
-// # include "./implementations/reverse_iterator.hpp"
-
-// #include <iostream>
-// #include <iomanip>
-// #include <type_traits>
+# include <map>
+# include <vector>
+#include <iostream>
+#include <iomanip>
+#include <type_traits>
 
 template <typename T>
 void	print_node(ft::NODE<T> *node)
@@ -68,7 +66,7 @@ void	test()
 		int i = 0;
 		ft::NODE<int> *node;
 		node = new ft::NODE<int>[100];
-		while (i != 1000) {
+		while (i != 100) {
 			std::cin >> tmp;
 			std::cout << std::endl;
 			node[i] = ft::NODE<int>(tmp);

@@ -14,7 +14,7 @@ NAME = containers
 
 CC = c++
 
-CFLAGS = -std=c++98
+CFLAGS = 
 
 OBJ_PATH = ./__Obj_Tmp_Fils/
 

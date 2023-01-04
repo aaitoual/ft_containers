@@ -23,9 +23,9 @@
 # include "exceptions/__exceptions.hpp"
 # include "../implementations/enable_if.hpp"
 # include "iterators/___vec_iterator.hpp"
-// # include "iterators/___vec_reverse_iterator.hpp"
 # include "../implementations/iterator_traits.hpp"
 # include "../implementations/reverse_iterator.hpp"
+# include "../implementations/lexicographical_compare.hpp"
 
 void	_throw_my_exception(int index) {
 	switch (index)
@@ -523,7 +523,7 @@ bool	operator!= (const ft::vector<R, alloc>& lhs, const ft::vector<R,alloc>& rhs
 
 template <typename R, typename alloc>
 bool	operator< (const ft::vector<R, alloc>& lhs, const ft::vector<R,alloc>& rhs) {
-	return lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+	return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
 }
 
 template <typename R, typename alloc>
