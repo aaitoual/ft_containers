@@ -48,6 +48,7 @@ void	test()
 		three.RDT_insert(&node6);
 		three.RDT_insert(&node7);
 		three.RDT_insert(&node8);
+		three.RDT_delete(&node6);
 		std::cout << "root : " << three.__root->content << std::endl;
 			std::cout << "*****************************************************************\n";
 		print_node(three.__root);
