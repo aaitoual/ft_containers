@@ -22,7 +22,7 @@ void	test()
 	{
 		std::map<int, int> test;
 	}
-	puts ("\n***************************\n");
+	// puts ("\n***************************\n");
 	{
 		ft::RDT<int> three;
 		// ft::NODE<int> node1(8);
@@ -48,10 +48,16 @@ void	test()
 		three.RDT_insert(&node6);
 		three.RDT_insert(&node7);
 		three.RDT_insert(&node8);
-		three.RDT_delete(&node6);
-		std::cout << "root : " << three.__root->content << std::endl;
-			std::cout << "*****************************************************************\n";
-		print_node(three.__root);
+		// three.RDT_delete(&node6);
+		// three.RDT_delete(&node2);
+		// three.RDT_delete(&node7);
+		three.RDT_delete(&node5);
+		// std::cout << "root : " << three.__root->content << std::endl;
+		std::cout << "*****************************************************************\n";
+			print_node(three.__root);
+		// std::cout << three.__root->right->left->color << std::endl;
+		std::cout << "*****************************************************************\n";
+		// std::cout << three.__root->right->right->right->content << std::endl;
 		// int tmp;
 		// int i = 0;
 		// ft::NODE<int> *node;

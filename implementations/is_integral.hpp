@@ -22,7 +22,6 @@ namespace ft
 	};
 	#define true_const const_value<bool, true>
 	#define false_const const_value<bool, false>
-
 	template <typename T> struct is_integral_utils : public false_const {};
 	template <> struct is_integral_utils<bool> : public true_const {};
 	template <> struct is_integral_utils<char> : public true_const {};

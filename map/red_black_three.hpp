@@ -87,7 +87,8 @@ namespace ft {
 				parent->parent->left = child;
 			else
 				parent->parent->right = child;
-			child->parent = parent->parent;
+			if (child != __nullnode)
+				child->parent = parent->parent;
 		}
 
 		NODE<T>	*get_sub_child_min(int case_, NODE<T> *node) {
@@ -101,6 +102,7 @@ namespace ft {
 					child = child->left;
 				}
 			}
+			std::cout << "CONETNT : " << ret->content << std::endl;
 			return ret;
 		}
 
@@ -120,30 +122,91 @@ namespace ft {
 			NODE<T> *sibling;
 
 			while (node != __root && node != __nullnode && !node->color) {
-				sibling = get_sibling(node);
-				if (sibling != __nullnode && sibling->color) {
-					sibling->color = 0;
-					node->parent->color = 1;
-					left_rotation(node->parent);
-					sibling = get_sibling(node); //check;
+				if (which_node(node) == 2) {
+					sibling = node->parent->right;
+					if (sibling != __nullnode && sibling->color) {
+						sibling->color = 0;
+						node->parent->color = 1;
+						left_rotation(node->parent);
+						sibling = node->parent->right;
+						if ((sibling->right == __nullnode || !sibling->right->color)
+								&& (sibling->left == __nullnode || !sibling->left->color)) {
+							sibling->color = 1;
+							node = node->parent;
+						}
+						else if (sibling->right == __nullnode || !sibling->right->color) {
+							// if (sibling->left != __nullnode)
+								sibling->left->color = 0;
+								sibling->color = 0;
+								right_rotation(sibling);
+								node->parent->right = sibling;
+						}
+					}
+					else {
+						sibling->color = node->parent->color;
+						if (node->parent != __nullnode && node->parent->parent != __nullnode)
+							node->parent->parent->color = 0;
+						if (sibling->right != __nullnode)
+							sibling->right->color = 0;
+						left_rotation(node->parent);
+						__root = node;
+					}
 				}
-				if ((sibling == __nullnode || !sibling->color) && (sibling->right == __nullnode || !sibling->right->color) && (sibling->left == __nullnode || !sibling->left->color)) {
-					sibling->color = 1;
-					node = node->parent;
+				else if (which_node(node) == 1) {
+					sibling = node->parent->left;
+					if (sibling != __nullnode && sibling->color) {
+						sibling->color = 0;
+						node->parent->color = 1;
+						right_rotation(node->parent);
+						sibling = node->parent->left;
+						if ((sibling->left == __nullnode || !sibling->left->color)
+								&& (sibling->right == __nullnode || !sibling->right->color)) {
+							sibling->color = 1;
+							node = node->parent;
+						}
+						else if (sibling->left == __nullnode || !sibling->left->color) {
+							// if (sibling->left != __nullnode)
+								sibling->right->color = 0;
+								sibling->color = 0;
+								right_rotation(sibling);
+								node->parent->left = sibling;
+						}
+					}
+					else {
+						sibling->color = node->parent->color;
+						if (node->parent != __nullnode && node->parent->parent != __nullnode)
+							node->parent->parent->color = 0;
+						if (sibling->left != __nullnode)
+							sibling->left->color = 0;
+						left_rotation(node->parent);
+						__root = node;
+					}
 				}
-				if (sibling != __nullnode && !sibling->color && (sibling->right == __nullnode || !sibling->right->color) && (sibling->left != __nullnode && sibling->left->color)) {
-					sibling->color = 1;
-					right_rotation(sibling);
-					sibling = get_sibling(node);
-				}
-				if (sibling != __nullnode && !sibling->color && (sibling->right != __nullnode && sibling->right->color)) {
-					sibling->color = node->parent->color;
-					node->parent->color = 0;
-					if (sibling->right != __nullnode)
-						sibling->right->color = 0;
-					left_rotation(node->parent);
-					node = __root;
-				}
+				// sibling = get_sibling(node);
+				// if (sibling != __nullnode && sibling->color) {
+				// 	sibling->color = 0;
+				// 	node->parent->color = 1;
+				// 	left_rotation(node->parent);
+				// 	sibling = get_sibling(node); //check;
+				// }
+				// if ((sibling == __nullnode || !sibling->color) && (sibling->right == __nullnode || !sibling->right->color) && (sibling->left == __nullnode || !sibling->left->color)) {
+				// 	sibling->color = 1;
+				// 	node = node->parent;
+				// }
+				// if (sibling != __nullnode && !sibling->color && (sibling->right == __nullnode || !sibling->right->color) && (sibling->left != __nullnode && sibling->left->color)) {
+				// 	sibling->color = 1;
+				// 	right_rotation(sibling);
+				// 	sibling = get_sibling(node);
+				// }
+				// // if (sibling != __nullnode && !sibling->color && (sibling->right != __nullnode && sibling->right->color)) {
+				// else {
+				// 	sibling->color = node->parent->color;
+				// 	node->parent->color = 0;
+				// 	if (sibling->right != __nullnode)
+				// 		sibling->right->color = 0;
+				// 	left_rotation(node->parent);
+				// 	node = __root;
+				// }
 			}
 			if (node != __nullnode)
 				node->color = 0; 
@@ -157,30 +220,32 @@ namespace ft {
 			ori_color = node->color;
 			if (node->left == __nullnode) {
 				tmp_node = node->right;
+				tmp_node2 = tmp_node;
 				transplant(node, tmp_node);
-				if (!ori_color)
-					___delete_fix(tmp_node);
 			}
 			else if (node->right == __nullnode) {
 				tmp_node = node->left;
+				tmp_node2 = tmp_node;
 				transplant(node, tmp_node);
-				if (!ori_color)
-					___delete_fix(tmp_node);
 			}
 			else {
-				tmp_node = get_sub_child_min(1, node);
-				tmp_node2 = tmp_node->right;
-				transplant(tmp_node, tmp_node2);
-				tmp_node->right = tmp_node2->parent;
-				tmp_node2->parent = tmp_node;
+				tmp_node = get_sub_child_min(1, node); // y
+				ori_color = tmp_node->color;
+				tmp_node2 = tmp_node->right; // x
+				if (tmp_node->parent == node)
+					tmp_node2->parent = tmp_node;
+				else {
+					transplant(tmp_node, tmp_node->right);
+					tmp_node->right = node->right;
+					tmp_node->right->parent = tmp_node;
+				}
 				transplant(node, tmp_node);
-				node->left->parent = tmp_node;
 				tmp_node->left = node->left;
-				tmp_node->parent = node->parent;
-				if (!ori_color)
-					___delete_fix(tmp_node2);
+				tmp_node->left->parent = tmp_node;
+				tmp_node->color = node->color;
 			}
-
+			if (!ori_color)
+				___delete_fix(tmp_node2);
 		}
 
 		void	RDT_delete(NODE<T> *delete_node) {
