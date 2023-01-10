@@ -14,8 +14,22 @@
 # include <map>
 # include <vector>
 #include <iostream>
-#include <iomanip>
 #include <type_traits>
+
+template <typename T>
+void print_tree(ft::NODE<T> *root, ft::NODE<T> *NULL_NODE, int indent = 0) {
+    if (root == NULL_NODE) {
+        return;
+    }
+    print_tree(root->right, NULL_NODE, indent + 4);
+    if (indent) {
+        std::cout << std::setw(indent) << ' ';
+    }
+    if (root->right) std::cout << " /\n" << std::setw(indent) << ' ';
+    std::cout << root->content << " (" << (root->color ? "red" : "black") << ")\n ";
+    if (root->left) std::cout << std::setw(indent) << ' ' << " \\\n";
+    print_tree(root->left, NULL_NODE, indent + 4);
+}
 
 void	test()
 {
@@ -32,14 +46,22 @@ void	test()
 		// ft::NODE<int> node5(9);
 		// ft::NODE<int> node6(13);
 		// ft::NODE<int> node7(23);
-		ft::NODE<int> node1(8);
-		ft::NODE<int> node2(18);
-		ft::NODE<int> node3(5);
-		ft::NODE<int> node4(15);
-		ft::NODE<int> node5(17);
-		ft::NODE<int> node6(25);
-		ft::NODE<int> node7(40);
-		ft::NODE<int> node8(80);
+		// ft::NODE<int> node1(8);
+		// ft::NODE<int> node2(18);
+		// ft::NODE<int> node3(5);
+		// ft::NODE<int> node4(15);
+		// ft::NODE<int> node5(17);
+		// ft::NODE<int> node6(25);
+		// ft::NODE<int> node7(40);
+		// ft::NODE<int> node8(80);
+		ft::NODE<int> node1(12);
+		ft::NODE<int> node2(8);
+		ft::NODE<int> node3(15);
+		ft::NODE<int> node4(1);
+		ft::NODE<int> node5(9);
+		ft::NODE<int> node6(13);
+		ft::NODE<int> node7(23);
+		ft::NODE<int> node8(10);
 		three.RDT_insert(&node1);
 		three.RDT_insert(&node2);
 		three.RDT_insert(&node3);
@@ -51,10 +73,13 @@ void	test()
 		// three.RDT_delete(&node6);
 		// three.RDT_delete(&node2);
 		// three.RDT_delete(&node7);
-		three.RDT_delete(&node5);
+		three.RDT_delete(&node2);
 		// std::cout << "root : " << three.__root->content << std::endl;
 		std::cout << "*****************************************************************\n";
-			print_node(three.__root);
+			// print_node(three.__root);
+			// std::cout << "ROOT : " << three.__root->content << std::endl;
+			// std::cout << "content : " << three.__root->left->content << std::endl;
+			ft::print_tree(three.__root, three.__nullnode);
 		// std::cout << three.__root->right->left->color << std::endl;
 		std::cout << "*****************************************************************\n";
 		// std::cout << three.__root->right->right->right->content << std::endl;
