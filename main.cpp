@@ -73,7 +73,8 @@ void	test()
 		// three.RDT_delete(&node6);
 		// three.RDT_delete(&node2);
 		// three.RDT_delete(&node7);
-		three.RDT_delete(&node2);
+		three.RDT_delete(&node8);
+		three.RDT_delete(&node3);
 		// std::cout << "root : " << three.__root->content << std::endl;
 		std::cout << "*****************************************************************\n";
 			// print_node(three.__root);

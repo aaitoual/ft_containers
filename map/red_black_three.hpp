@@ -136,8 +136,7 @@ namespace ft {
 		void	___delete_fix(NODE<T> *node) {
 			NODE<T> *sibling;
 
-			// std::cout << "CONTENT : " << node->content << std::endl;
-			while (node != __root && node != __nullnode && !node->color) {
+			while (node != __root && node != __nullnode && node->color) {
 				if (node == node->parent->left) {
 					sibling = node->parent->right;
 					if (sibling != __nullnode && sibling->color) {
@@ -146,18 +145,22 @@ namespace ft {
 						left_rotation(node->parent);
 						sibling = node->parent->right;
 					}
-					if ((sibling == __nullnode || !sibling->color) && (sibling->right == __nullnode || !sibling->right->color) && (sibling->left == __nullnode || !sibling->left->color)) {
+					// if ((sibling == __nullnode || !sibling->color) && (sibling->right == __nullnode || !sibling->right->color) && (sibling->left == __nullnode || !sibling->left->color)) {
+					if ((sibling == __nullnode || !sibling->color) && (sibling->right == __nullnode || !sibling->right->color)) {
 						sibling->color = 1;
 						node = node->parent;
 					}
 					else {
-						if (sibling != __nullnode && !sibling->color && (sibling->right == __nullnode || !sibling->right->color) && (sibling->left != __nullnode && sibling->left->color)) {
-							sibling->left->color = 0;
+						// if (sibling != __nullnode && !sibling->color && (sibling->right == __nullnode || !sibling->right->color) && (sibling->left != __nullnode && sibling->left->color)) {
+						if ((sibling->right == __nullnode || !sibling->right->color)) {
+							if (sibling->left != __nullnode)
+								sibling->left->color = 0;
 							sibling->color = 1;
 							right_rotation(sibling);
 							sibling = node->parent->right;
 						}
-						if (sibling != __nullnode && !sibling->color && sibling->right != __nullnode && sibling->right->color) {
+						// if (sibling != __nullnode && !sibling->color && sibling->right != __nullnode && sibling->right->color) {
+						if (1) {
 							sibling->color = node->parent->color;
 							node->parent->color = 0;
 							sibling->right->color = 0;
@@ -167,34 +170,37 @@ namespace ft {
 					}
 				}
 				//////////////////////////////////////////////////////////////
-				else if (node == node->parent->right) {
-					sibling = node->parent->left;
-					if (sibling != __nullnode && sibling->color) {
-						sibling->color = 0;
-						node->parent->color = 1;
-						right_rotation(node->parent);
-						sibling = node->parent->left;
-					}
-					if ((sibling == __nullnode || !sibling->color) && (sibling->left == __nullnode || !sibling->left->color) && (sibling->right == __nullnode || !sibling->right->color)) {
-						sibling->color = 1;
-						node = node->parent;
-					}
-					else {
-						if (sibling != __nullnode && !sibling->color && (sibling->left == __nullnode || !sibling->left->color) && (sibling->right != __nullnode && sibling->right->color)) {
-							sibling->right->color = 0;
-							sibling->color = 1;
-							left_rotation(sibling);
-							sibling = node->parent->left;
-						}
-						if (sibling != __nullnode && !sibling->color && sibling->left != __nullnode && sibling->left->color) {
-							sibling->color = node->parent->color;
-							node->parent->color = 0;
-							sibling->left->color = 0;
-							right_rotation(node->parent);
-							node = __root;
-						}
-					}
-				}
+				// else if (node == node->parent->right) {
+				// 	sibling = node->parent->left;
+				// 	if (sibling != __nullnode && sibling->color) {
+				// 		sibling->color = 0;
+				// 		node->parent->color = 1;
+				// 		right_rotation(node->parent);
+				// 		sibling = node->parent->left;
+				// 	}
+				// 	// if ((sibling == __nullnode || !sibling->color) && (sibling->left == __nullnode || !sibling->left->color) && (sibling->right == __nullnode || !sibling->right->color)) {
+				// 	if ((sibling == __nullnode || !sibling->color) && (sibling->left == __nullnode || !sibling->left->color)) {
+				// 		sibling->color = 1;
+				// 		node = node->parent;
+				// 	}
+				// 	else {
+				// 		// if (sibling != __nullnode && !sibling->color && (sibling->left == __nullnode || !sibling->left->color) && (sibling->right != __nullnode && sibling->right->color)) {
+				// 		if ((sibling->left == __nullnode || !sibling->left->color)) {
+				// 			sibling->right->color = 0;
+				// 			sibling->color = 1;
+				// 			left_rotation(sibling);
+				// 			sibling = node->parent->left;
+				// 		}
+				// 		// if (sibling != __nullnode && !sibling->color && sibling->left != __nullnode && sibling->left->color) {
+				// 		if (1) {
+				// 			sibling->color = node->parent->color;
+				// 			node->parent->color = 0;
+				// 			sibling->left->color = 0;
+				// 			right_rotation(node->parent);
+				// 			node = __root;
+				// 		}
+				// 	}
+				// }
 			}
 			if (node != __nullnode)
 				node->color = 0; 
@@ -205,70 +211,36 @@ namespace ft {
 			NODE<T>	*tmp_node;
 			NODE<T>	*tmp_node2;
 
-			// ori_color = node->color;
-			// if (node->left == __nullnode) {
-			// 	tmp_node = node->right;
-			// 	tmp_node2 = tmp_node;
-			// 	transplant(node, tmp_node);
-			// }
-			// else if (node->right == __nullnode) {
-			// 	tmp_node = node->left;
-			// 	tmp_node2 = tmp_node;
-			// 	transplant(node, tmp_node);
-			// }
-			// else {
-			// 	tmp_node = get_sub_child_min(1, node); // y
-			// 	ori_color = tmp_node->color;
-			// 	tmp_node2 = tmp_node->right; // x
-			// 	if (tmp_node->parent == node)
-			// 		tmp_node2->parent = tmp_node;
-			// 	else {
-			// 		transplant(tmp_node, tmp_node->right);
-			// 		tmp_node->right = node->right;
-			// 		tmp_node->right->parent = tmp_node;
-			// 	}
-			// 	transplant(node, tmp_node);
-			// 	tmp_node->left = node->left;
-			// 	tmp_node->left->parent = tmp_node;
-			// 	tmp_node->color = node->color;
-			// }
-			// if (!ori_color)
-			// 	___delete_fix(tmp_node2);
 			ori_color = node->color;
 			if (node->left == __nullnode) {
 				tmp_node = node->right;
 				transplant(node, tmp_node);
-				if (!ori_color)
-					___delete_fix(tmp_node);
 			}
 			else if (node->right == __nullnode) {
 				tmp_node = node->left;
 				transplant(node, tmp_node);
-				if (!ori_color)
-					___delete_fix(tmp_node);
 			}
 			else {
-				tmp_node = get_sub_child_min(1, node); // y
-				// print_tree(__root, __nullnode);
-				// puts ("**********************************");
- 				// ori_color = tmp_node->color;
-				tmp_node->color = ori_color;
-				tmp_node2 = tmp_node->right; // x
-				transplant(tmp_node, tmp_node2);
-				// print_tree(__root, __nullnode);
-				tmp_node->right = node->right; // maybe tmp_node->right = tnp_node->parent;
-				node->right->parent = tmp_node;
-				// tmp_node->right = tmp_node2->parent;
-				// tmp_node2->parent->parent = tmp_node;
-
-				// tmp_node->right = tmp_node->parent;
-				transplant(node, tmp_node);
-				tmp_node->left = node->left;
+				tmp_node2 = get_sub_child_min(1, node);
+ 				ori_color = tmp_node2->color;
+				tmp_node = tmp_node2->right;
+				if (tmp_node2->parent == node) {
+					if (tmp_node != __nullnode)
+						tmp_node->parent = tmp_node2;
+				}
+				else {
+					transplant(tmp_node2, tmp_node);
+					tmp_node2->right = node->right;
+					node->right->parent = tmp_node2;
+				}
+				transplant(node, tmp_node2);
+				tmp_node2->left = node->left;
 				if (node->left != __nullnode)
-					node->left->parent = tmp_node;
-				if (!ori_color)
-					___delete_fix(tmp_node2);
+					node->left->parent = tmp_node2;
+				tmp_node2->color = node->color;
 			}
+			if (!ori_color)
+				___delete_fix(tmp_node);
 		}
 
 		void	RDT_delete(NODE<T> *delete_node) {
