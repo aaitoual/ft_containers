@@ -307,7 +307,7 @@ namespace ft {
 						G_parent->color = 1;
 					}
 				}
-				if (which_node(parent) == 1) {
+				else if (which_node(parent) == 1) {
 					if (G_parent != __nullnode && G_parent->left != __nullnode && G_parent->left->color == 1) {
 						G_parent->color = 1;
 						parent->color = 0;
