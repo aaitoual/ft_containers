@@ -6,7 +6,7 @@
 /*   By: aaitoual <aaitoual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 20:55:51 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/11/06 20:30:06 by aaitoual         ###   ########.fr       */
+/*   Updated: 2023/01/10 23:24:16 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ namespace ft
 	typedef	typename allocator_type::const_pointer		const_pointer;
 	typedef typename alloc::size_type					size_type;
 	typedef std::allocator_traits<allocator_type>       __alloc_traits;
-	// typedef	typename long int									difference_type;
+	typedef long int									difference_type;
 	
 //****************************************iterator*******************************************************************//
 		public :

@@ -6,7 +6,7 @@
 /*   By: aaitoual <aaitoual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 22:21:42 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/12/02 00:13:08 by aaitoual         ###   ########.fr       */
+/*   Updated: 2023/01/11 01:00:58 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,12 @@ namespace ft {
 	/////////////////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////////////////
-	template<typename T> class RDT {
+	template<typename T> class RBT {
 	public :
 		NODE<T>	*__root;
 		NODE<T>	*__nullnode;
-		NODE<T>	*leaf;
-		RDT (void) : __root(NULL), __nullnode(NULL), leaf(new NODE<T>()) {}
-		void	RDT_insert(NODE<T> *new_node) {
+		RBT (void) : __root(NULL), __nullnode(NULL) {}
+		void	RBT_insert(NODE<T> *new_node) {
 			NODE<T> *x = __root;
 			NODE<T> *y = __root;
 			while (x != __nullnode) {
@@ -243,7 +242,7 @@ namespace ft {
 				___delete_fix(tmp_node);
 		}
 
-		void	RDT_delete(NODE<T> *delete_node) {
+		void	RBT_delete(NODE<T> *delete_node) {
 			__delete(delete_node);
 		}
 		void	right_rotation(NODE<T> *node) {
@@ -335,10 +334,6 @@ namespace ft {
 			}
 		}
 	};
-	/////////////////////////////////////////////////////////////////////////////
-	/////////////////////////////////////////////////////////////////////////////
-	/////////////////////////////////////////////////////////////////////////////
-	/////////////////////////////////////////////////////////////////////////////
 	template<typename T>
 	int	which_node(NODE<T> *node) {
 		if (node->parent->right == node)

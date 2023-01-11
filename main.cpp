@@ -16,21 +16,6 @@
 #include <iostream>
 #include <type_traits>
 
-template <typename T>
-void print_tree(ft::NODE<T> *root, ft::NODE<T> *NULL_NODE, int indent = 0) {
-    if (root == NULL_NODE) {
-        return;
-    }
-    print_tree(root->right, NULL_NODE, indent + 4);
-    if (indent) {
-        std::cout << std::setw(indent) << ' ';
-    }
-    if (root->right) std::cout << " /\n" << std::setw(indent) << ' ';
-    std::cout << root->content << " (" << (root->color ? "red" : "black") << ")\n ";
-    if (root->left) std::cout << std::setw(indent) << ' ' << " \\\n";
-    print_tree(root->left, NULL_NODE, indent + 4);
-}
-
 void	test()
 {
 	{
@@ -70,9 +55,9 @@ void	test()
 		three.RDT_insert(&node6);
 		three.RDT_insert(&node7);
 		three.RDT_insert(&node8);
-		// three.RDT_delete(&node6);
+		three.RDT_delete(&node5);
 		// three.RDT_delete(&node2);
-		// three.RDT_delete(&node7);
+		three.RDT_delete(&node7);
 		// three.RDT_delete(&node8);
 		// three.RDT_delete(&node3);
 		// std::cout << "root : " << three.__root->content << std::endl;
@@ -101,8 +86,18 @@ void	test()
 	}
 }
 
+void	test2() {
+	{
+		std::map<int, int> test;
+	}
+	puts ("----------------------\n\n\n\n-------------------");
+	{
+		ft::map<int, int> test;
+	}
+}
+
 int main() {
-	test();
+	test2();
 	std::cout << std::endl << std::endl << std::endl << std::endl << std::endl << std::endl;
 	// system("leaks containers");
 	return 0;
