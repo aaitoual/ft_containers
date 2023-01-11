@@ -6,7 +6,7 @@
 /*   By: aaitoual <aaitoual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 21:02:50 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/12/01 22:38:15 by aaitoual         ###   ########.fr       */
+/*   Updated: 2023/01/11 05:29:57 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	test()
 	}
 	// puts ("\n***************************\n");
 	{
-		ft::RDT<int> three;
+		ft::RBT<int> three;
 		// ft::NODE<int> node1(8);
 		// ft::NODE<int> node2(5);
 		// ft::NODE<int> node3(15);
@@ -47,17 +47,17 @@ void	test()
 		ft::NODE<int> node6(7);
 		ft::NODE<int> node7(6);
 		ft::NODE<int> node8(20);
-		three.RDT_insert(&node1);
-		three.RDT_insert(&node2);
-		three.RDT_insert(&node3);
-		three.RDT_insert(&node4);
-		three.RDT_insert(&node5);
-		three.RDT_insert(&node6);
-		three.RDT_insert(&node7);
-		three.RDT_insert(&node8);
-		three.RDT_delete(&node5);
+		three.RBT_insert(&node1);
+		three.RBT_insert(&node2);
+		three.RBT_insert(&node3);
+		three.RBT_insert(&node4);
+		three.RBT_insert(&node5);
+		three.RBT_insert(&node6);
+		three.RBT_insert(&node7);
+		three.RBT_insert(&node8);
+		three.RBT_delete(&node5);
 		// three.RDT_delete(&node2);
-		three.RDT_delete(&node7);
+		three.RBT_delete(&node7);
 		// three.RDT_delete(&node8);
 		// three.RDT_delete(&node3);
 		// std::cout << "root : " << three.__root->content << std::endl;
@@ -92,7 +92,7 @@ void	test2() {
 	}
 	puts ("----------------------\n\n\n\n-------------------");
 	{
-		ft::map<int, int> test;
+		ft::map<int, std::string> test;
 	}
 }
 
