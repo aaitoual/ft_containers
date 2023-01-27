@@ -13,6 +13,7 @@
 # pragma once
 
 
+# include <iterator>
 # include "vector/vector.hpp"
 # include "implementations/iterator_traits.hpp"
 # include "implementations/reverse_iterator.hpp"

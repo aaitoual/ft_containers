@@ -12,11 +12,11 @@
 
 NAME = containers
 
-CC = c++
+CC = g++
 
 CFLAGS = 
 
-OBJ_PATH = ./__Obj_Tmp_Fils/
+OBJ_PATH = ./__Obj_Tmp_Files/
 
 VECTOR_EXCEP_ = __exceptions.cpp
 

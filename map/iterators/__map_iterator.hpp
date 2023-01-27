@@ -14,10 +14,10 @@
 # include "../../implementations/iterator_traits.hpp"
 
 template<typename S>
-class iterator_map : public std::iterator < std::random_access_iterator_tag, S, const S, S>{
+class iterator_map : public std::iterator <std::random_access_iterator_tag, S, const S, S>{
 	public :
-		typedef typename ft::iterator_traits<S>::reference 			reference;
-		typedef typename ft::iterator_traits<S>::difference_type	difference_type;
+		typedef S& 			reference;
+		typedef long int	difference_type;
 	private :
 		S	current;
 	public :

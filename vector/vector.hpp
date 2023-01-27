@@ -150,8 +150,8 @@ namespace ft
 				capacity__ = capacity_;
 				size__ = capacity_;
 			}
-			template <class IT >
-        	vector (IT first, IT last, const allocator_type& tmp = allocator_type(), typename ft::enable_if<!std::is_integral<IT>::value>::type = NULL) {									//range
+			template <class IT>
+        	vector (IT first, IT last, const allocator_type& tmp = allocator_type(), typename enable_if<!std::is_integral<IT>::value>::type = NULL) {									//range
 				(void) tmp;
 				alloc_obj.construct(arr);
 				capacity__ = 0;

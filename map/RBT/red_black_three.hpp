@@ -52,14 +52,19 @@ namespace ft {
 	/////////////////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////////////////
-	template<typename T> class RBT {
+	template<typename T, typename Alloc = std::allocator<NODE<T> > > class RBT {
 	public :
 		NODE<T>	*__root;
 		NODE<T>	*__nullnode;
+		Alloc	__alloc_obj;
+
 		RBT (void) : __root(NULL), __nullnode(NULL) {}
-		void	RBT_insert(NODE<T> *new_node) {
+		void	RBT_insert(T new_content) {
 			NODE<T> *x = __root;
 			NODE<T> *y = __root;
+			NODE<T>	*new_node = __alloc_obj.allocate(1);
+			__alloc_obj.construct(new_node, new_content);
+
 			while (x != __nullnode) {
 				y = x;
 				if (new_node->content < x->content)
