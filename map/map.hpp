@@ -23,10 +23,10 @@ namespace ft
 	{
 	private:
 		// typedef _Rb_tree<key_type, value_type, _Select1st<value_type>, key_compare, _Pair_alloc_type> RBT_type;
-		typedef ft::RBT<std::pair<const Key, T>> RBT_type;
+		typedef ft::RBT<std::pair<Key, T> > RBT_type;
 
 	public:
-		typedef typename std::pair<const Key, T> value_type;
+		typedef typename std::pair<Key, T> value_type;
 		typedef T mapped_type;
 		typedef Key key_type;
 		typedef Compare key_compare;

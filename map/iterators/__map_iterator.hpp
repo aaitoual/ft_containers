@@ -28,8 +28,8 @@ class iterator_map : public std::iterator <std::random_access_iterator_tag, S, c
 		iterator_map () : current() {}
 		iterator_map (ft::NODE<S>* it) : current(it) {}
 		template <typename T>
-		iterator_map (const iterator_map<T>& it) : current(it.base()) {};
-		S&				operator * () const {current->content;}
+		iterator_map (iterator_map<T>& it) : current(it.base()) {};
+		S&				operator * () const {return current->content;}
 		// std::pair<i				operator * () const {return std::pair<int, std::string> (1, "test");}
 		// S						operator -> () const {return current;}
 		// iterator_map			operator ++ (int) {iterator_map	tmp(current);current++;return tmp;}

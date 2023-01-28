@@ -94,15 +94,17 @@ void	test2() {
 		// test[10] = "test1";
 		// std::cout << test[10] << std::endl;
 		// std::cout << pr.second << std::endl;
-		std::cout << (*tmp.first).first << std::endl;
+		std::cout << (*tmp.first).second << std::endl;
 	}
 	puts ("**************************\n\n\n\n**************************");
 	{
 		ft::map<int, std::string> test;
 		std::pair<int, std::string> pr(10, "test");
 		std::pair<ft::map<int, std::string>::iterator, bool> tmp = test.insert(pr);
-		// std::cout << tmp.first << std::endl;
-		std::cout << (*tmp.first).first << std::endl;
+		// test[10] = "test1";
+		// std::cout << test[10] << std::endl;
+		// std::cout << pr.second << std::endl;
+		std::cout << (*tmp.first).second << std::endl;
 	}
 }
 
