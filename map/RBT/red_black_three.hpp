@@ -17,9 +17,12 @@
 #include <cstdlib>
 #include <iomanip>
 
+template<typename S>
+class iterator_map;
 
 namespace ft {
-	template<typename T> class NODE {
+	template<typename T>
+	class NODE {
 		public :
 			NODE	*parent;
 			NODE	*right;
@@ -28,20 +31,20 @@ namespace ft {
 			bool	color; //0 black, 1 red
 			NODE (T content_) : parent(NULL), right(NULL), left(NULL), color(1), content(content_) {}
 			NODE (void) : parent(NULL), right(NULL), left(NULL), color(0), content(T()) {}
+			T		operator *() {return content;}
 			// NODE (NODE<T> & copy) : parent(NULL), right(NULL), left(NULL), color(1), content(T()) {}
-			// void	operator = (const NODE& copy) {
-			// 	color = copy.color;
-			// 	content = copy.content;
-			// 	right = copy->right;
-			// 	left = copy->left;
-			// 	parent = copy->parent;
-			// }
+			void	operator = (const NODE& copy){
+				color = copy.color;
+				content = copy.content;
+				right = copy->right;
+				left = copy->left;
+				parent = copy->parent;
+			}
 	};
 	template <typename T>
 	void print_tree(ft::NODE<T> *root, ft::NODE<T> *NULL_NODE, int indent = 0);
 	template <typename T>
-	void	print_node(ft::NODE<T> *node)
-	{
+	void	print_node(ft::NODE<T> *node) {
 		if (node->left)
 			print_node(node->left);
 		std::cout << node->content << "   " << node->color << std::endl;
@@ -54,6 +57,8 @@ namespace ft {
 	/////////////////////////////////////////////////////////////////////////////
 	template<typename T, typename Alloc = std::allocator<NODE<T> > > class RBT {
 	public :
+		typedef	iterator_map<T>						iterator;
+		typedef	iterator_map<const T>				const_iterator;
 		NODE<T>	*__root;
 		NODE<T>	*__nullnode;
 		Alloc	__alloc_obj;

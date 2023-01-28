@@ -102,7 +102,7 @@ void	test2() {
 		std::pair<int, std::string> pr(10, "test");
 		std::pair<ft::map<int, std::string>::iterator, bool> tmp = test.insert(pr);
 		// std::cout << tmp.first << std::endl;
-		*tmp.first;
+		std::cout << (*tmp.first).first << std::endl;
 	}
 }
 

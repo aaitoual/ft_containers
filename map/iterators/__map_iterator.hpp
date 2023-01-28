@@ -10,8 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+# pragma once
+
 # include <iterator>
 # include "../../implementations/iterator_traits.hpp"
+# include "../RBT/red_black_three.hpp"
 
 template<typename S>
 class iterator_map : public std::iterator <std::random_access_iterator_tag, S, const S, S>{
@@ -19,24 +22,25 @@ class iterator_map : public std::iterator <std::random_access_iterator_tag, S, c
 		typedef S& 			reference;
 		typedef long int	difference_type;
 	private :
-		S	current;
+		ft::NODE<S>	*current;
 	public :
 		S	base() const {return current;}
 		iterator_map () : current() {}
-		iterator_map (S it) : current(it) {}
+		iterator_map (ft::NODE<S>* it) : current(it) {}
 		template <typename T>
 		iterator_map (const iterator_map<T>& it) : current(it.base()) {};
-		reference				operator * () const {return *current;}
-		S						operator -> () const {return current;}
-		iterator_map			operator ++ (int) {iterator_map	tmp(current);current++;return tmp;}
-		iterator_map&			operator ++ () {current++;return *this;}
-		iterator_map			operator -- (int) {iterator_map	tmp(current);current--;return tmp;}
-		iterator_map&			operator -- () {current--;return *this;}
-		template <typename T>
-		iterator_map&			operator = (const iterator_map<T>& copy) {current = copy.base(); return *this;}
-		bool					operator != (iterator_map& iter) {return (this->current != iter.current) ?  1 : 0;}
-		bool					operator == (iterator_map& iter) {return (this->current != iter.current) ?  0 : 1;}
+		S&				operator * () const {current->content;}
+		// std::pair<i				operator * () const {return std::pair<int, std::string> (1, "test");}
+		// S						operator -> () const {return current;}
+		// iterator_map			operator ++ (int) {iterator_map	tmp(current);current++;return tmp;}
+		// iterator_map&			operator ++ () {current++;return *this;}
+		// iterator_map			operator -- (int) {iterator_map	tmp(current);current--;return tmp;}
+		// iterator_map&			operator -- () {current--;return *this;}
+		// template <typename T>
+		iterator_map&			operator = (const iterator_map<S>& copy) {current = copy.base(); return *this;}
+		// bool					operator != (iterator_map& iter) {return (this->current != iter.current) ?  1 : 0;}
+		// bool					operator == (iterator_map& iter) {return (this->current != iter.current) ?  0 : 1;}
 		
-		friend	bool			operator != (const iterator_map& that, const iterator_map& iter) {return (that.base() != iter.base()) ?  1 : 0;}
-		friend	bool			operator == (const iterator_map& that, const iterator_map& iter) {return (that.base() != iter) ?  0 : 1;}
+		// friend	bool			operator != (const iterator_map& that, const iterator_map& iter) {return (that.base() != iter.base()) ?  1 : 0;}
+		// friend	bool			operator == (const iterator_map& that, const iterator_map& iter) {return (that.base() != iter) ?  0 : 1;}
 };
