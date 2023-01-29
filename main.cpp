@@ -90,21 +90,22 @@ void	test2() {
 	{
 		std::map<int, std::string> test;
 		std::pair<int, std::string> pr(10, "test");
+		std::pair<int, std::string> pr2(20, "test2");
 		std::pair<std::map<int, std::string>::iterator, bool> tmp = test.insert(pr);
-		// test[10] = "test1";
-		// std::cout << test[10] << std::endl;
-		// std::cout << pr.second << std::endl;
-		std::cout << (*tmp.first).second << std::endl;
+		test.insert(tmp.first, pr2);
 	}
 	puts ("**************************\n\n\n\n**************************");
 	{
-		ft::map<int, std::string> test;
-		std::pair<int, std::string> pr(10, "test");
-		std::pair<ft::map<int, std::string>::iterator, bool> tmp = test.insert(pr);
-		// test[10] = "test1";
-		// std::cout << test[10] << std::endl;
-		// std::cout << pr.second << std::endl;
-		std::cout << (*tmp.first).second << std::endl;
+		// ft::map<int, std::string> test;
+		// std::pair<int, std::string> pr(10, "test");
+		// std::pair<int, std::string> pr2(20, "test2");
+		// std::pair<ft::map<int, std::string>::iterator, bool> tmp = test.insert(pr);
+		// std::pair<ft::map<int, std::string>::iterator, bool> tmp2 = test.insert(pr2);
+		// // test[10] = "test1";
+		// test[30] = "test3";
+		// std::cout << test[30] << std::endl;
+		// // std::cout << pr.second << std::endl;
+		// std::cout << (*tmp.first).second << std::endl;
 	}
 }
 

@@ -23,10 +23,10 @@ namespace ft
 	{
 	private:
 		// typedef _Rb_tree<key_type, value_type, _Select1st<value_type>, key_compare, _Pair_alloc_type> RBT_type;
-		typedef ft::RBT<std::pair<Key, T> > RBT_type;
+		typedef ft::RBT<std::pair<const Key, T> > RBT_type;
 
 	public:
-		typedef typename std::pair<Key, T> value_type;
+		typedef typename std::pair<const Key, T> value_type;
 		typedef T mapped_type;
 		typedef Key key_type;
 		typedef Compare key_compare;
@@ -55,6 +55,33 @@ namespace ft
 		///////////////////////////////////////////////
 		///////////////////////////////////////////////
 		///////////////////////////////////////////////
+				///////////////////////////////////////////////
+		///////////////////////////////////////////////
+		///////////////////////////////////////////////
+	private :
+		ft::NODE<value_type> *find_node(const key_type &key)
+		{
+			ft::NODE<value_type> *node = __tree.__root;
+
+			while (node != __tree.__nullnode)
+			{
+				if (key == node->content.first)
+					break;
+				if (__comp(key, node->content.first))
+				{
+					if (node->left == __tree.__nullnode)
+						break;
+					node = node->left;
+				}
+				else
+				{
+					if (node->right == __tree.__nullnode)
+						break;
+					node = node->right;
+				}
+			}
+			return node;
+		}
 	public:
 		explicit map(const key_compare &comp = key_compare(), const allocator_type &alloc = allocator_type())
 		{
@@ -98,38 +125,21 @@ namespace ft
 		////////////////////////////////////////////////
 		////////////////////////////////////////////////
 		////////////////////////////////////////////////
-		mapped_type &operator[](const key_type &k) {}
-		///////////////////////////////////////////////
-		///////////////////////////////////////////////
-		///////////////////////////////////////////////
-		ft::NODE<value_type> *find_node(const key_type &key)
-		{
-			ft::NODE<value_type> *node = __tree.__root;
-
-			while (node != __tree.__nullnode)
-			{
-				if (key == node->content.first)
-					break;
-				if (__comp(key, node->content.first))
-				{
-					if (node->left == __tree.__nullnode)
-						break;
-					node = node->left;
-				}
-				else
-				{
-					if (node->right == __tree.__nullnode)
-						break;
-					node = node->right;
-				}
+		mapped_type &operator[](const key_type &key) {
+			ft::NODE<value_type> *tmp = find_node(key);
+			
+			if (tmp != __tree.__nullnode && tmp->content.first == key)
+				return tmp->content.second;
+			else {
+				insert(value_type (key, mapped_type()));
+				tmp = find_node(key);
 			}
-			return node;
+			return tmp->content.second;
 		}
 		///////////////////////////////////////////////
 		///////////////////////////////////////////////
 		///////////////////////////////////////////////
-		std::pair<iterator, bool> insert(const value_type &val)
-		{
+		std::pair<iterator, bool> insert(const value_type &val) {
 			ft::NODE<value_type> *tmp = find_node(val.first);
 
 			if (tmp != __tree.__nullnode && tmp->content.first == val.first)
@@ -146,5 +156,11 @@ namespace ft
 			}
 			// return ret;
 		}
+
+		// iterator insert (iterator position, const value_type& val) {
+		// 	ft::NODE<value_type> *tmp = find_node(val.first);
+
+		// 	// if (*position.)
+		// }
 	};
 }
