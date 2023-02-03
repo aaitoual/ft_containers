@@ -90,42 +90,60 @@
 void	test2() {
 	{
 		std::map<int, std::string> test;
-		// std::map<int, std::string> test2;
+		std::map<int, std::string> test2;
 		std::pair<int, std::string> pr(10, "test");
 		std::pair<int, std::string> pr2(20, "test2");
 		std::pair<int, std::string> pr3(5, "test3");
-		std::pair<std::map<int, std::string>::iterator, bool> tmp = test.insert(pr);
-		test.insert(pr2);
-		test.insert(pr3);
-		test.insert({21, "test21"});
-		// test.insert({19, "test19"});
-		// test.insert({4, "test4"});
-		// test.insert({6, "test6"});
+		test.insert(pr);
+		test.insert (pr2);
+		test.insert (pr3);
+		test.insert({19, "test19"});
+		std::pair<std::map<int, std::string>::iterator, bool> tmp = test.insert({21, "test21"});
+		test.insert({4, "test5"});
+		test.insert({6, "test6"});
+		// test2 = test;
+		// test[10] = "test10";
 		std::map<int, std::string>::iterator it = tmp.first;
 		--it;
-		// --it;
+		--it;
+		--it;
+		--it;
+		--it;
+		--it;
+		--it;
+
 		std::cout << (*it).first << std::endl;
-		// test.insert(tmp.first, pr2);
+		// std::cout << test[10] << std::endl;
+		// std::cout << test2[10] << std::endl;
+
 	}
 	std::cout << ("**************************\n\n\n\n**************************") << std::endl;
 	{
 		ft::map<int, std::string> test;
-		// std::map<int, std::string> test2;
+		ft::map<int, std::string> test2;
 		std::pair<int, std::string> pr(10, "test");
 		std::pair<int, std::string> pr2(20, "test2");
 		std::pair<int, std::string> pr3(5, "test3");
-		std::pair<ft::map<int, std::string>::iterator, bool> tmp = test.insert(pr);
-		test.insert(pr2);
-		test.insert(pr3);
-		test.insert({21, "test21"});
-		// test.insert({19, "test19"});
-		// test.insert({4, "test4"});
-		// test.insert({6, "test6"});
+		test.insert(pr);
+		test.insert (pr2);
+		test.insert (pr3);
+		test.insert({19, "test19"});
+		std::pair<ft::map<int, std::string>::iterator, bool> tmp = test.insert({21, "test21"});
+		test.insert({4, "test5"});
+		test.insert({6, "test6"});
+		// test2 = test;
+		// test[10] = "test10";
 		ft::map<int, std::string>::iterator it = tmp.first;
 		--it;
-		// --it;
+		--it;
+		--it;
+		--it;
+		--it;
+		--it;
+		--it;
 		std::cout << (*it).first << std::endl;
-		// test.insert(tmp.first, pr2);
+		// std::cout << test[10] << std::endl;
+		// std::cout << test2[10] << std::endl;
 	}
 }
 

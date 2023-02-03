@@ -42,6 +42,50 @@ namespace ft {
 				parent = copy->parent;
 				null_node = NULL;
 			}
+			NODE *get_next() {
+				NODE	*tmp;
+				NODE	*ret;
+				if (right != NULL) {
+					tmp = right;
+					ret = right;
+					while (tmp != NULL) {
+						ret = tmp;
+						tmp = tmp->left;
+					}
+					return ret;
+				}
+				else if (parent != NULL && parent->left == this) {
+					return parent;
+				}
+				else if (parent != NULL && parent->left != this) {
+					if (parent->parent != NULL)
+						return parent->parent;
+					else
+						return this + 1;
+				}
+			}
+			NODE *get_prev() {
+				NODE	*tmp;
+				NODE	*ret;
+				if (left != NULL) {
+					tmp = left;
+					ret = left;
+					while (tmp != NULL) {
+						ret = tmp;
+						tmp = tmp->right;
+					}
+					return ret;
+				}
+				else if (parent != NULL && parent->right == this) {
+					return parent;
+				}
+				else if (parent != NULL && parent->right != this) {
+					if (parent->parent != NULL)
+						return parent->parent;
+					else
+						return this - 1;
+				}
+			}
 	};
 	template <typename T>
 	void print_tree(ft::NODE<T> *root, ft::NODE<T> *NULL_NODE, int indent = 0);
@@ -66,6 +110,9 @@ namespace ft {
 		Alloc	__alloc_obj;
 
 		RBT (void) : __root(NULL), __nullnode(NULL) {}
+		RBT&	operator = (RBT &copy) {
+			return *this;
+		}
 		void	RBT_insert(T new_content) {
 			NODE<T> *x = __root;
 			NODE<T> *y = __root;

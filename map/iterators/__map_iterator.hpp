@@ -35,20 +35,12 @@ class iterator_map : public std::iterator <std::random_access_iterator_tag, S, c
 		// S						operator -> () const {return current;}
 		iterator_map			operator ++ (int) {iterator_map	tmp(current);*this++;return tmp;}
 		iterator_map&			operator ++ () {
-			if (current->right != current->null_node)
-				current = current->right;
-			else if (current->parent != current->null_node && current->parent->left == current)
-				current = current->parent;
-			else {} //do something about that if i need it
+			current = current->get_next();
 			return *this;
 		}
 		iterator_map			operator -- (int) {iterator_map	tmp(current);*this--;return tmp;}
 		iterator_map&			operator -- () {
-			if (current->left != current->null_node)
-				current = current->left;
-			else if (current->parent != current->null_node && current->parent->right == current)
-				current = current->parent;
-			else {} //do something about that if i need it
+			current = current->get_prev();
 			return *this;
 		}
 		// template <typename T>

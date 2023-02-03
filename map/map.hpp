@@ -90,19 +90,6 @@ namespace ft
 			__size = 0;
 			__alloc = alloc;
 			__comp = comp;
-			// std::pair <const int, std::string> tmp1 = std::make_pair(10, "test10");
-			// std::pair <const int, std::string> tmp2= std::make_pair(11, "test11");
-			// std::pair <const int, std::string> tmp3 = std::make_pair(12, "test12");
-			// std::pair <const int, std::string> tmp4 = std::make_pair(13, "test13");
-			// ft::NODE<value_type> node1(tmp1);
-			// ft::NODE<value_type> node2(tmp2);
-			// ft::NODE<value_type> node3(tmp3);
-			// ft::NODE<value_type> node4(tmp4);
-			// __tree.RBT_insert(&node1);
-			// __tree.RBT_insert(&node2);
-			// __tree.RBT_insert(&node3);
-			// __tree.RBT_insert(&node4);
-			// std::cout << "content : " << find_node(13).second << std::endl;
 		}
 
 		template <class Iter>
@@ -111,22 +98,23 @@ namespace ft
 			__size = 0;
 			__alloc = alloc;
 			__comp = comp;
-			if (first > last)
-			{
-				// throw
-				std::cout << "throw \n";
-				exit(0);
-			}
-			if (first == last)
-			{
-				return;
-			}
-			for (Iter it = first; it != last; it++)
-				__tree.RBT_insert(*it);
+			insert(first, last);
+		}
+
+		map (const map& x) {
+			*this = x;
 		}
 		////////////////////////////////////////////////
 		////////////////////////////////////////////////
 		////////////////////////////////////////////////
+		map&	operator = (const map& x) {
+			__size = x.__size;
+			__alloc = x.__alloc;
+			__comp = x.__comp;
+			__tree = x.__tree;
+			return *this;
+		}
+
 		mapped_type &operator[](const key_type &key) {
 			ft::NODE<value_type> *tmp = find_node(key);
 			
@@ -166,8 +154,10 @@ namespace ft
 
 		template <class IT>
   		void insert (IT first, IT last) {
-			if (first > last)
+			if (first > last) {
 				std::cout << "EXCEPTION\n"; //return an exception;
+				exit (0);
+			}
 			if (first == last)
 				return ;
 			for (IT it = first; it != last; it++)
