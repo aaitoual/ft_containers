@@ -24,7 +24,7 @@ namespace  ft {
 	
 	template <typename T>
 	struct iterator_traits <T*>{
-		typedef ptrdiff_t						difference_type;
+		typedef long int				difference_type;
 		typedef T						value_type;
 		typedef T*						pointer;
 		typedef T&						reference;
@@ -33,7 +33,7 @@ namespace  ft {
 	
 	template <typename T>
 	struct iterator_traits<const T*> {
-		typedef ptrdiff_t						difference_type;
+		typedef long int						difference_type;
 		typedef const T							value_type;
 		typedef const T*						pointer;
 		typedef const T&						reference;

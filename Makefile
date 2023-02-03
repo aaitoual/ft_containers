@@ -14,7 +14,7 @@ NAME = containers
 
 CC = g++
 
-CFLAGS = 
+# CFLAGS = -std=c++98 -pedantic
 
 OBJ_PATH = ./__Obj_Tmp_Files/
 

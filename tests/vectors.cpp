@@ -29,6 +29,6 @@ int main () {
     }
     catch (std::exception &e) {
         std::cout << e.what();
-        puts ("yppp");
+        std::cout ("yppp");
     }
 }

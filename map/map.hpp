@@ -15,10 +15,12 @@
 #include "RBT/red_black_three.hpp"
 #include "iterators/__map_iterator.hpp"
 #include "../implementations/reverse_iterator.hpp"
+#include "../implementations/enable_if.hpp"
+#include "../implementations/is_integral.hpp"
 
 namespace ft
 {
-	template <class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator<std::pair<const Key, T>>>
+	template <class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator<std::pair<const Key, T> > >
 	class map
 	{
 	private:
@@ -104,7 +106,7 @@ namespace ft
 		}
 
 		template <class Iter>
-		map(Iter first, Iter last, const key_compare &comp = key_compare(), const allocator_type &alloc = allocator_type(), typename enable_if<!std::is_integral<Iter>::value>::type = NULL)
+		map(Iter first, Iter last, const key_compare &comp = key_compare(), const allocator_type &alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<Iter>::value>::type = NULL)
 		{
 			__size = 0;
 			__alloc = alloc;
@@ -154,7 +156,6 @@ namespace ft
 				tmp = find_node(val.first);
 				return {iterator(tmp), true};
 			}
-			// return ret;
 		}
 
 		// iterator insert (iterator position, const value_type& val) {
@@ -162,5 +163,15 @@ namespace ft
 
 		// 	// if (*position.)
 		// }
+
+		template <class IT>
+  		void insert (IT first, IT last) {
+			if (first > last)
+				std::cout << "EXCEPTION\n"; //return an exception;
+			if (first == last)
+				return ;
+			for (IT it = first; it != last; it++)
+				insert (*it);
+		}
 	};
 }

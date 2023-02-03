@@ -21,7 +21,7 @@
 // 	{
 // 		std::map<int, int> test;
 // 	}
-// 	// puts ("\n***************************\n");
+// 	// std::cout ("\n***************************\n");
 // 	{
 // 		ft::RBT<int> three;
 // 		// ft::NODE<int> node1(8);
@@ -86,43 +86,63 @@
 // 	}
 // }
 
+
 void	test2() {
 	{
 		std::map<int, std::string> test;
+		// std::map<int, std::string> test2;
 		std::pair<int, std::string> pr(10, "test");
 		std::pair<int, std::string> pr2(20, "test2");
+		std::pair<int, std::string> pr3(5, "test3");
 		std::pair<std::map<int, std::string>::iterator, bool> tmp = test.insert(pr);
-		test.insert(tmp.first, pr2);
+		test.insert(pr2);
+		test.insert(pr3);
+		test.insert({21, "test21"});
+		// test.insert({19, "test19"});
+		// test.insert({4, "test4"});
+		// test.insert({6, "test6"});
+		std::map<int, std::string>::iterator it = tmp.first;
+		--it;
+		// --it;
+		std::cout << (*it).first << std::endl;
+		// test.insert(tmp.first, pr2);
 	}
-	puts ("**************************\n\n\n\n**************************");
+	std::cout << ("**************************\n\n\n\n**************************") << std::endl;
 	{
-		// ft::map<int, std::string> test;
-		// std::pair<int, std::string> pr(10, "test");
-		// std::pair<int, std::string> pr2(20, "test2");
-		// std::pair<ft::map<int, std::string>::iterator, bool> tmp = test.insert(pr);
-		// std::pair<ft::map<int, std::string>::iterator, bool> tmp2 = test.insert(pr2);
-		// // test[10] = "test1";
-		// test[30] = "test3";
-		// std::cout << test[30] << std::endl;
-		// // std::cout << pr.second << std::endl;
-		// std::cout << (*tmp.first).second << std::endl;
+		ft::map<int, std::string> test;
+		// std::map<int, std::string> test2;
+		std::pair<int, std::string> pr(10, "test");
+		std::pair<int, std::string> pr2(20, "test2");
+		std::pair<int, std::string> pr3(5, "test3");
+		std::pair<ft::map<int, std::string>::iterator, bool> tmp = test.insert(pr);
+		test.insert(pr2);
+		test.insert(pr3);
+		test.insert({21, "test21"});
+		// test.insert({19, "test19"});
+		// test.insert({4, "test4"});
+		// test.insert({6, "test6"});
+		ft::map<int, std::string>::iterator it = tmp.first;
+		--it;
+		// --it;
+		std::cout << (*it).first << std::endl;
+		// test.insert(tmp.first, pr2);
 	}
 }
 
 int main() {
-	puts ("-------------------------------------------------------");
-	puts ("-------------------------------------------------------");
-	puts ("-------------------------------------------------------");
-	puts ("-------------------------------------------------------");
-	puts ("-------------------------------------------------------");
+	std::cout << ("-------------------------------------------------------") << std::endl;
+	std::cout << ("-------------------------------------------------------") << std::endl;
+	std::cout << ("-------------------------------------------------------") << std::endl;
+	std::cout << ("-------------------------------------------------------") << std::endl;
+	std::cout << ("-------------------------------------------------------") << std::endl;
 	test2();
 	// std::cout << std::endl << std::endl << std::endl << std::endl << std::endl << std::endl;
 	// while (1);
 	// system("leaks containers");
-	puts ("-------------------------------------------------------");
-	puts ("-------------------------------------------------------");
-	puts ("-------------------------------------------------------");
-	puts ("-------------------------------------------------------");
-	puts ("-------------------------------------------------------");
+	std::cout << ("-------------------------------------------------------") << std::endl;
+	std::cout << ("-------------------------------------------------------") << std::endl;
+	std::cout << ("-------------------------------------------------------") << std::endl;
+	std::cout << ("-------------------------------------------------------") << std::endl;
+	std::cout << ("-------------------------------------------------------") << std::endl;
 	return 0;
 }

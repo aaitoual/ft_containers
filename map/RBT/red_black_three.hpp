@@ -27,10 +27,11 @@ namespace ft {
 			NODE	*parent;
 			NODE	*right;
 			NODE	*left;
+			NODE	*null_node;
 			T		content;
 			bool	color; //0 black, 1 red
-			NODE (T content_) : parent(NULL), right(NULL), left(NULL), color(1), content(content_) {}
-			NODE (void) : parent(NULL), right(NULL), left(NULL), color(0), content(T()) {}
+			NODE (T content_) : parent(NULL), right(NULL), left(NULL), color(1), content(content_), null_node(NULL) {}
+			NODE (void) : parent(NULL), right(NULL), left(NULL), color(0), content(T()), null_node(NULL) {}
 			T		operator *() {return content;}
 			// NODE (NODE<T> & copy) : parent(NULL), right(NULL), left(NULL), color(1), content(T()) {}
 			void	operator = (const NODE& copy){
@@ -39,6 +40,7 @@ namespace ft {
 				right = copy->right;
 				left = copy->left;
 				parent = copy->parent;
+				null_node = NULL;
 			}
 	};
 	template <typename T>
@@ -96,7 +98,44 @@ namespace ft {
 			}
 			__root->color = 0;
 		}
-
+		void	RDT_insert(NODE<T> *new_node, NODE<T> *pos) {
+			NODE<T> *x = pos;
+			NODE<T> *y = pos;
+			while (x != __nullnode) {
+				y = x;
+				if (which_node(x) == 1 && new_node->content < x->parent->content)
+					x = x->parent;
+				else if (which_node(x) == 2 && new_node->content >= x->parent->content)
+					x = x->parent;
+				else
+					break;
+			}
+			while (x != __nullnode) {
+				y = x;
+				if (new_node->content < x->content)
+					x = x->left;
+				else
+					x = x->right;
+			}
+			if (y == __nullnode)
+			{
+				__root = new_node;
+				new_node->color = 0;
+				new_node->right = __nullnode;
+				new_node->left = __nullnode;
+			}
+			else {
+				new_node->parent = y;
+				new_node->right = __nullnode;
+				new_node->left = __nullnode;
+				if (new_node->content < y->content)
+					y->left = new_node;
+				else
+					y->right = new_node;
+				fix_the_three(new_node);
+			}
+			__root->color = 0;
+		}
 		void	transplant(NODE<T> *parent, NODE<T> *child) {
 			if (parent->parent == __nullnode)
 				__root = child;
