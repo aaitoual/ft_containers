@@ -110,8 +110,25 @@ namespace ft {
 		Alloc	__alloc_obj;
 
 		RBT (void) : __root(NULL), __nullnode(NULL) {}
-		RBT&	operator = (RBT &copy) {
-			return *this;
+		NODE<T>	*get_first() const {
+			NODE<T>	*ret = __root;
+			NODE<T>	*tmp = __root;
+
+			while (tmp != __nullnode) {
+				ret = tmp;
+				tmp = tmp->left;
+			}
+			return ret;
+		}
+		NODE<T> *get_last() const {
+			NODE<T>	*ret = __root;
+			NODE<T>	*tmp = __root;
+
+			while (tmp != __nullnode) {
+				ret = tmp;
+				tmp = tmp->right;
+			}
+			return ret;
 		}
 		void	RBT_insert(T new_content) {
 			NODE<T> *x = __root;

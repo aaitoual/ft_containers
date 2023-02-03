@@ -111,7 +111,11 @@ namespace ft
 			__size = x.__size;
 			__alloc = x.__alloc;
 			__comp = x.__comp;
-			__tree = x.__tree;
+			size_t i = 0;
+			for (iterator it(x.__tree.get_first()); i != x.__size; i++) {
+				insert(*it);
+				it++;
+			}
 			return *this;
 		}
 

@@ -101,20 +101,20 @@ void	test2() {
 		std::pair<std::map<int, std::string>::iterator, bool> tmp = test.insert({21, "test21"});
 		test.insert({4, "test5"});
 		test.insert({6, "test6"});
-		// test2 = test;
-		// test[10] = "test10";
+		test2 = test;
+		test[10] = "test10";
 		std::map<int, std::string>::iterator it = tmp.first;
-		--it;
-		--it;
-		--it;
-		--it;
-		--it;
-		--it;
-		--it;
+		// --it;
+		// --it;
+		// --it;
+		// --it;
+		// --it;
+		// --it;
+		// --it;
 
-		std::cout << (*it).first << std::endl;
-		// std::cout << test[10] << std::endl;
-		// std::cout << test2[10] << std::endl;
+		// std::cout << (*it).first << std::endl;
+		std::cout << test[10] << std::endl;
+		std::cout << test2[10] << std::endl;
 
 	}
 	std::cout << ("**************************\n\n\n\n**************************") << std::endl;
@@ -131,19 +131,19 @@ void	test2() {
 		std::pair<ft::map<int, std::string>::iterator, bool> tmp = test.insert({21, "test21"});
 		test.insert({4, "test5"});
 		test.insert({6, "test6"});
-		// test2 = test;
-		// test[10] = "test10";
+		test2 = test;
+		test[10] = "test10";
 		ft::map<int, std::string>::iterator it = tmp.first;
-		--it;
-		--it;
-		--it;
-		--it;
-		--it;
-		--it;
-		--it;
-		std::cout << (*it).first << std::endl;
-		// std::cout << test[10] << std::endl;
-		// std::cout << test2[10] << std::endl;
+		// --it;
+		// --it;
+		// --it;
+		// --it;
+		// --it;
+		// --it;
+		// --it;
+		// std::cout << (*it).first << std::endl;
+		std::cout << test[10] << std::endl;
+		std::cout << test2[10] << std::endl;
 	}
 }
 

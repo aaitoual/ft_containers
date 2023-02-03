@@ -33,12 +33,12 @@ class iterator_map : public std::iterator <std::random_access_iterator_tag, S, c
 		S&				operator * () const {return current->content;}
 		// std::pair<i				operator * () const {return std::pair<int, std::string> (1, "test");}
 		// S						operator -> () const {return current;}
-		iterator_map			operator ++ (int) {iterator_map	tmp(current);*this++;return tmp;}
+		iterator_map			operator ++ (int) {iterator_map	tmp(current);current = current->get_next();return tmp;}
 		iterator_map&			operator ++ () {
 			current = current->get_next();
 			return *this;
 		}
-		iterator_map			operator -- (int) {iterator_map	tmp(current);*this--;return tmp;}
+		iterator_map			operator -- (int) {iterator_map	tmp(current);current = current->get_prev();return tmp;}
 		iterator_map&			operator -- () {
 			current = current->get_prev();
 			return *this;
