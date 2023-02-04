@@ -28,10 +28,11 @@ namespace ft {
 			NODE	*right;
 			NODE	*left;
 			NODE	*null_node;
+			NODE	*__leaf;
 			T		content;
 			bool	color; //0 black, 1 red
-			NODE (T content_) : parent(NULL), right(NULL), left(NULL), color(1), content(content_), null_node(NULL) {}
-			NODE (void) : parent(NULL), right(NULL), left(NULL), color(0), content(T()), null_node(NULL) {}
+			NODE (T content_) : parent(NULL), right(NULL), left(NULL), color(1), content(content_), null_node(NULL), __leaf(NULL) {}
+			NODE (void) : parent(NULL), right(NULL), left(NULL), color(0), content(T()), null_node(NULL), __leaf(NULL) {}
 			T		operator *() {return content;}
 			// NODE (NODE<T> & copy) : parent(NULL), right(NULL), left(NULL), color(1), content(T()) {}
 			void	operator = (const NODE& copy){
@@ -113,12 +114,16 @@ namespace ft {
 		NODE<T>	*get_first() const {
 			NODE<T>	*ret = __root;
 			NODE<T>	*tmp = __root;
-
+			NODE<T>	*leaf = NULL;
 			while (tmp != __nullnode) {
 				ret = tmp;
 				tmp = tmp->left;
 			}
-			return ret;
+			leaf = = __alloc_obj.allocate(1);
+			__alloc_obj.construct(leaf, );
+			leaf->parent = ret;
+			ret->__leaf = leaf;
+			return leaf;
 		}
 		NODE<T> *get_last() const {
 			NODE<T>	*ret = __root;

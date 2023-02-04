@@ -89,61 +89,36 @@
 
 void	test2() {
 	{
-		std::map<int, std::string> test;
-		std::map<int, std::string> test2;
-		std::pair<int, std::string> pr(10, "test");
-		std::pair<int, std::string> pr2(20, "test2");
-		std::pair<int, std::string> pr3(5, "test3");
-		test.insert(pr);
-		test.insert (pr2);
-		test.insert (pr3);
-		test.insert({19, "test19"});
-		std::pair<std::map<int, std::string>::iterator, bool> tmp = test.insert({21, "test21"});
-		test.insert({4, "test5"});
-		test.insert({6, "test6"});
-		test2 = test;
-		test[10] = "test10";
-		std::map<int, std::string>::iterator it = tmp.first;
-		// --it;
-		// --it;
-		// --it;
-		// --it;
-		// --it;
-		// --it;
-		// --it;
+  std::map<char,int> mymap;
 
-		// std::cout << (*it).first << std::endl;
-		std::cout << test[10] << std::endl;
-		std::cout << test2[10] << std::endl;
+  mymap['x'] = 100;
+  mymap['y'] = 200;
+  mymap['z'] = 300;
+
+  // show content:
+  std::map<char,int>::reverse_iterator rit;
+  for (rit=mymap.rbegin(); rit!=mymap.rend(); ++rit)
+    std::cout << rit->first << " => " << rit->second << '\n';
 
 	}
 	std::cout << ("**************************\n\n\n\n**************************") << std::endl;
 	{
-		ft::map<int, std::string> test;
-		ft::map<int, std::string> test2;
-		std::pair<int, std::string> pr(10, "test");
-		std::pair<int, std::string> pr2(20, "test2");
-		std::pair<int, std::string> pr3(5, "test3");
-		test.insert(pr);
-		test.insert (pr2);
-		test.insert (pr3);
-		test.insert({19, "test19"});
-		std::pair<ft::map<int, std::string>::iterator, bool> tmp = test.insert({21, "test21"});
-		test.insert({4, "test5"});
-		test.insert({6, "test6"});
-		test2 = test;
-		test[10] = "test10";
-		ft::map<int, std::string>::iterator it = tmp.first;
-		// --it;
-		// --it;
-		// --it;
-		// --it;
-		// --it;
-		// --it;
-		// --it;
-		// std::cout << (*it).first << std::endl;
-		std::cout << test[10] << std::endl;
-		std::cout << test2[10] << std::endl;
+  ft::map<char,int> mymap;
+
+  mymap['x'] = 100;
+  mymap['y'] = 200;
+  mymap['z'] = 300;
+
+  // show content:
+  ft::map<char,int>::reverse_iterator rit;
+//   rit != mymap.rend();
+//   rit.operator->();
+//   puts ("yooo");
+  for (rit=mymap.rbegin(); rit!=mymap.rend(); ++rit) {
+	// puts ("yooo");
+    // std::cout << rit->first << " => " << rit->second << '\n';
+  }
+
 	}
 }
 

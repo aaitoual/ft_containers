@@ -34,9 +34,9 @@ namespace ft {
 			template <typename T>
 			reverse_iterator (const reverse_iterator<T>& it) : current(it.base()) {};
 			reference					operator * () const {S tmp = current; return *--tmp;}
-			S*							operator -> () const {return &current;}
+			pointer						operator -> () const {return &(operator*());}
 			reverse_iterator			operator ++ (int) {reverse_iterator	tmp(current);current--;return tmp;}
-			reverse_iterator&			operator ++ () {current--;return *this;}
+			reverse_iterator&			operator ++ () {--current;return *this;}
 			reverse_iterator			operator -- (int) {reverse_iterator	tmp(current);current++;return tmp;}
 			reverse_iterator&			operator -- () {current++;return *this;}
 			reverse_iterator			operator + (int i) {return reverse_iterator (current - i);}

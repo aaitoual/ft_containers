@@ -167,5 +167,39 @@ namespace ft
 			for (IT it = first; it != last; it++)
 				insert (*it);
 		}
+		//////////////////////////////////////////
+		/////////////////////////////////////////
+		//////////////////////////////////////////
+		iterator	begin() {
+			return iterator(__tree.get_first());
+		}
+
+		const_iterator	begin() const {
+			return const_iterator(__tree.get_first());
+		}
+
+		iterator	end() {
+			return iterator(__tree.get_last());
+		}
+
+		const_iterator	end() const {
+			return const_iterator(__tree.get_last());
+		}
+
+		reverse_iterator	rbegin() {
+			return reverse_iterator(__tree.get_last());
+		}
+
+		const_reverse_iterator	rbegin() const {
+			return const_reverse_iterator(__tree.get_last());
+		}
+
+		reverse_iterator	rend() {
+			return reverse_iterator(__tree.get_first());
+		}
+
+		const_reverse_iterator	rend() const {
+			return const_reverse_iterator(__tree.get_first());
+		}
 	};
 }
