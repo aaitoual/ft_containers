@@ -16,6 +16,7 @@
 #include <algorithm>
 #include <cstdlib>
 #include <iomanip>
+#include <memory>
 
 template<typename S>
 class iterator_map;
@@ -23,16 +24,19 @@ class iterator_map;
 namespace ft {
 	template<typename T>
 	class NODE {
+		private :
+			std::allocator<NODE>	alloc;
 		public :
 			NODE	*parent;
 			NODE	*right;
 			NODE	*left;
 			NODE	*null_node;
-			NODE	*__leaf;
+			NODE	*__leaf_l;
+			NODE	*__leaf_r;
 			T		content;
 			bool	color; //0 black, 1 red
-			NODE (T content_) : parent(NULL), right(NULL), left(NULL), color(1), content(content_), null_node(NULL), __leaf(NULL) {}
-			NODE (void) : parent(NULL), right(NULL), left(NULL), color(0), content(T()), null_node(NULL), __leaf(NULL) {}
+			NODE (T content_) : parent(NULL), right(NULL), left(NULL), color(1), content(content_), null_node(NULL), __leaf_l(NULL), __leaf_r(NULL) {}
+			NODE (void) : parent(NULL), right(NULL), left(NULL), color(0), content(T()), null_node(NULL), __leaf_l(NULL), __leaf_r(NULL) {}
 			T		operator *() {return content;}
 			// NODE (NODE<T> & copy) : parent(NULL), right(NULL), left(NULL), color(1), content(T()) {}
 			void	operator = (const NODE& copy){
@@ -61,8 +65,13 @@ namespace ft {
 				else if (parent != NULL && parent->left != this) {
 					if (parent->parent != NULL)
 						return parent->parent;
-					else
-						return this + 1;
+					else {
+						if (__leaf_r == NULL) {
+							__leaf_r = alloc.allocate(1);
+							alloc.construct(__leaf_r, T());
+						}
+						return __leaf_r;
+					}
 				}
 			}
 			NODE *get_prev() {
@@ -83,8 +92,13 @@ namespace ft {
 				else if (parent != NULL && parent->right != this) {
 					if (parent->parent != NULL)
 						return parent->parent;
-					else
-						return this - 1;
+					else {
+						if (__leaf_l == NULL) {
+							__leaf_l = alloc.allocate(1);
+							alloc.construct(__leaf_l, T());
+						}
+						return __leaf_l;
+					}
 				}
 			}
 	};
@@ -111,7 +125,7 @@ namespace ft {
 		Alloc	__alloc_obj;
 
 		RBT (void) : __root(NULL), __nullnode(NULL) {}
-		NODE<T>	*get_first() const {
+		NODE<T>	*get_first() {
 			NODE<T>	*ret = __root;
 			NODE<T>	*tmp = __root;
 			NODE<T>	*leaf = NULL;
@@ -119,21 +133,22 @@ namespace ft {
 				ret = tmp;
 				tmp = tmp->left;
 			}
-			leaf = = __alloc_obj.allocate(1);
-			__alloc_obj.construct(leaf, );
-			leaf->parent = ret;
-			ret->__leaf = leaf;
-			return leaf;
+			return ret;
 		}
-		NODE<T> *get_last() const {
+		NODE<T> *get_last() {
 			NODE<T>	*ret = __root;
 			NODE<T>	*tmp = __root;
+			NODE<T> *leaf = NULL;
 
 			while (tmp != __nullnode) {
 				ret = tmp;
 				tmp = tmp->right;
 			}
-			return ret;
+			leaf = __alloc_obj.allocate(1);
+			__alloc_obj.construct(leaf, T());
+			leaf->parent = ret;
+			ret->__leaf_r = leaf;
+			return leaf;
 		}
 		void	RBT_insert(T new_content) {
 			NODE<T> *x = __root;

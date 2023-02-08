@@ -114,9 +114,10 @@ void	test2() {
 //   rit != mymap.rend();
 //   rit.operator->();
 //   puts ("yooo");
+// std::cout << mymapp['z'] << std::endl;
   for (rit=mymap.rbegin(); rit!=mymap.rend(); ++rit) {
 	// puts ("yooo");
-    // std::cout << rit->first << " => " << rit->second << '\n';
+    std::cout << rit->first << " => " << rit->second << '\n';
   }
 
 	}
