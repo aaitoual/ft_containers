@@ -187,11 +187,6 @@ namespace ft
 		}
 
 		reverse_iterator	rbegin() {
-			// iterator tmp (__tree.get_last());
-			reverse_iterator tmp(__tree.get_last());
-			// tmp--;
-			std::cout << "GET_LAST : " << (*tmp).second << std::endl;
-			// std::cout << this->operator[] ('z') << std::endl;
 			return reverse_iterator(__tree.get_last());
 		}
 

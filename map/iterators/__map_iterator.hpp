@@ -55,7 +55,8 @@ class iterator_map : public std::iterator <std::random_access_iterator_tag, S, c
 				current = current->get_prev();
 			else
 				current = current - 1;
-			return tmp;}
+			return tmp;
+		}
 		iterator_map&			operator -- () {
 			current = current->get_prev();
 			return *this;

@@ -62,7 +62,7 @@ namespace ft {
 				else if (parent != NULL && parent->left == this) {
 					return parent;
 				}
-				else if (parent != NULL && parent->left != this) {
+				else if (parent != NULL && parent->right == this) {
 					if (parent->parent != NULL)
 						return parent->parent;
 					else {
@@ -73,6 +73,8 @@ namespace ft {
 						return __leaf_r;
 					}
 				}
+				else if (parent != NULL && this == parent->__leaf_l)
+					return parent;
 			}
 			NODE *get_prev() {
 				NODE	*tmp;
@@ -89,7 +91,7 @@ namespace ft {
 				else if (parent != NULL && parent->right == this) {
 					return parent;
 				}
-				else if (parent != NULL && parent->right != this) {
+				else if (parent != NULL && parent->left == this) {
 					if (parent->parent != NULL)
 						return parent->parent;
 					else {
@@ -100,6 +102,8 @@ namespace ft {
 						return __leaf_l;
 					}
 				}
+				else if (parent != NULL && this == parent->__leaf_r)
+					return parent;
 			}
 	};
 	template <typename T>

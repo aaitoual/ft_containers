@@ -96,7 +96,8 @@ void	test2() {
   mymap['z'] = 300;
 
   // show content:
-  std::map<char,int>::reverse_iterator rit;
+  std::map<char,int>::reverse_iterator rit = mymap.rbegin();
+	std::cout << (*rit).second << std::endl;
   for (rit=mymap.rbegin(); rit!=mymap.rend(); ++rit)
     std::cout << rit->first << " => " << rit->second << '\n';
 
@@ -111,7 +112,9 @@ void	test2() {
 
   // show content:
   ft::map<char,int>::reverse_iterator rit;
-//   rit != mymap.rend();
+  rit = mymap.rbegin();
+  	// std::cout << (*rit).second << std::endl;
+
 //   rit.operator->();
 //   puts ("yooo");
 // std::cout << mymapp['z'] << std::endl;
