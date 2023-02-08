@@ -91,38 +91,29 @@ void	test2() {
 	{
   std::map<char,int> mymap;
 
-  mymap['x'] = 100;
-  mymap['y'] = 200;
-  mymap['z'] = 300;
+  mymap['b'] = 100;
+  mymap['a'] = 200;
+  mymap['c'] = 300;
 
   // show content:
-  std::map<char,int>::reverse_iterator rit = mymap.rbegin();
-	std::cout << (*rit).second << std::endl;
-  for (rit=mymap.rbegin(); rit!=mymap.rend(); ++rit)
-    std::cout << rit->first << " => " << rit->second << '\n';
-
+  for (std::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+    std::cout << it->first << " => " << it->second << '\n';
 	}
 	std::cout << ("**************************\n\n\n\n**************************") << std::endl;
 	{
   ft::map<char,int> mymap;
 
-  mymap['x'] = 100;
-  mymap['y'] = 200;
-  mymap['z'] = 300;
+  mymap['b'] = 100;
+  mymap['a'] = 200;
+  mymap['c'] = 300;
 
   // show content:
-  ft::map<char,int>::reverse_iterator rit;
-  rit = mymap.rbegin();
-  	// std::cout << (*rit).second << std::endl;
+  for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it) {
+	// puts ("yooo");;
+    std::cout << it->first << " => " << it->second << '\n';
+		// puts (";l]]ooo");;
 
-//   rit.operator->();
-//   puts ("yooo");
-// std::cout << mymapp['z'] << std::endl;
-  for (rit=mymap.rbegin(); rit!=mymap.rend(); ++rit) {
-	// puts ("yooo");
-    std::cout << rit->first << " => " << rit->second << '\n';
   }
-
 	}
 }
 

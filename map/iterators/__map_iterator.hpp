@@ -33,20 +33,31 @@ class iterator_map : public std::iterator <std::random_access_iterator_tag, S, c
 		iterator_map (iterator_map<T>& it) : current(it.base()), ref_ret() {};
 		S&				operator * () const {return (current != NULL) ? current->content : ref_ret->content;}
 		// std::pair<i				operator * () const {return std::pair<int, std::string> (1, "test");}
-		S*						operator -> () const {S& tmp = current->content; return &tmp;}
+		S*						operator -> () const {
+			if (current != NULL) {
+				S& tmp = current->content;
+				return &tmp;
+			}
+			else {
+				S& tmp = ref_ret->content;
+				return &tmp;
+			}
+		}
 		iterator_map			operator ++ (int) {
 			iterator_map	tmp(current);
 			if (current != NULL)
 				current = current->get_next();
-			else
-				current = current + 1;
+			// else
+			// 	current = current + 1;
 			return tmp;
 		}
 		iterator_map&			operator ++ () {
+			// puts ("yooo");
 			if (current != NULL)
 				current = current->get_next();
 			else
 				current = current + 1;
+			// puts ("kpoooo");
 			return *this;
 		}
 		iterator_map			operator -- (int) {

@@ -75,6 +75,7 @@ namespace ft {
 				}
 				else if (parent != NULL && this == parent->__leaf_l)
 					return parent;
+				return this;
 			}
 			NODE *get_prev() {
 				NODE	*tmp;
@@ -148,11 +149,13 @@ namespace ft {
 				ret = tmp;
 				tmp = tmp->right;
 			}
-			leaf = __alloc_obj.allocate(1);
-			__alloc_obj.construct(leaf, T());
-			leaf->parent = ret;
-			ret->__leaf_r = leaf;
-			return leaf;
+			if (ret->__leaf_r == NULL) {
+				leaf = __alloc_obj.allocate(1);
+				__alloc_obj.construct(leaf, T());
+				leaf->parent = ret;
+				ret->__leaf_r = leaf;
+			}
+			return ret->__leaf_r;
 		}
 		void	RBT_insert(T new_content) {
 			NODE<T> *x = __root;
