@@ -219,16 +219,10 @@ namespace ft
 		/////////////////////////////////////
 		/////////////////////////////////////
 		void erase (iterator position) {
-			NODE<value_type> *tmp;
-
-			tmp = __tree.__root;
-			tmp = tmp->right;
-			tmp = tmp->right;
-			std::cout << "SIZE : " << (tmp)->content.first << std::endl;
-			__tree.RBT_delete(position.base());
+			__tree.RBT_delete(*position);
 		}
 		size_type	erase (const key_type& k) {
-			ft::NODE<value_type>	*tmp = find_node(k);
+			ft::NODE<value_type>	tmp = find_node(k);
 
 			if (tmp != __tree.__nullnode) {
 				__tree.RBT_delete(tmp);
@@ -251,9 +245,9 @@ namespace ft
 		////////////////////////////////////////////////////
 		iterator	find (const key_type& k){
 			ft::NODE<value_type>	*tmp = find_node(k);
-			if (!__size)
-				tmp = __tree.__ROOT_P;
-			else if (tmp == __tree.__nullnode)
+			// if (!__size)
+			// 	tmp = __tree.__ROOT_P;
+			// else if (tmp == __tree.__nullnode)
 				tmp = __tree.get_last()->parent;
 			return iterator(tmp);
 		}

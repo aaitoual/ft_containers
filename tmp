@@ -280,7 +280,6 @@ namespace ft {
 		void	___delete_fix(NODE<T> *node) {
 			NODE<T> *sibling;
 
-			std::cout << __root->left->content.second << std::endl;
 			while (node != __root && node != __nullnode && node->color) {
 				if (node == node->parent->left) {
 					sibling = node->parent->right;
