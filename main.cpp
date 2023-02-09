@@ -90,30 +90,20 @@
 void	test2() {
 	{
   std::map<char,int> mymap;
+  mymap['a']=101;
+  mymap['b']=202;
+  mymap['c']=302;
 
-  mymap['b'] = 100;
-  mymap['a'] = 200;
-  mymap['c'] = 300;
-
-  // show content:
-  for (std::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
-    std::cout << it->first << " => " << it->second << '\n';
+  std::cout << "mymap.size() is " << mymap.size() << '\n';
 	}
 	std::cout << ("**************************\n\n\n\n**************************") << std::endl;
 	{
   ft::map<char,int> mymap;
+  mymap['a']=101;
+  mymap['b']=202;
+  mymap['c']=302;
 
-  mymap['b'] = 100;
-  mymap['a'] = 200;
-  mymap['c'] = 300;
-
-  // show content:
-  for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it) {
-	// puts ("yooo");;
-    std::cout << it->first << " => " << it->second << '\n';
-		// puts (";l]]ooo");;
-
-  }
+  std::cout << "mymap.size() is " << mymap.size() << '\n';
 	}
 }
 

@@ -18,6 +18,9 @@
 #include "../implementations/enable_if.hpp"
 #include "../implementations/is_integral.hpp"
 
+# include "../implementations/iterator_traits.hpp"
+# include "../implementations/lexicographical_compare.hpp"
+
 namespace ft
 {
 	template <class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator<std::pair<const Key, T> > >
@@ -44,6 +47,7 @@ namespace ft
 		typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
 		typedef ft::iterator_traits<Key> difference_type;
 		typedef size_t size_type;
+		typedef std::allocator_traits<allocator_type>       __alloc_traits;
 
 		////////////////////////////////////////////////
 		////////////////////////////////////////////////
@@ -201,5 +205,19 @@ namespace ft
 		const_reverse_iterator	rend() const {
 			return const_reverse_iterator(__tree.get_first());
 		}
+		////////////////////////////////////////
+		///////////////////////////////////////
+		///////////////////////////////////////
+		bool	empty() const {
+			if (!__size)
+				return true;
+			return false;
+		}
+		size_type	size() const {
+			return __size;
+		}
+		// size_type	max_size() const {
+		// 	return (((unsigned long)std::numeric_limits<T>::max() < __alloc_traits::max_size(__alloc)) / sizeof(T) ? std::numeric_limits<typename alloc::difference_type>::max() : __alloc_traits::max_size(__alloc));
+		// }
 	};
 }
