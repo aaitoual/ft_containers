@@ -219,12 +219,6 @@ namespace ft
 		/////////////////////////////////////
 		/////////////////////////////////////
 		void erase (iterator position) {
-			NODE<value_type> *tmp;
-
-			tmp = __tree.__root;
-			tmp = tmp->right;
-			tmp = tmp->right;
-			std::cout << "SIZE : " << (tmp)->content.first << std::endl;
 			__tree.RBT_delete(position.base());
 		}
 		size_type	erase (const key_type& k) {
