@@ -69,7 +69,7 @@ namespace ft
 		{
 			ft::NODE<value_type> *node = __tree.__root;
 
-			while (node != __tree.__nullnode)
+			while (node != __tree.__nullnode && !node->leaf)
 			{
 				if (key == node->content.first)
 					break;

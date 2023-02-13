@@ -55,8 +55,8 @@ class iterator_map : public std::iterator <std::random_access_iterator_tag, S, c
 			// puts ("yooo");
 			if (current != NULL)
 				current = current->get_next();
-			else
-				current = current + 1;
+			// else
+			// 	current = current + 1;
 			// puts ("kpoooo");
 			return *this;
 		}
