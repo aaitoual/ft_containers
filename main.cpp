@@ -44,7 +44,7 @@ void	test()
 	}
 	// std::cout ("\n***************************\n");
 	{
-		ft::RBT<int> three;
+		ft::RBT<char> three;
 		// ft::NODE<int> node1(8);
 		// ft::NODE<int> node2(5);
 		// ft::NODE<int> node3(15);
@@ -60,18 +60,44 @@ void	test()
 		// ft::NODE<int> node6(25);
 		// ft::NODE<int> node7(40);
 		// ft::NODE<int> node8(80);
-		ft::NODE<int> node1(1);
-		ft::NODE<int> node2(2);
-		ft::NODE<int> node3(3);
-		ft::NODE<int> node4(4);
+		// ft::NODE<int> node1(1);
+		// ft::NODE<int> node2(2);
+		// ft::NODE<int> node3(3);
+		// ft::NODE<int> node4(4);
 		// ft::NODE<int> node5(87);
 		// ft::NODE<int> node6(7);
 		// ft::NODE<int> node7(6);
 		// ft::NODE<int> node8(20);
-		three.RBT_insert(1);
-		three.RBT_insert(2);
-		three.RBT_insert(3);
-		three.RBT_insert(4);
+		ft::NODE<char> node1('q');
+		ft::NODE<char> node2('w');
+		ft::NODE<char> node3('e');
+		ft::NODE<char> node4('r');
+		ft::NODE<char> node5('t');
+		ft::NODE<char> node6('y');
+		ft::NODE<char> node7('u');
+		ft::NODE<char> node8('i');
+		ft::NODE<char> node9('o');
+		ft::NODE<char> node10('p');
+		ft::NODE<char> node11('a');
+		ft::NODE<char> node12('s');
+		ft::NODE<char> node13('d');
+		ft::NODE<char> node14('f');
+		ft::NODE<char> node15('g');
+		three.RBT_insert('q');
+		three.RBT_insert('w');
+		three.RBT_insert('e');
+		three.RBT_insert('r');
+		three.RBT_insert('t');
+		three.RBT_insert('y');
+		three.RBT_insert('u');
+		three.RBT_insert('i');
+		three.RBT_insert('o');
+		three.RBT_insert('p');
+		three.RBT_insert('a');
+		three.RBT_insert('s');
+		three.RBT_insert('d');
+		three.RBT_insert('f');
+		three.RBT_insert('g');
 		// three.RBT_insert(&node5);
 		// three.RBT_insert(&node6);
 		// three.RBT_insert(&node7);
@@ -113,26 +139,46 @@ void test2()
 	{
 		ft::map<char, int> mymap;
 		ft::map<char, int>::iterator it;
+		ft::map<char, int>::iterator it2;
 
+		mymap['q'] = 50;
+		mymap['w'] = 50;
+		mymap['e'] = 50;
+		mymap['r'] = 50;
+		mymap['t'] = 50;
+		mymap['y'] = 50;
+		mymap['u'] = 50;
+		mymap['i'] = 50;
+		mymap['o'] = 50;
+		mymap['p'] = 50;
 		mymap['a'] = 50;
-		mymap['c'] = 100;
-		mymap['d'] = 150;
-		mymap['e'] = 200;
+		mymap['s'] = 50;
+		mymap['d'] = 50;
+		mymap['f'] = 50;
+		mymap['g'] = 50;
 		// mymap['b'] = 1000;
 		it = mymap.begin();
-		it++;
-		it++;
-		it++;
-		// ft::NODE<std::pair<const char, int> > *tmp = it.base();
+		it2 = mymap.end();
+        ft::NODE<std::pair<const char, int> > *tmp = it.base();
 		// std::cout << tmp->content.first << std::endl;
+		for (; it != mymap.end(); it++)
 		// it++;
-		for (; 1; it++)
-			std::cout << (*it).first << " test" << std::endl;
-		// ft::NODE<std::pair<const char, int> > *tmp2 = it.base();
-		// std::cout << tmp2->left->leaf << std::endl;
-		// std::cout << (*it).first << std::endl;
-		// for (; it != mymap.end(); it++)
-		// 	std::cout << (*it).first << " test " << std::endl;
+		// it++;
+		// it++;
+		// it++;
+		// it++;
+		// it++;
+		// it++;
+		// it++;
+		// it++;
+		// it++;
+		// it++;
+		// it++;
+		// it++;
+		// it++;
+		// it++;
+
+			std::cout << (*it).first << " test " << std::endl;
 
 		//   // print content:
 		//   std::cout << "elements in mymap:" << '\n';

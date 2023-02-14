@@ -63,14 +63,19 @@ namespace ft {
 					return parent;
 				}
 				else if (parent != NULL && parent->right == this) {
-					if (parent->parent != NULL && parent->parent->left == parent)
-						return parent->parent;
+					if (parent->parent != NULL) {
+						ret = parent->parent;
+						while (ret->content < content && ret->parent != NULL)
+							ret = ret->parent;
+						if (ret->content > content)
+							return ret;
+					}
 					else if (!leaf)
 						return right;
 				}
 				if (leaf)
 					return parent;
-				return this;
+				return right;
 			}
 			NODE *get_prev() {
 				NODE	*tmp;
