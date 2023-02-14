@@ -75,10 +75,14 @@ namespace ft
 					break;
 				if (__comp(key, node->content.first))
 				{
+					if (node->left->leaf)
+						break ;
 					node = node->left;
 				}
 				else
 				{
+					if (node->right->leaf)
+						break ;
 					node = node->right;
 				}
 			}

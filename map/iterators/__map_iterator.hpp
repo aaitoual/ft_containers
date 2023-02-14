@@ -47,25 +47,17 @@ class iterator_map : public std::iterator <std::random_access_iterator_tag, S, c
 			iterator_map	tmp(current);
 			if (current != NULL)
 				current = current->get_next();
-			// else
-			// 	current = current + 1;
 			return tmp;
 		}
 		iterator_map&			operator ++ () {
-			// puts ("yooo");
 			if (current != NULL)
 				current = current->get_next();
-			// else
-			// 	current = current + 1;
-			// puts ("kpoooo");
 			return *this;
 		}
 		iterator_map			operator -- (int) {
 			iterator_map	tmp(current);
 			if (current != NULL)
 				current = current->get_prev();
-			else
-				current = current - 1;
 			return tmp;
 		}
 		iterator_map&			operator -- () {

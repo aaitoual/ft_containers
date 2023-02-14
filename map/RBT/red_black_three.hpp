@@ -80,7 +80,7 @@ namespace ft {
 			NODE *get_prev() {
 				NODE	*tmp;
 				NODE	*ret;
-				if (left != NULL) {
+				if (left != NULL && !left->leaf) {
 					tmp = left;
 					ret = left;
 					while (tmp != NULL && !tmp->leaf) {
@@ -93,21 +93,19 @@ namespace ft {
 					return parent;
 				}
 				else if (parent != NULL && parent->left == this) {
-					if (parent->parent != NULL && parent->parent->right == parent)
-						return parent->parent;
-					// else {
-					// 	if (__leaf_l == NULL) {
-					// 		__leaf_l = alloc.allocate(1);
-					// 		alloc.construct(__leaf_l, T());
-					// 		__leaf_l->parent = this;
-					// 		__leaf_l->color = 0;
-					// 	}
-					// 	return __leaf_l;
-					// }
+					if (parent->parent != NULL) {
+						ret = parent->parent;
+						while (ret->content > content && ret->parent != NULL)
+							ret = ret->parent;
+						if (ret->content < content)
+							return ret;
+					}
+					else if (!leaf)
+						return left;
 				}
-				// else if (parent != NULL && this == parent->__leaf_r)
-				// 	return parent;
-				return this;
+				if (leaf)
+					return parent;
+				return left;
 			}
 	};
 	template <typename T>

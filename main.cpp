@@ -137,31 +137,33 @@ void	test()
 void test2()
 {
 	{
-		ft::map<char, int> mymap;
-		ft::map<char, int>::iterator it;
-		ft::map<char, int>::iterator it2;
+		ft::map<int, int> mymap;
+		ft::map<int, int>::iterator it;
+		ft::map<int, int>::iterator it2;
 
-		mymap['q'] = 50;
-		mymap['w'] = 50;
-		mymap['e'] = 50;
-		mymap['r'] = 50;
-		mymap['t'] = 50;
-		mymap['y'] = 50;
-		mymap['u'] = 50;
-		mymap['i'] = 50;
-		mymap['o'] = 50;
-		mymap['p'] = 50;
-		mymap['a'] = 50;
-		mymap['s'] = 50;
-		mymap['d'] = 50;
-		mymap['f'] = 50;
-		mymap['g'] = 50;
-		// mymap['b'] = 1000;
+		mymap[5] = 50;
+		mymap[3] = 50;
+		mymap[7] = 50;
+		mymap[1] = 50;
+		mymap[4] = 50;
+		mymap[6] = 50;
+		mymap[9] = 50;
+		mymap[8] = 50;
+		mymap[11] = 50;
+		mymap[2] = 50;
+		mymap[0] = 50;
+		mymap[10] = 50;
+		mymap[12] = 50;
+
 		it = mymap.begin();
 		it2 = mymap.end();
-        ft::NODE<std::pair<const char, int> > *tmp = it.base();
+		it2--;
+        ft::NODE<std::pair<const int, int> > *tmp = it.base();
 		// std::cout << tmp->content.first << std::endl;
-		for (; it != mymap.end(); it++)
+		for (; it2 != mymap.begin(); it2--)
+			std::cout << (*it2).first << " " << (*it2).second << " test " << std::endl;
+		std::cout << (*it2).first << " " << (*it2).second << " test " << std::endl;
+		std::cout << tmp->left->content.first << " " << tmp->left->content.second << std::endl;
 		// it++;
 		// it++;
 		// it++;
@@ -178,7 +180,6 @@ void test2()
 		// it++;
 		// it++;
 
-			std::cout << (*it).first << " test " << std::endl;
 
 		//   // print content:
 		//   std::cout << "elements in mymap:" << '\n';
@@ -241,6 +242,7 @@ int main()
 	std::cout << ("-------------------------------------------------------") << std::endl;
 	std::cout << ("-------------------------------------------------------") << std::endl;
 	std::cout << ("-------------------------------------------------------") << std::endl;
+	// test();
 	test2();
 	// std::cout << std::endl << std::endl << std::endl << std::endl << std::endl << std::endl;
 	// while (1);
