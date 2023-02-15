@@ -67,8 +67,8 @@ class iterator_map : public std::iterator <std::random_access_iterator_tag, S, c
 		// template <typename T>
 		iterator_map&			operator = (const iterator_map<S>& copy) {current = copy.base(); return *this;}
 		bool					operator != (iterator_map& iter) {return (this->current != iter.current) ?  1 : 0;}
-		// bool					operator == (iterator_map& iter) {return (this->current != iter.current) ?  0 : 1;}
+		bool					operator == (iterator_map& iter) {return (this->current != iter.current) ?  0 : 1;}
 		
 		friend	bool			operator != (const iterator_map& that, const iterator_map& iter) {return (that.base() != iter.base()) ?  1 : 0;}
-		// friend	bool			operator == (const iterator_map& that, const iterator_map& iter) {return (that.base() != iter) ?  0 : 1;}
+		friend	bool			operator == (const iterator_map& that, const iterator_map& iter) {return (that.base() != iter.base()) ?  0 : 1;}
 };

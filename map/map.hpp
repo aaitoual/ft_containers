@@ -235,14 +235,15 @@ namespace ft
 			return 0;
 		}
 		void erase (iterator first, iterator last) {
-			if (first > last) {
-				std::cout << "EXCEPTION\n"; //return an exception;
-				exit (0);
-			}
+			// if (first > last) {
+			// 	std::cout << "EXCEPTION\n"; //return an exception;
+			// 	exit (0);
+			// }
 			if (first == last)
 				return ;
-			for (iterator it = first; it != last; it++)
+			for (iterator it = first; it != last; it++) {
 				erase(it);
+			}
 		}
 		//////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////////
@@ -255,6 +256,18 @@ namespace ft
 				tmp = __tree.get_last()->parent;
 			return iterator(tmp);
 		}
+		void	swap (map& x) {
+			ft::NODE<value_type> *tmp_root = __tree.__root;
+			ft::NODE<value_type> *tmp_p_root = __tree.__ROOT_P;
+			size_t	tmp_size = __size;
+
+			__size = x.__size;
+			x.__size = tmp_size;
+			__tree.__root = x.__tree.__root;
+			__tree.__ROOT_P = x.__tree.__ROOT_P;
+			x.__tree.__root = tmp_root;
+			x.__tree.__ROOT_P = tmp_p_root;
+		}
 		// const_iterator find (const key_type& k) const {
 		// 	ft::NODE<value_type>	*tmp = find_node(k);
 		// 	if (!__size)
@@ -263,5 +276,8 @@ namespace ft
 		// 		tmp = __tree.get_last()->parent;
 		// 	return const_iterator(tmp);
 		// }
+		void	clear() {
+			erase(begin(), end());
+		}
 	};
 }
