@@ -27,7 +27,6 @@ namespace ft
 	class map
 	{
 	private:
-		// typedef _Rb_tree<key_type, value_type, _Select1st<value_type>, key_compare, _Pair_alloc_type> RBT_type;
 		typedef ft::RBT<std::pair<const Key, T> > RBT_type;
 
 	public:
@@ -35,7 +34,7 @@ namespace ft
 		typedef T mapped_type;
 		typedef Key key_type;
 		typedef Compare key_compare;
-		// typedef											value_compare;
+		typedef	std::less<value_type>	value_compare;
 		typedef Alloc allocator_type;
 		typedef typename allocator_type::reference reference;
 		typedef typename allocator_type::const_reference const_reference;
@@ -178,9 +177,9 @@ namespace ft
 			return iterator(__tree.get_first());
 		}
 
-		const_iterator	begin() const {
-			return const_iterator(__tree.get_first());
-		}
+		// const_iterator	begin() const {
+		// 	return const_iterator(__tree.get_first());
+		// }
 
 		iterator	end() {
 			return iterator(__tree.get_last());
@@ -278,6 +277,24 @@ namespace ft
 		// }
 		void	clear() {
 			erase(begin(), end());
+		}
+		/////////////////////////////////////////
+		/////////////////////////////////////////
+		/////////////////////////////////////////
+		key_compare	key_comp() const {
+			return __comp;
+		}
+		value_compare	value_comp() const {
+			return value_comp();
+		}
+		size_type	count(const key_type& key) const {
+			size_t		i = 0;
+			iterator	_end(__tree.get_first());
+			// for (iterator it = begin(); it != _end; it++) {
+			// 	// if (!__comp((*it).first, key))
+			// 		i++;
+			// }
+			return i;
 		}
 	};
 }

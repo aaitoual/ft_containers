@@ -79,45 +79,21 @@ void	test()
 }
 
 void test2()
-{
 	{
-  std::map<char,int> mymap;
+  ft::map<char,int> mymap;
+  char c;
 
-  mymap['x']=100;
-  mymap['y']=200;
-  mymap['z']=300;
+  mymap ['a']=101;
+  mymap ['c']=202;
+  mymap ['f']=303;
 
-  std::cout << "mymap contains:\n";
-  for (std::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
-    std::cout << it->first << " => " << it->second << '\n';
-
-  mymap.clear();
-  mymap['a']=1101;
-  mymap['b']=2202;
-
-  std::cout << "mymap contains:\n";
-  for (std::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
-    std::cout << it->first << " => " << it->second << '\n';
-	}
-	puts ("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
-	{
-	  ft::map<char,int> mymap;
-
-  mymap['x']=100;
-  mymap['y']=200;
-  mymap['z']=300;
-
-  std::cout << "mymap contains:\n";
-  for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
-    std::cout << it->first << " => " << it->second << '\n';
-
-  mymap.clear();
-  mymap['a']=1101;
-  mymap['b']=2202;
-
-  std::cout << "mymap contains:\n";
-  for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
-    std::cout << it->first << " => " << it->second << '\n';;
+  for (c='a'; c<'h'; c++)
+  {
+    std::cout << c;
+    if (mymap.count(c)>0)
+      std::cout << " is an element of mymap.\n";
+    else 
+      std::cout << " is not an element of mymap.\n";
 	}
 }
 
